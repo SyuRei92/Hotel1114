@@ -11,6 +11,8 @@
     "readmeFilename": "README.md",
     "dependencies": {
     	"express": "~4.13.1",
-        "ejs": "~2.4.1"
+        "express-session":"~1.15.2",
+//        "body-parser":"1.17.1",
+    	"ejs": "~2.4.1"
     }
 }
