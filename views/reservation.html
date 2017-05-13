@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<form action="/doReserve">
+		<label>Email</label>
+		<input name="email" type="text" placeholder="Enter number" required="required"/>
+		<label>Start</label>
+		<input name="startDate" type="date" required="required"/>
+		<label>End</label>
+		<input name="endDate" type="date" required="required"/>
+		<br/>
+		<label>Single</label>
+		<input name="singleRoom" type="number" placeholder="0" required="required"/>
+		<label>Double</label>
+		<input name="doubleRoom" type="number" placeholder="0" required="required"/>
+		<label>Suite</label>
+		<input name="suiteRoom" type="number" placeholder="0" required="required"/>
+		<input type="hidden" name="hotel" value="Hotel1114"/>
+		<input value="Submit" type="submit"/>
+	</form>
+</body>
+</html>

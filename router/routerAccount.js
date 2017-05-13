@@ -1,4 +1,4 @@
-module.exports = function(app)
+module.exports = function(app,db)
 {
 	const accountController=require('../controller/accountController');
      app.get('/login',function(req,res){
