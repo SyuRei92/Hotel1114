@@ -1,4 +1,4 @@
-module.exports=function(collection){
+module.exports=function(){
 	
 	/* Status-validity Table
 	 * Status		| Valid					| Invalid
@@ -8,37 +8,38 @@ module.exports=function(collection){
 	 * Checked In	| Currently Checked In	| No Show
 	 * Checked Out	| N/A					| Checked out
 	 */
-	var reservationDao={cName:'reservation',
-						status:{notPaid:'Not Paid',
+	var reservationDao={status:{notPaid:'Not Paid',
 								paid:'Paid',
 								checkedIn:'Checked In',
 								checkedOut:'Checked Out'},
 						validity:{valid:'Valid',
 								invalid:'Invalid'}};
+	var db=global.db.collection('reservation');
+	
 	
 	// CRUD on reservation table
 	// 1. Create
 	// Input: data(reservation data), nextJob(function(_id of inserted data))
 	reservationDao.insert=function(data,nextJob){
-		collection(reservationDao.cName).insertOne(data).then(nextJob);
+		db.insertOne(data).then(nextJob);
 	};
 	
 	// 2. Read
-	// 2A. Read by reservation number(rid)
+	// 2A. Search by reservation number(rid)
 	// Input: rid(reservation number), nextJob(function(document))
 	reservationDao.queryRid=function(rid,nextJob){
-		collection(reservationDao.cName).findOne({_id:rid}).then(nextJob);
+		db.findOne({_id:rid}).then(nextJob);
 	};
-	// 2B. Read by reservation customer ID(cid)
+	// 2B. Search by reservation customer ID(cid)
 	// Input: cid(customer ID), nextJob(function(document[]))
 	reservationDao.queryCid=function(cid,nextJob){
-		collection(reservationDao.cName).find({customerID:cid}).toArray().then(
+		db.find({customerID:cid}).toArray().then(
 				function(result){nextJob(result);});
 	};
-	// 2C. Read by reservation start date(startDate)
+	// 2C. Search by reservation start date(startDate)
 	// Input: cid(customer ID), nextJob(function(document[]))
-	reservationDao.queryCid=function(startDate,nextJob){
-		collection(reservationDao.cName).find({startDate:{$gte:startDate}}).toArray().then(
+	reservationDao.queryStartDate=function(startDate,nextJob){
+		db.find({startDate:startDate}).toArray().then(
 				function(result){nextJob(result);});
 	};
 	// 3. Update
@@ -46,7 +47,7 @@ module.exports=function(collection){
 	// Update email and name for the reservation with the given ID.
 	// Input: rid, name(new name), email(new email), nextJob(function(_id of updated data))
 	reservationDao.updateInfo=function(rid,name,email,nextJob){
-		collection(reservationDao.cName).updateOne(
+		db.updateOne(
 				{_id: rid},
 				{$set: { name: name, email: email },
 				    $currentDate: { lastModified: true }}).then(nextJob);
@@ -55,44 +56,49 @@ module.exports=function(collection){
 	// Set the validity flag invalid, for the reservation with the given ID.
 	// Input: rid, nextJob(function(_id of updated data))
 	reservationDao.invalidate=function(rid,nextJob){
-		collection(reservationDao.cName).updateOne(
+		db.updateOne(
 				{_id: rid},
 				{$set: { validity: reservationDao.validity.invalid },
 				    $currentDate: { lastModified: true }}).then(nextJob);
 	};
+	
 	// 4. Delete (N/A)
+	
 	// 5. Aggregation
-	/* Testing
-	reservationDao.readRoomsInUse=function(startDate,endDate,hotel){
-		collection(reservationDao.cName).mapReduce(
-			// For each reservations, first generate the list of (date,room) pair s by
-			function(){
-				// from the reservation startDate capped by the entered startDate
-				var reservationStart=this.startDate<startDate?startDate:this.startDate;
-				// to the reservation endDate capped by the entered endDate
-				var reservationEnd=this.endDate>endDate?endDate:this.endDate;
-				// for each day within the period, produce such pair.
-				for(var today=reservationStart;today<reservationEnd;today.setDate(today.getDate() + 1))
-					emit({day:today},this.room);
-				},
-			// Then, obtain the sum of the reserved rooms for each day.
-			function(k, values) {
-			    var result = {};
-			    for(i in values){
-			    	for (attrname in values[i]) {
-			    		if(!result[attrname]) result[attrname] = 0;
-			    		result[attrname]+=values[i][attrname];
-			    	}
-			    }
-			    return result;
-			},
-			{query:{validity:reservationDao.validity.valid, // These operations are performed for valid reservations
-					hotel:hotel, // in the specified hotel
-					startDate: { $lt: endDate }, // such that its startDate is less than the specified endDate,
-					endDate: { $gt: startDate }}, // and its endDate is greater than the specified startDate.
-			 out:'emptyRoomByDate'}); // with the results in the collection emptyRoomByDate.
+	// 5A. 호텔의 전체 방 개수를 질의한다.
+	// hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 결과값)
+	reservationDao.queryTotalRooms=function(hotel,nextJob){
+		global.db.collection('room').findOne({hotel:hotel}).then(
+				function(result){console.log(result);nextJob(result);});
 	};
-	*/
+	
+	// 5B. 해당 기간에 예약된 방 개수의 종류별 최대값을 확인한다.
+	// startDate:체크인 날짜, endDate:체크아웃 날짜, hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 결과값)
+	reservationDao.queryRoomsByDate=function(startDate,endDate,hotel,nextJob){
+		global.db.collection('reservedRoomsByDate').aggregate([
+			{$match : {date:{ $gte: startDate, $lt: endDate }, hotel:hotel}},
+			{$group : {
+				_id: null,
+				singleRoom: { $max: "$singleRoom" },
+				doubleRoom: { $max: "$doubleRoom" },
+				suiteRoom: { $max: "$suiteRoom" }}
+			}
+		]).toArray().then(function(result){nextJob(result);});
+	};
+	
+	// 5C. 해당 날짜에 예약된 방 개수를 증가시킨다.
+	// date: 날짜, rooms:새로 예약한 방 목록, hotel:호텔, nextJob:다음에 처리할 일(인자 0개)
+	reservationDao.updateRoomsByDate=function(date,rooms,hotel,nextJob){
+		console.log("Update Call:"+date+","+rooms);
+		global.db.collection('reservedRoomsByDate').update(
+			{ date:date,hotel:hotel },
+			{
+				$setOnInsert:{date:date,hotel:hotel},
+				$inc: rooms
+			},
+			{ upsert: true }
+			).then(function(result){nextJob();});
+	};
 	
 	return reservationDao;
 };
