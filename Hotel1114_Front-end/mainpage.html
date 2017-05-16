@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link href="./hotel_reservation.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
+    
+    <!-- import javascript files -->
+    <script src="./jquery-3.2.1.min.js"></script>
+    <script src="./hotel_reservation.js"></script>
+    <script src="date-range-picker/daterangepicker.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h1> Hotel 1114 </h1>
+      <hr>
+    </div>
+    <div class="center-div">
+      <h2> Make Reservation </h2>
+      <div>
+        <h3> Check in/out Date </h3>
+        <!-- date range picker -->
+        <input class="date" type="text" name="daterange" value="05/16/2017 - 05/17/2017" />
+        <script type="text/javascript">
+          $(function() {
+            $('input[name="daterange"]').daterangepicker();
+          });
+        </script>
+      </div>
+      <div>
+        <h3> Rooms </h3>
+        <table id="room">
+          <tr id="single">
+            <td class="room_type"> Single </td>
+            <td class="remain_room"> Remain: 0 </td>
+            <td class="room-number"> <input type="number" value="0" min="0" max="100"> </td>
+          </tr>
+          <tr id="double">
+            <td class="room_type"> Double </td>
+            <td class="remain_room"> Remain: 0 </td>
+            <td class="room-number"> <input type="number" value="0" min="0" max="100"> </td>
+            <td id="total_price"> Total: $0</td>
+          </tr>
+          <tr id="suite">
+            <td class="room_type"> Suite </td>
+            <td class="remain_room"> Remain: 0 </td>
+            <td class="room-number"> <input  type="number" value="0" min="0" max="100"> </td>
+          </tr>
+        </table>
+      </div>
+      <div class="info">
+        <h3> Personal Information </h3>
+        <table>
+          <tr>
+            <td class="info-title"> Name </td>
+            <td> <input id="name" type="text" value=""> </td>
+          </tr>
+          <tr>
+            <td class="info-title"> E-Mail </td>
+            <td> <input id="email" type="email" value=""> </td>
+          </tr>
+        </table>
+      </div>
+      <input id="reserve_confirm" type="submit" value="Confirm">
+    </div>
+  </body>
+</html>
