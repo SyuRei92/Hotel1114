@@ -44,7 +44,6 @@ router.get('/available',function(req,res){
 				return;
 			}
 			//SeqD MakeReservation Step 06(Show Available Rooms) Exitpoint
-			// TODO (Will be changed later to JSON Response)
 			res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));
 			//res.render('remainingRooms.html',{result:documents});
 		});

@@ -62,7 +62,6 @@ reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
 	dao.queryRoomsByDate(startDate,endDate,hotel,function(result){
 		// Additional query for the total room count
 		dao.queryTotalRooms(hotel,function(rooms){
-			console.log(result);
 			//SeqD MakeReservation Step 04(rooms[]) arrives here
 			if(typeof result=='undefined') nextJob(rooms);
 			else nextJob(rooms.subtract(result));

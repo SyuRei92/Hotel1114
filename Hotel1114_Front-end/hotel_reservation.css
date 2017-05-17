@@ -1,0 +1,60 @@
+html {
+  font-family: 'Hind', sans-serif;
+}
+h1 {
+  margin: 0 auto;
+  font-family: 'Barrio', cursive;
+  font-size: 400%;
+}
+h2 {
+  font-weight: bold;
+}
+
+hr {
+  border-width: 1px;
+  border-color: black;
+  color: black;
+  margin 0 0;
+}
+
+.date {
+  font-size: 18px;
+  width: 40%;
+  height: auto;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  height: auto;
+  top: 0;
+  z-index: 100;
+  background-color: white;
+}
+
+.center-div {
+  margin: 102px auto auto auto;
+  width: 600px;
+}
+
+.room_type {
+  font-weight: bold;
+}
+
+#room {
+  margin: 0 0 0 30px;
+}
+
+#total_price {
+  padding: 0 30px;
+}
+
+.remain_room {
+  padding: 2px;
+  font-size: 13px;
+  color: gray;
+}
+
+.info-title {
+  padding: 3px;
+}

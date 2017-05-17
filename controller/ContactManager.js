@@ -1,5 +1,5 @@
 var ContactManager={};
-var connArg={  
+const connArg={  
 	    service: 'Gmail',
 	    auth: {
 	        user: 'baek449.test',

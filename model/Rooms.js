@@ -25,6 +25,7 @@ class Rooms {
 			suiteRoom:this.suiteRoom};
 	}
 	static buildFromJson(obj){
+		if(typeof obj != 'object') return new Rooms(0,0,0);
 		return new Rooms(obj.singleRoom,obj.doubleRoom,obj.suiteRoom);
 	}
 };

@@ -3,7 +3,9 @@ module.exports={
 	checkNumber:function(a){return (typeof a =='number');},
 	checkString:function(a){return (typeof a =='string');},
 	date2String:function(date){return date.format('yyyy-MM-dd');},
-	string2Date:function(str){var t=str.split("-"); return new Date(t[0],t[1]-1,t[2]);},
+	string2Date:function(str){
+		if(typeof str!='string') return str;
+		var t=str.split("-"); return new Date(t[0],t[1]-1,t[2]);},
 	string2number:function(str){return Number(str);},
 	incrementDate:function(date){date.setDate(date.getDate() + 1); return date;},
 	buildResponse:function(responseCode_,result){return {responseCode:responseCode_,result:result};},
