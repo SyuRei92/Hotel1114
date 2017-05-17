@@ -1,20 +1,27 @@
 var reservationController={};
 var dao=require('../dao/daoReservation')();
-var util=require('./HotelUtil');
+
+const Rooms=require('../model/Rooms');
+const Reservation=require('../model/Reservation');
+const CustomerInfo=require('../model/CustomerInfo');
+const util=require('./HotelUtil');
 
 // 예약 기록 만들기
 //SeqD MakeReservation Step 07 arrives here
+// room: Rooms 객체, 예약할 종류별 방의 개수
 reservationController.reserve=
-	function(customerID,startDate,endDate,room,hotel,nextJob){
+	function(email,startDate,endDate,rooms,hotel,nextJob){
 	// TODO Check variables here
-	for (var property in room) {
-	    if (room.hasOwnProperty(property)) {
-	        room[property]=Number(room[property]);
-	    }
-	}
+	
+	// 객체 만들기
+	rooms=new Rooms(Number(rooms.singleRoom),
+			Number(rooms.doubleRoom),
+			Number(rooms.suiteRoom));
 	startDate=util.string2Date(startDate);
 	endDate=util.string2Date(endDate);
-	
+	var reservation=new Reservation(0,0,startDate,endDate,rooms,
+			new CustomerInfo("홍길동",email,"000-0000"),"","");
+	reservation.setNew();
 	//SeqD MakeReservation Step 08(tryBlock)
 	// TODO test total rooms again
 	
@@ -23,10 +30,10 @@ reservationController.reserve=
 	
 	
 	// Insert
-	var obj={customerID:customerID,room:room,startDate:startDate,endDate:endDate,hotel:hotel};
+	//var obj={customerID:customerID,room:room,startDate:startDate,endDate:endDate,hotel:hotel};
 	var updater=function(date,endDate_,nextJob_){
 		if(date<endDate_){
-			dao.updateRoomsByDate(date,room,'Hotel1114',function(){
+			dao.updateRoomsByDate(date,rooms,'Hotel1114',function(){
 				updater(util.incrementDate(date),endDate_,nextJob_);
 			});
 		}
@@ -34,8 +41,7 @@ reservationController.reserve=
 	};
 	updater(startDate,endDate,function(){
 		//SeqD MakeReservation Step 13(createReservation)
-		var obj={customerID:customerID,room:room,startDate:startDate,endDate:endDate,hotel:hotel};
-		dao.insert(obj,function(id){nextJob(id);});
+		dao.insert(reservation,function(id){nextJob(id);});
 	});
 };
 
@@ -55,7 +61,7 @@ reservationController.findReservationByStartDate=function(startDate,nextJob){
 };
 // 방 개수 가져오기
 //SeqD MakeReservation Step 02 arrives here
-//startDate:체크인 날짜, endDate:체크아웃 날짜, hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 결과값)
+//startDate:체크인 날짜, endDate:체크아웃 날짜, hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 방 개수가 들어있는 Rooms)
 reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
 	startDate=util.string2Date(startDate);
 	endDate=util.string2Date(endDate);
@@ -64,13 +70,8 @@ reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
 		// Additional query for the total room count
 		dao.queryTotalRooms(hotel,function(rooms){
 			//SeqD MakeReservation Step 04(rooms[]) arrives here
-			if(typeof result[0]=='undefined') nextJob(rooms);
-			else{
-				var r={ singleRoom: rooms.singleRoom-result[0].singleRoom,
-						doubleRoom: rooms.doubleRoom-result[0].doubleRoom,
-						suiteRoom: rooms.suiteRoom-result[0].suiteRoom};
-				nextJob(r);
-			}
+			if(typeof result=='undefined') nextJob(rooms);
+			else nextJob(rooms.subtract(result));
 		});
 	});
 };

@@ -10,7 +10,6 @@ router.get('/new',function(req,res){
 // 예약 실행
 //SeqD MakeReservation Step 07 Entrypoint
 router.get('/doReserve',function(req,res){
-	console.log(req.query);
 	reservationController.reserve(req.query.email,req.query.startDate,req.query.endDate,
 			{singleRoom: req.query.singleRoom,
 				doubleRoom: req.query.doubleRoom,
@@ -22,8 +21,8 @@ router.get('/doReserve',function(req,res){
 
 // 예약 목록
 router.get('/list',function(req,res){
-	var d=reservationController.findReservationByAccount('baek449@gmail.com',
-			function(documents){console.log(documents); res.render('reservationList.html',{result:documents})});
+	reservationController.findReservationByAccount('baek449@gmail.com',
+			function(documents){res.render('reservationList.html',{result:documents})});
 });
 
 //예약 기간에 대한 방 개수
