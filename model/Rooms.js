@@ -1,3 +1,5 @@
+var util=require('../controller/HotelUtil');
+
 module.exports=
 class Rooms { 
 	constructor(singleRoom,doubleRoom,suiteRoom) {
@@ -12,7 +14,9 @@ class Rooms {
 		return singleRoom>=0 && doubleRoom>=0 && suiteRoom>=0 && (singleRoom+doubleRoom+suiteRoom)>0;
 	}
 	subtract(r){
-		return new Rooms(this.singleRoom-r.singleRoom,this.doubleRoom-r.doubleRoom,this.suiteRoom-r.suiteRoom);
+		return new Rooms(this.singleRoom-util.zeroIfNull(r.singleRoom),
+				this.doubleRoom-util.zeroIfNull(r.doubleRoom),
+				this.suiteRoom-util.zeroIfNull(r.suiteRoom));
 	}
 	toJson(){
 		return {singleRoom:this.singleRoom,

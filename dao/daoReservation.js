@@ -10,8 +10,6 @@ module.exports=function(){
 	// 1. Create
 	// Input: data(type Reservation), nextJob(function(_id of inserted data))
 	reservationDao.insert=function(data,nextJob){
-		data.status=Reservation.statusList().notPaid;
-		data.validity=Reservation.validityList().valid;
 		db.insertOne(data.toJson()).then(nextJob);
 	};
 	
@@ -76,7 +74,7 @@ module.exports=function(){
 				suiteRoom: { $max: "$suiteRoom" }}
 			}
 		]).toArray().then(function(result){
-			nextJob(Rooms.buildFromJson(result));
+			nextJob(Rooms.buildFromJson(result[0]));
 		});
 	};
 	
