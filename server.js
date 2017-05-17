@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+app.use(express.static('Hotel1114_Front-end'));
 
 // Session Use
 var session = require('express-session');

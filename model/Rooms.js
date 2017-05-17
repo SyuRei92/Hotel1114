@@ -11,7 +11,8 @@ class Rooms {
 		return "Single("+this.singleRoom+"), Double("+this.doubleRoom+"), Suite("+this.suiteRoom+")";
 	}
 	isValid(){
-		return singleRoom>=0 && doubleRoom>=0 && suiteRoom>=0 && (singleRoom+doubleRoom+suiteRoom)>0;
+		return this.singleRoom>=0 && this.doubleRoom>=0 && this.suiteRoom>=0
+			&& (this.singleRoom+this.doubleRoom+this.suiteRoom)>0;
 	}
 	subtract(r){
 		return new Rooms(this.singleRoom-util.zeroIfNull(r.singleRoom),

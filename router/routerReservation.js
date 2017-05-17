@@ -1,4 +1,6 @@
 var router=require('express').Router();
+const Rooms=require('../model/Rooms');
+const util=require('../controller/HotelUtil');
 
 const reservationController=require('../controller/ReservationController');
 	
@@ -10,10 +12,12 @@ router.get('/new',function(req,res){
 // 예약 실행
 //SeqD MakeReservation Step 07 Entrypoint
 router.get('/doReserve',function(req,res){
-	reservationController.reserve(req.query.email,req.query.startDate,req.query.endDate,
-			{singleRoom: req.query.singleRoom,
-				doubleRoom: req.query.doubleRoom,
-				suiteRoom: req.query.suiteRoom},
+	reservationController.reserve(req.query.email,
+			util.string2Date(req.query.startDate),
+			util.string2Date(req.query.endDate),
+			new Rooms(Number(req.query.singleRoom),
+					Number(req.query.doubleRoom),
+					Number(req.query.suiteRoom)),
 			'Hotel1114', function(id){
 					//SeqD MakeReservation Step 14(showForm) Exitpoint (Will be changed later to JSON Response)
 					res.redirect('/reservation/list');});
@@ -27,17 +31,22 @@ router.get('/list',function(req,res){
 
 //예약 기간에 대한 방 개수
 //SeqD MakeReservation Step 02 Entrypoint
-router.get('/duration',function(req,res){
+router.get('/available',function(req,res){
 	//SeqD MakeReservation Step 02
-	var d=reservationController.availableRooms(req.query.startDate,req.query.endDate,'Hotel1114',
+	var d=reservationController.availableRooms(util.string2Date(req.query.startDate),
+			util.string2Date(req.query.endDate),'Hotel1114',
 		function(documents){
-			//SeqD MakeReservation Step 05(No Available Rooms) Exitpoint (Will be changed later to JSON Response)
-			if(documents.singleRoom<=0 && documents.doubleRoom<=0 && documents.suiteRoom<=0){ // opt RoomCheck
-				res.render('remainingRooms.html',{result:documents}); // will be changed
+			
+			if(!documents.isValid()){ // opt RoomCheck
+				// 사용 가능한 방이 없는 경우
+				//SeqD MakeReservation Step 05(No Available Rooms) Exitpoint
+				res.json(util.buildResponse(util.responseCode.NO_ROOM,null));
 				return;
 			}
-			//SeqD MakeReservation Step 06(Show Available Rooms) Exitpoint (Will be changed later to JSON Response)
-			res.render('remainingRooms.html',{result:documents});
+			//SeqD MakeReservation Step 06(Show Available Rooms) Exitpoint
+			// TODO (Will be changed later to JSON Response)
+			res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));
+			//res.render('remainingRooms.html',{result:documents});
 		});
 });
 module.exports = router;

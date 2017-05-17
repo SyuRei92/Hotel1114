@@ -14,11 +14,6 @@ reservationController.reserve=
 	// TODO Check variables here
 
 	// 객체 만들기
-	rooms=new Rooms(Number(rooms.singleRoom),
-			Number(rooms.doubleRoom),
-			Number(rooms.suiteRoom));
-	startDate=util.string2Date(startDate);
-	endDate=util.string2Date(endDate);
 	var reservation=new Reservation(0,0,new Date(startDate.getTime()),endDate,rooms,
 			new CustomerInfo("홍길동",email,"000-0000"),"","");
 	reservation.setNew();
@@ -63,9 +58,6 @@ reservationController.findReservationByStartDate=function(startDate,nextJob){
 //SeqD MakeReservation Step 02 arrives here
 //startDate:체크인 날짜, endDate:체크아웃 날짜, hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 방 개수가 들어있는 Rooms)
 reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
-	console.log(startDate);
-	startDate=util.string2Date(startDate);
-	endDate=util.string2Date(endDate);
 	//SeqD MakeReservation Step 03(queryRoom)
 	dao.queryRoomsByDate(startDate,endDate,hotel,function(result){
 		// Additional query for the total room count
