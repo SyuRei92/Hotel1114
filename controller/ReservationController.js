@@ -83,7 +83,6 @@ reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
 	});
 };
 
-<<<<<<< HEAD
 // 지불하기(TBD)
 reservationController.pay=function(id,coupon,nextJob){
 	// TODO Virtual Payment Logic (TBD)
@@ -104,8 +103,6 @@ reservationController.pay=function(id,coupon,nextJob){
 	});
 	
 };
-=======
->>>>>>> refs/remotes/origin/master
 
 // 예약 취소하기
 // rid: 예약 번호

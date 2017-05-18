@@ -19,14 +19,7 @@ module.exports=function(){
 	// If Success 	: nextJob(FOUND_RESERVATION_OBJECT)
 	// If fail		: nextJob(null)
 	reservationDao.queryRid=function(rid,nextJob){
-<<<<<<< HEAD
 		db.findOne({_id:new global.db.ObjectID(rid)},{},function(err,r){nextJob(Reservation.buildFromJson(r));});
-=======
-		db.findOne({_id:rid}).then(
-			function(r){nextJob(Reservation.buildFromJson(r));},
-			function(err){nextJob(null);}
-		);
->>>>>>> refs/remotes/origin/master
 	};
 	// 2B. Search by reservation customer ID(cid)
 	// Input: cid(customer ID), nextJob(function(Reservation[]))

@@ -56,7 +56,6 @@ router.get('/available',function(req,res){
 		});
 });
 
-<<<<<<< HEAD
 // 결졔
 router.get('/pay',function(req,res){
 	reservationController.pay(req.query.id,null,
@@ -71,17 +70,7 @@ router.get('/listOfDate',function(req,res){
 		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));});
 });
 
-//예약 취소
-=======
-// 시작날짜에 해당하는 예약 목록
-router.get('/listOfDate',function(req,res){
-	reservationController.findReservationByStartDate(
-		req.startDate,
-		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));});
-});
-
 // 예약 취소
->>>>>>> refs/remotes/origin/master
 router.get('/cancelReservation',function(req,res){
 	// 1. 해당 req.rid에 대한 예약이 있는지 확인
 	// 2-1. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
@@ -95,7 +84,7 @@ router.get('/cancelReservation',function(req,res){
 		function(reservationObj){
 			// part 2-1
 			if (reservationObj == null) {
-				res.json(util.buildResponse(util.responseCode."그런 예약 없음 or 실패",null)); //정확한 문구 아직 모름
+				res.json(util.buildResponse(util.responseCode.FAILURE,null)); //정확한 문구 아직 모름
 			}
 			// part 2-2
 			else {
@@ -103,7 +92,7 @@ router.get('/cancelReservation',function(req,res){
 					req.rid,
 					function(documents) {
 						// part 3-1
-						res.json(util.buildResponse(util.responseCode."성공",null)); //정확한 문구 아직 모름
+						res.json(util.buildResponse(util.responseCode.SUCCESS,null)); //정확한 문구 아직 모름
 					});
 			}
 		}
