@@ -60,29 +60,27 @@ router.get('/listOfDate',function(req,res){
 // 예약 취소
 router.get('/cancelReservation',function(req,res){
 	// 1. 해당 req.rid에 대한 예약이 있는지 확인
-	// 근데 이걸로 있는지 없는지 어떻게 알지?
-	reservationController.findReservationById(req.rid, function(documents){});
-
 	// 2-1. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
-	// 어떻게 하는지는 아직 모르겠다.
-	if (그런 예약 없음) {
-		res.answer = "그런 예약번호 없음";
-		return;
-	}
-
 	// 2-2. 정상적으로 있다면 reservationController에 있는 함수 cancelReservation을 실행
-	// cancelReservation의 성공 여부를 가져오면 참 좋겠는데... 가능한가?
-	reservationController.cancelReservation(req.rid, function(documents){});
+	// 3-1. 성공했다면 res에 성공했다고 보냄
+	// 3.2. 실패했다면 res에 실패한 이유를 보냄. 실패하는 경우가 있는지 모르겠어서 일단 안 함.
 
-	// 3-1. 성공했다면 res에 성공했다고 보내고
-	// 3.2. 실패했다면 res에 실패한 이유를 보내고
-	// 실패한 이유에는 뭐가 있을 수 있을까?
-	if (성공) {
-		res.json("정상적으로 예약을 취소했습니다.");
-	}
-	else {
-		res.json(실패한 이유);
-	}
+	// part 1
+	reservationController.findReservationById(
+		req.rid,
+		function(reservationObj){
+			// part 2-1
+			if (reservationObj == null) {
+				res.json(util.buildResponse(util.responseCode."그런 예약 없음 or 실패",null)); //정확한 문구 아직 모름
+			}
+			// part 2-2
+			else {
+				reservationController.cancelReservation(req.rid, function(documents){});
+
+				res.json(util.buildResponse(util.responseCode."성공",null)); //정확한 문구 아직 모름
+			}
+		}
+	);
 });
 
 module.exports = router;

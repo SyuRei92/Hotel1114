@@ -16,8 +16,13 @@ module.exports=function(){
 	// 2. Read
 	// 2A. Search by reservation number(rid)
 	// Input: rid(reservation number), nextJob(function(Reservation))
+	// If Success 	: nextJob(FOUND_RESERVATION_OBJECT)
+	// If fail		: nextJob(null)
 	reservationDao.queryRid=function(rid,nextJob){
-		db.findOne({_id:rid}).then(function(r){nextJob(Reservation.buildFromJson(r));});
+		db.findOne({_id:rid}).then(
+			function(r){nextJob(Reservation.buildFromJson(r));},
+			function(err){nextJob(null);}
+		);
 	};
 	// 2B. Search by reservation customer ID(cid)
 	// Input: cid(customer ID), nextJob(function(Reservation[]))
