@@ -13,6 +13,7 @@ function makeReservationTable(data) {
 		var startDate = data.result[reservation].startDate;
 		var endDate = data.result[reservation].endDate;
 		var numOfRooms = data.result[reservation].rooms;
+		console.log(startDate);
 
 		// index, rid, startDate ~ endDate, numOfRooms
 		var newRow = rsv_table.insertRow();
