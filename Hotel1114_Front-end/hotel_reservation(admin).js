@@ -13,8 +13,7 @@ function makeReservationTable(data) {
 		var startDate = data.result[reservation].startDate;
 		var endDate = data.result[reservation].endDate;
 		var numOfRooms = data.result[reservation].rooms;
-		console.log(startDate);
-
+		
 		// index, rid, startDate ~ endDate, numOfRooms
 		var newRow = rsv_table.insertRow();
 		var newCell1 = newRow.insertCell(0);
@@ -24,7 +23,7 @@ function makeReservationTable(data) {
 		newCell1.innerHTML = index++;
 		newCell2.innerHTML = rid;
 		newCell3.innerHTML = startDate + "~" + endDate;
-		newCell4.innerHTML = "single: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
+		newCell4.innerHTML = "sigle: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
 	}
 }
 
