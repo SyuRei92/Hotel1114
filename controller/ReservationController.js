@@ -104,4 +104,11 @@ reservationController.pay=function(id,coupon,nextJob){
 	
 };
 
+// 예약 취소하기
+// rid: 예약 번호
+//다음에 처리할 일(nextJob)이라는게 뭐가 있을까?
+reservationController.cancelReservation=function(rid, nextJob){
+	dao.invalidate(rid, function(documents){nextJob(documents);});
+};
+
 module.exports=reservationController;
