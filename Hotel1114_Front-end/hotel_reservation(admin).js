@@ -14,7 +14,7 @@ function makeReservationTable(data) {
 	}
 }
 
-function queryDate(startDate, endDate) {
+function queryDate(startDate) {
   	$.getJSON(
   		'http://'+document.location.host+'/reservation/listOfDate' +
   		'?startDate='+startDate.format('YYYY-MM-DD'),
