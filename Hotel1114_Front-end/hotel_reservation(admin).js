@@ -10,16 +10,19 @@ function makeReservationTable(data) {
 	
 	for (var reservation in data.result) {
 		var rid = data.result[reservation].id;
-		var startDate = data.result[reservation].startDate;
-		var endDate = data.result[reservation].endDate;
+		var startDateString = data.result[reservation].startDate;
+		var endDateString = data.result[reservation].endDate;
 		var numOfRooms = data.result[reservation].rooms;
 		
-		sdd = startDate.getDate();
-		smm = startDate.getMonth()+1;
-		syyyy = startDate.getFullYear();
-		edd = endDate.getDate();
-		emm = endDate.getMonth()+1;
-		eyyyy = endDate.getFullYear();
+		var startDate = new Date(startDateString);
+		var endDate = new Date(endDateString);
+		
+		var sdd = startDate.getDate();
+		var smm = startDate.getMonth()+1;
+		var syyyy = startDate.getFullYear();
+		var edd = endDate.getDate();
+		var emm = endDate.getMonth()+1;
+		var eyyyy = endDate.getFullYear();
 		
 		if (sdd < 10) sdd = '0'+sdd;
 		if (smm < 10) smm = '0'+smm;
