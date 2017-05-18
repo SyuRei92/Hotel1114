@@ -51,10 +51,9 @@ router.get('/available',function(req,res){
 
 // 시작날짜에 해당하는 예약 목록
 router.get('/listOfDate',function(req,res){
-	reservationController.findReservationByStartDate(req.startDate,
-		// res에 무엇을 집어넣어야 할 지 잘 모르겠음.
-		// 아니 그냥 res를 아직 모르겠음.
-			function(documents){res.render('reservationList.html',{result:documents})});
+	reservationController.findReservationByStartDate(
+		req.startDate,
+		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));});
 });
 
 // 예약 취소
@@ -75,9 +74,12 @@ router.get('/cancelReservation',function(req,res){
 			}
 			// part 2-2
 			else {
-				reservationController.cancelReservation(req.rid, function(documents){});
-
-				res.json(util.buildResponse(util.responseCode."성공",null)); //정확한 문구 아직 모름
+				reservationController.cancelReservation(
+					req.rid,
+					function(documents) {
+						// part 3-1
+						res.json(util.buildResponse(util.responseCode."성공",null)); //정확한 문구 아직 모름
+					});
 			}
 		}
 	);

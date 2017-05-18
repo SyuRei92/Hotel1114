@@ -1,3 +1,26 @@
+function makeReservationTable(data) {
+	var index = 0;
+
+	for (var reservation in data.result) {
+		index ++;
+
+		var rid = reservation.rid;
+		var startDate = reservation.startDate;
+		var endDate = reservation.endDate;
+		var numOfRooms = reservation.rooms;
+
+		// 표를 만드시면 될 듯 합니다.
+		// index, rid, startDate ~ endDate, numOfRooms
+	}
+}
+
+function queryDate(startDate, endDate) {
+  	$.getJSON(
+  		'http://'+document.location.host+'/reservation/listOfDate' +
+  		'?startDate='+startDate.format('YYYY-MM-DD'),
+		makeReservationTable);
+}
+
 $(document).ready(function(){
 	var rsv_list = [];
 	var rsv_table = document.getElementById("reservation");
