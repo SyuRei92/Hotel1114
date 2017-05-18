@@ -14,6 +14,21 @@ function makeReservationTable(data) {
 		var endDate = data.result[reservation].endDate;
 		var numOfRooms = data.result[reservation].rooms;
 		
+		sdd = startDate.getDate();
+		smm = startDate.getMonth()+1;
+		syyyy = startDate.getFullYear();
+		edd = endDate.getDate();
+		emm = endDate.getMonth()+1;
+		eyyyy = endDate.getFullYear();
+		
+		if (sdd < 10) sdd = '0'+sdd;
+		if (smm < 10) smm = '0'+smm;
+		if (edd < 10) edd = '0'+edd;
+		if (emm < 10) emm = '0'+emm;
+		
+		var startDateForm = syyyy+'-'+smm+'-'+sdd;
+		var endDateForm = eyyyy+'-'+emm+'-'+edd;
+		
 		// index, rid, startDate ~ endDate, numOfRooms
 		var newRow = rsv_table.insertRow();
 		var newCell1 = newRow.insertCell(0);
@@ -22,7 +37,7 @@ function makeReservationTable(data) {
 		var newCell4 = newRow.insertCell(3);
 		newCell1.innerHTML = index++;
 		newCell2.innerHTML = rid;
-		newCell3.innerHTML = startDate.format('YYYY-MM-DD') + "~" + endDate.format('YYYY-MM-DD');
+		newCell3.innerHTML = startDateForm + "~" + endDateForm;
 		newCell4.innerHTML = "single: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
 	}
 }
