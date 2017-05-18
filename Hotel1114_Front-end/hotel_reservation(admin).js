@@ -1,15 +1,20 @@
 function makeReservationTable(data) {
+	alert(data.result);
 	var index = 1;
 	
 	for (i = 1; i < numRows; i++){
-		rsv_table.deleteRow(1);
+		alert(1);
+		rsv_table.deleteRow(i);
+		alert(1);
 	}
+	alert(data.result[0]);
 	
 	for (var reservation in data.result) {
-		var rid = reservation.rid;
-		var startDate = reservation.startDate;
-		var endDate = reservation.endDate;
-		var numOfRooms = reservation.rooms;
+		alert(data.result[reservation]);
+		var rid = data.result[reservation].rid;
+		var startDate = data.result[reservation].startDate;
+		var endDate = data.result[reservation].endDate;
+		var numOfRooms = data.result[reservation].rooms;
 
 		// index, rid, startDate ~ endDate, numOfRooms
 		var newRow = rsv_table.insertRow();
