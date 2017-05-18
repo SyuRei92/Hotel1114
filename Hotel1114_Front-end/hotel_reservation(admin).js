@@ -1,17 +1,15 @@
+var rsv_list = [];
+var rsv_table = document.getElementById("reservation");
+
 function makeReservationTable(data) {
-	alert(data.result);
 	var index = 1;
 	var numRows = rsv_table.rows.length;
 	for (i = 1; i < numRows; i++){
-		alert(1);
-		rsv_table.deleteRow(i);
-		alert(1);
+		rsv_table.deleteRow(1);
 	}
-	alert(data.result[0]);
 	
 	for (var reservation in data.result) {
-		alert(data.result[reservation]);
-		var rid = data.result[reservation].rid;
+		var rid = data.result[reservation].id;
 		var startDate = data.result[reservation].startDate;
 		var endDate = data.result[reservation].endDate;
 		var numOfRooms = data.result[reservation].rooms;
@@ -30,17 +28,14 @@ function makeReservationTable(data) {
 }
 
 function queryDate(startDate) {
-	console.log(startDate);
   	$.getJSON(
   		'http://'+document.location.host+'/reservation/listOfDate' +
   		'?startDate='+startDate, makeReservationTable);
 }
 
-var rsv_list = [];
-var rsv_table = document.getElementById("reservation");
 
 $(document).ready(function(){
-	
+	rsv_table = document.getElementById("reservation");
 	// db에서 가지고 와야 함
 	rsv_list.push([27914, "2017-05-01", "2017-05-05", 3]);
 	rsv_list.push([27915, "2017-05-02", "2017-05-06", 5]);
