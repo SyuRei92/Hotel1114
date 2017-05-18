@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+	  <!-- Include Required Prerequisites -->
+	  <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+	  <script type="text/javascript" src="http://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+ 
+	  <!-- Include Date Range Picker -->
+	  <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+	  <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	  <link href="./hotel_reservation(admin).css" rel="stylesheet" />
+	  
+      <script src="./hotel_reservation(admin).js"></script>
+  </head>
+  <body>
+    <!-- import javascript files
+    <script src="./jquery-3.2.1.min.js"></script>
+    <script src="./hotel_reservation.js"></script>-->
+    <div class="header">
+        <h1> Hotel 1114 </h1>
+    </div>
+    <div align="center">
+		<h1 align="left"> Check Reservation </h1>
+		Period:
+		<input type="text" id="datefilter" value="2017-05-18" />
+		<script type="text/javascript">
+			$("input[id='datefilter']").daterangepicker({
+				singleDatePicker: true,
+				showDropdowns: true,
+				locale:{
+					format: "YYYY-MM-DD"
+				}
+			});
+		</script>
+        <table border="1" id="reservation">
+            <thead>
+				<td width="50px" align="center"></td>
+				<td width="150px">Reservation ID</td>
+				<td width="200px">Period</td>
+				<td width="150px">Numer of Rooms</td>
+			</thead>
+			<tr>
+				<td>1</td>
+				<td>27914</td>
+				<td>2017-05-01 ~ 2017-05-05</td>
+				<td>3</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>27915</td>
+				<td>2017-05-02 ~ 2017-05-06</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>27916</td>
+				<td>2017-05-03 ~ 2017-05-07</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>27917</td>
+				<td>2017-05-04 ~ 2017-05-08</td>
+				<td>2</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>27918</td>
+				<td>2017-05-05 ~ 2017-05-09</td>
+				<td>3</td>
+			</tr>
+        </table>
+    </div>
+  </body>
+</html>
