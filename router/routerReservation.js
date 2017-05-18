@@ -1,5 +1,6 @@
 var router=require('express').Router();
 const Rooms=require('../model/Rooms');
+const CustomerInfo=require('../model/CustomerInfo');
 const util=require('../controller/HotelUtil');
 
 const reservationController=require('../controller/ReservationController');
@@ -12,15 +13,21 @@ router.get('/new',function(req,res){
 // 예약 실행
 //SeqD MakeReservation Step 07 Entrypoint
 router.get('/doReserve',function(req,res){
-	reservationController.reserve(req.query.email,
+	reservationController.reserve(
+			new CustomerInfo(req.query.name,req.query.email,req.query.phone),
 			util.string2Date(req.query.startDate),
 			util.string2Date(req.query.endDate),
 			new Rooms(Number(req.query.singleRoom),
 					Number(req.query.doubleRoom),
 					Number(req.query.suiteRoom)),
-			'Hotel1114', function(id){
+			'Hotel1114', function(result){
 					//SeqD MakeReservation Step 14(showForm) Exitpoint (Will be changed later to JSON Response)
-					res.redirect('/reservation/list');});
+					res.redirect('/payment.html?id='+result.insertedId);},
+					function(responseCode){
+						//SeqD MakeReservation Step 10
+						// TODO notify the code to the customer
+						console.log(responseCode);
+					});
 });
 
 // 예약 목록
@@ -48,4 +55,12 @@ router.get('/available',function(req,res){
 			//res.render('remainingRooms.html',{result:documents});
 		});
 });
+
+//예약 목록
+router.get('/pay',function(req,res){
+	reservationController.pay(req.query.id,null,
+			function(documents){res.redirect('/')}); // json 형식으로 뿌리도록 나중에 바꿔야 함
+});
+
+
 module.exports = router;

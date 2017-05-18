@@ -17,7 +17,7 @@ module.exports=function(){
 	// 2A. Search by reservation number(rid)
 	// Input: rid(reservation number), nextJob(function(Reservation))
 	reservationDao.queryRid=function(rid,nextJob){
-		db.findOne({_id:rid}).then(function(r){nextJob(Reservation.buildFromJson(r));});
+		db.findOne({_id:new global.db.ObjectID(rid)},{},function(err,r){nextJob(Reservation.buildFromJson(r));});
 	};
 	// 2B. Search by reservation customer ID(cid)
 	// Input: cid(customer ID), nextJob(function(Reservation[]))
@@ -49,6 +49,15 @@ module.exports=function(){
 		db.updateOne(
 				{_id: rid},
 				{$set: { validity: Reservation.validityList().invalid },
+				    $currentDate: { lastModified: true }}).then(nextJob);
+	};
+	// 3C. Set the reservation paid(rid)
+	// Set the validity flag invalid, for the reservation with the given ID.
+	// Input: rid, nextJob(function(_id of updated data))
+	reservationDao.setPaid=function(rid,nextJob){
+		db.updateOne(
+				{_id: rid},
+				{$set: { status: Reservation.statusList().paid },
 				    $currentDate: { lastModified: true }}).then(nextJob);
 	};
 	

@@ -5,39 +5,53 @@ const Rooms=require('../model/Rooms');
 const Reservation=require('../model/Reservation');
 const CustomerInfo=require('../model/CustomerInfo');
 const util=require('./HotelUtil');
+const ContactManager=require('./ContactManager');
 
 // 예약 기록 만들기
 //SeqD MakeReservation Step 07 arrives here
 // room: Rooms 객체, 예약할 종류별 방의 개수
 reservationController.reserve=
-	function(email,startDate,endDate,rooms,hotel,nextJob){
+	function(customerInfo, startDate,endDate,rooms,hotel,nextJob,failJob){
 	// TODO Check variables here
 
 	// 객체 만들기
 	var reservation=new Reservation(0,0,new Date(startDate.getTime()),endDate,rooms,
-			new CustomerInfo("홍길동",email,"000-0000"),"","");
+			customerInfo,"","");
 	reservation.setNew();
+
+	if(!rooms.isValid()){
+		// 선택한 방의 개수가 올바르지 않음
+		failJob(util.responseCode.NO_ROOM);
+		return;
+	}
+
 	//SeqD MakeReservation Step 08(tryBlock)
-	// TODO test total rooms again
-	
-	//SeqD MakeReservation Step 09 arrives here
-	//SeqD MakeReservation Step 10
-	
-	
-	// Insert
-	//var obj={customerID:customerID,room:room,startDate:startDate,endDate:endDate,hotel:hotel};
-	var updater=function(date,endDate_,nextJob_){
-		if(date<endDate_){
-			dao.updateRoomsByDate(date,rooms,'Hotel1114',function(){
-				updater(util.incrementDate(date),endDate_,nextJob_);
-			});
+	// Test total rooms again (이 부분은 critical section을 걸어줘야 안전함)
+	reservationController.availableRooms(startDate,endDate,hotel,function(result){
+		//SeqD MakeReservation Step 09 arrives here
+		if(!result.subtract(rooms).isValid0()){
+			// 날짜 선택 시점과 방 예약 시점 사이에 예약할 방이 꽉 찼음
+			failJob(util.responseCode.FAILURE);
+			return;
 		}
-		else nextJob_();
-	};
-	updater(startDate,endDate,function(){
-		//SeqD MakeReservation Step 13(createReservation)
-		dao.insert(reservation,function(id){nextJob(id);});
+		
+		
+		// Insert
+		//var obj={customerID:customerID,room:room,startDate:startDate,endDate:endDate,hotel:hotel};
+		var updater=function(date,endDate_,nextJob_){
+			if(date<endDate_){
+				dao.updateRoomsByDate(date,rooms,'Hotel1114',function(){
+					updater(util.incrementDate(date),endDate_,nextJob_);
+				});
+			}
+			else nextJob_();
+		};
+		updater(startDate,endDate,function(){
+			//SeqD MakeReservation Step 13(createReservation)
+			dao.insert(reservation,function(id){nextJob(id);});
+		});		
 	});
+	// critical section의 끝
 };
 
 // 예약 번호로 찾기
@@ -67,6 +81,27 @@ reservationController.availableRooms=function(startDate,endDate,hotel,nextJob){
 			else nextJob(rooms.subtract(result));
 		});
 	});
+};
+
+// 지불하기(TBD)
+reservationController.pay=function(id,coupon,nextJob){
+	// TODO Virtual Payment Logic (TBD)
+	console.log("Pay started: "+id);
+	
+	reservationController.findReservationById(id,function(result){
+		if(result==null || typeof result == 'undefined') {
+			nextJob(null);
+			return;
+		}
+		dao.setPaid(result.id,function(id_){
+			console.log("Corresponding reservation found: "+result.id);
+			console.log("Sending Email to: "+result);
+			ContactManager.sendComfirmMail(result);
+			nextJob(result.id);
+		});
+		
+	});
+	
 };
 
 module.exports=reservationController;

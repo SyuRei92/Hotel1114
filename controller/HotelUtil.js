@@ -2,7 +2,8 @@ module.exports={
 	zeroIfNull:function(a){return (typeof a =='number')?a:0;},
 	checkNumber:function(a){return (typeof a =='number');},
 	checkString:function(a){return (typeof a =='string');},
-	date2String:function(date){return date.format('yyyy-MM-dd');},
+	checkObject:function(a){return (typeof a =='object');},
+	date2String:function(date){return ''+date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();},
 	string2Date:function(str){
 		if(typeof str!='string') return str;
 		var t=str.split("-"); return new Date(t[0],t[1]-1,t[2]);},

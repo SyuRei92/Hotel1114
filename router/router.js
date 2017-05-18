@@ -11,7 +11,7 @@ module.exports = function(app,dao)
 
 	// Basic page render
      app.get('/',function(req,res){
-        res.render('index.html');
+        res.redirect('/mainpage.html');
      });
      
      app.get('/error',function(req,res){
@@ -27,6 +27,7 @@ module.exports = function(app,dao)
     	 res.render('error.html',{message:"404 Not Found"});
      });
      app.use(function(req,res){
+    	 console.log(req.originalUrl);
     	 res.redirect('/404');
      });
 };

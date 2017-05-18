@@ -17,6 +17,11 @@
     <script src="./jquery-3.2.1.min.js"></script>
     <script src="./hotel_reservation.js"></script>
     <script src="date-range-picker/daterangepicker.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$('input[name="id"]').val(location.search.split("id=")[1]);
+    });
+    </script>
   </head>
   <body>
     <div class="header">
@@ -24,9 +29,13 @@
       <hr>
     </div>
     <div class="center-div">
+    <form action="/reservation/pay">
+      <h2> Reservation ID </h2>
+      <input type="text" name="id" value=""/> <br>
       <h2> Payment </h2>
-      Price: $120 <br>
+      <!-- Price: $120 <br> (Price system is not implemented yet.)-->
       <input id="payment_confirm" type="submit" value="Confirm">
+      </form>
     </div>
   </body>
 </html>

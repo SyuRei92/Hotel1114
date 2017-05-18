@@ -18,8 +18,8 @@
     $("#suite").children(".room-number").children("input").attr({
       "max" : data.suiteRoom
     });
-  	$('input[name="startDate"]').val($('input[name="daterange"]').data('daterangepicker').startDate);
-  	$('input[name="endDate"]').val($('input[name="daterange"]').data('daterangepicker').endDate);
+  	$('input[name="startDate"]').val($('input[name="daterange"]').data('daterangepicker').startDate.format("YYYY-MM-DD"));
+  	$('input[name="endDate"]').val($('input[name="daterange"]').data('daterangepicker').endDate.format("YYYY-MM-DD"));
   }
 
   function queryDate(startDate, endDate) {
@@ -43,6 +43,7 @@ $(document).ready(function () {
     });
 
     // click reserve confirm button
+    /*
     $(document).on("click", "#reserve_confirm", function() {
       var room_check = $("#single").children(".room-number").children("input").val() + $("#double").children(".room-number").children("input").val() + $("#suite").children(".room-number").children("input").val() == 0;
       var name_check = $("#name").val() == "";
@@ -74,8 +75,10 @@ $(document).ready(function () {
       else{
         location.href="./payment.html";
       }
+
     });
-  }
+      */ 
+   }
 
   function changePrice(){
     totalPrice = 10*$("#single").children(".room-number").children("input").val() +15*$("#double").children(".room-number").children("input").val() +20*$("#suite").children(".room-number").children("input").val();

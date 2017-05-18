@@ -15,6 +15,8 @@ app.set('views', __dirname + '/views'); // View pages are in /views directory
 app.set('view engine', 'ejs'); // Use EJS as view engine
 app.engine('html', require('ejs').renderFile);
 
+// Mail
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // MongoDB Use
 var mongoClient = require('mongodb').MongoClient;
@@ -27,6 +29,7 @@ mongoClient.connect('mongodb://localhost:27017/hotel1114', function(err, db) {
     console.log("Successfully connected with MongoDB server.");
 
     global.db=db;
+    global.db.ObjectID=require('mongodb').ObjectID;
     
 	// Router Setting
     require('./router/router')(app);

@@ -1,3 +1,4 @@
+const util=require('./HotelUtil');
 var ContactManager={};
 const connArg={  
 	    service: 'Gmail',
@@ -7,22 +8,23 @@ const connArg={
 	    }};
 
 ContactManager.sendComfirmMail=
-	function(email,rid){
+	function(result){
 	//SeqD MakeReservation Step 20(Send Email)
-	var conn = require('nodemailer').createTransport("SMTP",connArg);
+	var conn = require('nodemailer').createTransport(connArg);
 
+	console.log('Sendmail');
+	console.log(result);
 	// TODO Write mail contents here
 	var mailOptions = {  
 	    from: 'Hotel1114 <baek449.test@gmail.com>',
-	    to: email,
+	    to: result.customerInfo.email,
 	    subject: 'Hotel1114 Reservation Receipt',
 	    text: 'Thank you for reserving Hotel1114.'
-	    	+'\nReservation ID: '+rid
-	    	+'\nName: '+'Insert name here'
-	    	+'\nEmail: '+'Insert mail here'
-	    	+'\nPeriod: '+'Insert period here'
-	    	+'\nRooms: '+'Insert room here'
-	    	+'\nTimestamp: '+'Insert time here'
+	    	+'\nReservation ID: '+result.id
+	    	+'\nName: '+result.customerInfo.name
+	    	+'\nEmail: '+result.customerInfo.email
+	    	+'\nPeriod: '+util.date2String(result.startDate)+'~'+util.date2String(result.endDate)
+	    	+'\nRooms: '+result.rooms.toString()
 	    	+'\nPayment: TBD'
 	};
 
@@ -36,7 +38,7 @@ ContactManager.sendComfirmMail=
 ContactManager.sendCancelMail=
 	function(email){
 	//SeqD CancelReservation Step 6(Send Cancel Mail)
-	var conn = require('nodemailer').createTransport("SMTP",connArg);
+	var conn = require('nodemailer').createTransport(connArg);
 
 	// TODO Write mail contents here
 	var mailOptions = {  
