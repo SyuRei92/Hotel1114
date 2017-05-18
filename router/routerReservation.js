@@ -13,6 +13,9 @@ router.get('/new',function(req,res){
 // 예약 실행
 //SeqD MakeReservation Step 07 Entrypoint
 router.get('/doReserve',function(req,res){
+	console.log("Routing Started");
+	console.log(req.query);
+	
 	reservationController.reserve(
 			new CustomerInfo(req.query.name,req.query.email,req.query.phone),
 			util.string2Date(req.query.startDate),
@@ -22,8 +25,10 @@ router.get('/doReserve',function(req,res){
 					Number(req.query.suiteRoom)),
 			'Hotel1114', function(result){
 					//SeqD MakeReservation Step 14(showForm) Exitpoint (Will be changed later to JSON Response)
+					console.log("Reserving Succeed");
 					res.redirect('/payment.html?id='+result.insertedId);},
 					function(responseCode){
+						console.log("Reserving Failed");
 						//SeqD MakeReservation Step 10
 						// TODO notify the code to the customer
 						console.log(responseCode);
@@ -66,8 +71,8 @@ router.get('/pay',function(req,res){
 //시작날짜에 해당하는 예약 목록
 router.get('/listOfDate',function(req,res){
 	reservationController.findReservationByStartDate(
-		req.startDate,
-		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));});
+		util.string2Date(req.query.startDate),
+		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents));});
 });
 
 // 예약 취소

@@ -66,7 +66,9 @@ reservationController.findReservationByAccount=function(cid,nextJob){
 
 //시작일로 찾기
 reservationController.findReservationByStartDate=function(startDate,nextJob){
-	dao.queryStartDate(startDate,function(documents){nextJob(documents);});
+	console.log(startDate);
+	dao.queryStartDate(startDate,function(documents){
+		console.log(documents);nextJob(documents);});
 };
 // 방 개수 가져오기
 //SeqD MakeReservation Step 02 arrives here
