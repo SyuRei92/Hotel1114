@@ -1,29 +1,40 @@
 function makeReservationTable(data) {
-	var index = 0;
-
+	var index = 1;
+	
+	for (i = 1; i < numRows; i++){
+		rsv_table.deleteRow(1);
+	}
+	
 	for (var reservation in data.result) {
-		index ++;
-
 		var rid = reservation.rid;
 		var startDate = reservation.startDate;
 		var endDate = reservation.endDate;
 		var numOfRooms = reservation.rooms;
 
-		// 표를 만드시면 될 듯 합니다.
 		// index, rid, startDate ~ endDate, numOfRooms
+		var newRow = rsv_table.insertRow();
+		var newCell1 = newRow.insertCell(0);
+		var newCell2 = newRow.insertCell(1);
+		var newCell3 = newRow.insertCell(2);
+		var newCell4 = newRow.insertCell(3);
+		newCell1.innerHTML = index++;
+		newCell2.innerHTML = rid;
+		newCell3.innerHTML = startDate + "~" + endDate;
+		newCell4.innerHTML = numOfRooms;
 	}
 }
 
 function queryDate(startDate) {
+	console.log(startDate);
   	$.getJSON(
   		'http://'+document.location.host+'/reservation/listOfDate' +
-  		'?startDate='+startDate.format('YYYY-MM-DD'),
-		makeReservationTable);
+  		'?startDate='+startDate, makeReservationTable);
 }
 
+var rsv_list = [];
+var rsv_table = document.getElementById("reservation");
+
 $(document).ready(function(){
-	var rsv_list = [];
-	var rsv_table = document.getElementById("reservation");
 	
 	// db에서 가지고 와야 함
 	rsv_list.push([27914, "2017-05-01", "2017-05-05", 3]);
@@ -33,31 +44,22 @@ $(document).ready(function(){
 	rsv_list.push([27918, "2017-05-05", "2017-05-09", 3]);
 	
 	function bindEvents(){
-		$(document).on("change", "#datefilter", function(){
-			showFilteredReservation($("#datefilter").val());
-		});
-	}
-	
-	function showFilteredReservation(date){
-		var numRows = rsv_table.rows.length;
-		for (i = 1; i < numRows; i++){
-			rsv_table.deleteRow(1);
-		}
-		var index = 1;
-		for (i = 0; i < rsv_list.length; i++){
-			if (rsv_list[i][1] <= date && rsv_list[i][2] >= date){
-				var newRow = rsv_table.insertRow();
-				var newCell1 = newRow.insertCell(0);
-				var newCell2 = newRow.insertCell(1);
-		    	var newCell3 = newRow.insertCell(2);
-		    	var newCell4 = newRow.insertCell(3);
-				newCell1.innerHTML = index++;
-				newCell2.innerHTML = rsv_list[i][0];
-				newCell3.innerHTML = rsv_list[i][1] + "~" + rsv_list[i][2];
-				newCell4.innerHTML = rsv_list[i][3];
-			}			
-		}
+		today = new Date();
+		dd = today.getDate();
+		mm = today.getMonth()+1;
+		yyyy = today.getFullYear();
 		
+		if (dd < 10) dd = '0'+dd;
+		if (mm < 10) mm = '0'+mm;
+		
+		//today = mm+'/'+dd+'/'+yyyy;
+		today = yyyy + '-' + mm + '-' + dd;
+		$("#datefilter").val(today);
+		queryDate(today);
+		
+		$(document).on("change", "#datefilter", function(){
+			queryDate($("#datefilter").val());
+		});
 	}
 	
 	bindEvents();
