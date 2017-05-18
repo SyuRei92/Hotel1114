@@ -22,8 +22,8 @@ function makeReservationTable(data) {
 		var newCell4 = newRow.insertCell(3);
 		newCell1.innerHTML = index++;
 		newCell2.innerHTML = rid;
-		newCell3.innerHTML = startDate + "~" + endDate;
-		newCell4.innerHTML = "sigle: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
+		newCell3.innerHTML = startDate.format('YYYY-MM-DD') + "~" + endDate.format('YYYY-MM-DD');
+		newCell4.innerHTML = "single: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
 	}
 }
 
