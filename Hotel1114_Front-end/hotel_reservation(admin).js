@@ -23,7 +23,7 @@ function makeReservationTable(data) {
 		newCell1.innerHTML = index++;
 		newCell2.innerHTML = rid;
 		newCell3.innerHTML = startDate + "~" + endDate;
-		newCell4.innerHTML = numOfRooms;
+		newCell4.innerHTML = "single: "+ numOfRooms.singleRoom + "\ndouble: "+ numOfRooms.doubleRoom + "\nsuite: "+ numOfRooms.suiteRoom;
 	}
 }
 
@@ -37,11 +37,11 @@ function queryDate(startDate) {
 $(document).ready(function(){
 	rsv_table = document.getElementById("reservation");
 	// db에서 가지고 와야 함
-	rsv_list.push([27914, "2017-05-01", "2017-05-05", 3]);
-	rsv_list.push([27915, "2017-05-02", "2017-05-06", 5]);
-	rsv_list.push([27916, "2017-05-03", "2017-05-07", 1]);
-	rsv_list.push([27917, "2017-05-04", "2017-05-08", 2]);
-	rsv_list.push([27918, "2017-05-05", "2017-05-09", 3]);
+	rsv_list.push([27914, "2017-05-01", "2017-05-05", "single: 3\n double: 0\n suite: 0"]);
+	rsv_list.push([27915, "2017-05-02", "2017-05-06", "single: 1\n double: 0\n suite: 0"]);
+	rsv_list.push([27916, "2017-05-03", "2017-05-07", "single: 1\n double: 2\n suite: 0"]);
+	rsv_list.push([27917, "2017-05-04", "2017-05-08", "single: 1\n double: 0\n suite: 2"]);
+	rsv_list.push([27918, "2017-05-05", "2017-05-09", "single: 0\n double: 0\n suite: 0"]);
 	
 	function bindEvents(){
 		today = new Date();
