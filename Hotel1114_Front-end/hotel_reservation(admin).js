@@ -1,7 +1,7 @@
 function makeReservationTable(data) {
 	alert(data.result);
 	var index = 1;
-	
+	var numRows = rsv_table.rows.length;
 	for (i = 1; i < numRows; i++){
 		alert(1);
 		rsv_table.deleteRow(i);
