@@ -32,6 +32,12 @@ class Reservation {
 		this.status=Reservation.statusList().notPaid;
 		this.validity=Reservation.validityList().valid;
 	}
+	calculatePrice(coupon){
+		// TODO Make check of coupon and price loading
+		var p=this.rooms.singleRoom*10.0+this.rooms.doubleRoom*15.0+this.rooms.suiteRoom*20.0;
+		if(coupon) p=p*0.8;
+		return p;
+	}
 	toString() {
 		return "Reservation ID: "+this.id+
 			"\nCustomer: "+this.customerInfo.toString()+
@@ -56,7 +62,7 @@ class Reservation {
 		return new Reservation(obj.cid,obj.timestamp,obj.startDate,obj.endDate,
 			Rooms.buildFromJson(obj.rooms),CustomerInfo.buildFromJson(obj.customerInfo),
 			obj.status,obj.validity,obj._id);
-	};
+	}
 	static buildFromJsonArray(obj){
 		for(var i in obj) obj[i]=this.buildFromJson(obj[i]);
 		return obj;

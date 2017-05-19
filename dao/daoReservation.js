@@ -32,7 +32,7 @@ module.exports=function(){
 	// Input: cid(customer ID), nextJob(function(Reservation[]))
 	reservationDao.queryStartDate=function(startDate,nextJob){
 		db.find({startDate:startDate}).toArray().then(
-				function(result){nextJob(Reservation.buildFromJsonArray(result));});
+				function(result){console.log(result);console.log();nextJob(Reservation.buildFromJsonArray(result));});
 	};
 	// 3. Update
 	// 3A. Update reservation information

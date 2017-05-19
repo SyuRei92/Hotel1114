@@ -11,10 +11,8 @@ router.get('/new',function(req,res){
 });
 
 // 예약 실행
-//SeqD MakeReservation Step 07 Entrypoint
+//SeqD MakeReservation Step 09 Entrypoint
 router.get('/doReserve',function(req,res){
-	console.log("Routing Started");
-	console.log(req.query);
 	
 	reservationController.reserve(
 			new CustomerInfo(req.query.name,req.query.email,req.query.phone),
@@ -24,12 +22,12 @@ router.get('/doReserve',function(req,res){
 					Number(req.query.doubleRoom),
 					Number(req.query.suiteRoom)),
 			'Hotel1114', function(result){
-					//SeqD MakeReservation Step 14(showForm) Exitpoint (Will be changed later to JSON Response)
+					//SeqD MakeReservation Step 17(showPaymentForm) Exitpoint (Will be changed later to JSON Response)
 					console.log("Reserving Succeed");
 					res.redirect('/payment.html?id='+result.insertedId);},
 					function(responseCode){
 						console.log("Reserving Failed");
-						//SeqD MakeReservation Step 10
+						//SeqD MakeReservation Step 10 and 13
 						// TODO notify the code to the customer
 						console.log(responseCode);
 					});
@@ -42,26 +40,27 @@ router.get('/list',function(req,res){
 });
 
 //예약 기간에 대한 방 개수
-//SeqD MakeReservation Step 02 Entrypoint
+//SeqD MakeReservation Step 04 Entrypoint
 router.get('/available',function(req,res){
-	//SeqD MakeReservation Step 02
+	//SeqD MakeReservation Step 04
 	var d=reservationController.availableRooms(util.string2Date(req.query.startDate),
 			util.string2Date(req.query.endDate),'Hotel1114',
 		function(documents){
 			
 			if(!documents.isValid()){ // opt RoomCheck
 				// 사용 가능한 방이 없는 경우
-				//SeqD MakeReservation Step 05(No Available Rooms) Exitpoint
+				//SeqD MakeReservation Step 07(No Available Rooms) Exitpoint
 				res.json(util.buildResponse(util.responseCode.NO_ROOM,null));
 				return;
 			}
-			//SeqD MakeReservation Step 06(Show Available Rooms) Exitpoint
+			//SeqD MakeReservation Step 08(Show Available Rooms) Exitpoint
 			res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));
 			//res.render('remainingRooms.html',{result:documents});
 		});
 });
 
 // 결졔
+//SeqD MakeReservation Step 18 Entrypoint
 router.get('/pay',function(req,res){
 	reservationController.pay(req.query.id,null,
 			function(documents){res.redirect('/')}); // json 형식으로 뿌리도록 나중에 바꿔야 함
@@ -72,7 +71,7 @@ router.get('/pay',function(req,res){
 router.get('/listOfDate',function(req,res){
 	reservationController.findReservationByStartDate(
 		util.string2Date(req.query.startDate),
-		function(documents){res.json(util.buildResponse(util.responseCode.SUCCESS,documents));});
+		function(documents){console.log("type");console.log(util.buildResponse(util.responseCode.SUCCESS,documents));res.json(util.buildResponse(util.responseCode.SUCCESS,documents));});
 });
 
 // 예약 취소
