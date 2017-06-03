@@ -32,7 +32,6 @@ function queryDate(startDate, endDate) {
 function calculateRoom(room, guest) {
 	var single, double, suite;
 	
-	
 }
 
 $(document).ready(function () {

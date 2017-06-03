@@ -6,89 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- import CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link href="./hotel_reservation.css" rel="stylesheet" />
+		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
-    <link href="./hotel_reservation.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
   </head>
   <body>
-    <div class="header">
-      <h1> Hotel 1114 </h1>
-      <hr>
+    <div class="mui-appbar">
+      <div class="mui--text-display3"> Hotel 1114 </div>
+			<div class="mui-dropdown">
+				<button class="mui-btn mui-btn" data-mui-toggle="dropdown">
+					MENU
+					<span class="mui-caret"></span>
+				</button>
+				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
+					<li><a href="#"> Make new reservation </a></li>
+					<li><a href="#"> Check reservation </a></li>
+				</ul>
+			</div>
     </div>
-    <div class="container">
-      <h2> Make Reservation </h2>
-			<div class="row">
-				<div class="col-sm-6">
+		
+    <div class="mui-container">
+      <div class="mui--text-display1"> Make New Reservation </div>
+			<div class="mui-row">
+				<div class="mui-panel mui-col-md-5" style="height=383px;">
 					<!-- date range picker -->
 					<input type="hidden" name="daterange" value="" />
 				</div>
-				<div class="col-sm-6">
-					<div class="row">
-						<div class="col-sm-4">
-							<label for="room-number"> Rooms </label>
-							<input class="input-box box-small" name="room-number" type="number" value="0" min="0" max="100">
-						</div>
-						<div class="col-sm-4">
+				<div class="mui-panel mui-col-md-5" style="height=383px;">
+					<div class="mui-row">
+						<div class="mui-textfield mui-col-md-4">
 							<label for="guest-number"> Guests </label>	
 							<input class="input-box box-small" name="guest-number" type="number" value="0" min="0" max="100">
 						</div>
+						<div class="mui-radio mui-col-md-8">
+							<label class="mui-col-md-3">
+								<input type="radio" name="select" id="select_single" value="single">
+								Single
+							</label>
+							<label class="mui-col-md-3">
+								<input type="radio" name="select" id="select_double" value="double">
+								Double
+							</label>
+							<label class="mui-col-md-3">
+								<input type="radio" name="select" id="select_suite" value="suite">
+								Suite
+							</label>
+							<label class="mui-col-md-3">
+								<input type="radio" name="select" id="select_custom" value="custom">
+								Custom
+							</label>
+						</div>
 					</div>
-					<div class="row">
-						<input type="radio" name="filter" value="type1" checked> type 1
-						<input type="radio" name="filter" value="type2"> type 2
-						<input type="radio" name="filter" value="type3"> type 3
-						<input type="radio" name="filter" value="type4"> add your type
-					</div>
-	<!--
-						<table id="room">
-							<tr id="single">
-								<td class="room_type"> Single </td>
-								<td class="remain_room"> Remain: 0 </td>
-								<td class="room-number"> <input name="singleRoom" type="number" value="0" min="0" max="100"> </td>
-							</tr>
-							<tr id="double">
-								<td class="room_type"> Double </td>
-								<td class="remain_room"> Remain: 0 </td>
-								<td class="room-number"> <input name="doubleRoom" type="number" value="0" min="0" max="100"> </td>
-								<td id="total_price"> Total: $0</td>
-							</tr>
-							<tr id="suite">
-								<td class="room_type"> Suite </td>
-								<td class="remain_room"> Remain: 0 </td>
-								<td class="room-number"> <input name="suiteRoom" type="number" value="0" min="0" max="100"> </td>
-							</tr>
-						</table>
-	-->
-					<form action="/reservation/doReserve">
-						<input type="hidden" name="startDate" value="test" required/>
-						<input type="hidden" name="endDate" value="test" required/>
-						<input type="hidden" name="singleRoom" value="0" min="0" max="100" required>
-						<input type="hidden" name="doubleRoom" value="0" min="0" max="100" required>
-						<input type="hidden" name="suiteRoom" value="0" min="0" max="100" required>
-
-						<table class="personal-info">
-							<tr>
-								<td> <label for="name"> Name </label> </td>
-								<td> <input class="input-box box-long" id="name" name="name" type="text" value="" required> </td>
-							</tr>
-							<tr>
-								<td> <label for="email"> E-Mail </label> </td>
-								<td><input class="input-box box-long" id="email" name="email" type="email" value="" required> </td>
-							</tr>
-							<tr>
-								<td> <label for="phoneNumber"> Phone Number </label> </td>
-								<td> <input class="input-box box-long" id="phone" name="phoneNumber" type="text" value=""> </td>
-							</tr>
-						</table>
-						<input id="reserve_confirm" type="submit" value="Confirm">
-						</form>
-					</div>
+					<form class="mui-form" action="/reservation/doReserve" style="width: 100%;">
+						<input type="hidden" name="startDate" value="test" required >
+						<input type="hidden" name="endDate" value="test" required >
+						<input type="hidden" name="singleRoom" value="0" min="0" max="100" required >
+						<input type="hidden" name="doubleRoom" value="0" min="0" max="100" required >
+						<input type="hidden" name="suiteRoom" value="0" min="0" max="100" required >
+						<div class="mui-textfield mui-col-md-8">
+							<label for="name"> Name </label>
+							<input name="name" type="text" value="" required>
+						</div>
+						<div class="mui-textfield mui-col-md-8">
+							<label for="email"> E-Mail </label>
+							<input name="email" type="email" value="" required>
+						</div>
+						<div class="mui-textfield mui-col-md-8">
+							<label> Phone </label>
+							<input name="phoneNumber" type="text" value="">
+						</div>
+						<input class="mui-btn mui-btn--raised mui-btn--primary" id="reserve_confirm" type="submit" value="Confirm">
+					</form>
+				</div>
 			</div>
 		</div>
 		<!-- import javascript -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
     <script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
     <script src="./hotel_reservation.js"></script>
 	</body>

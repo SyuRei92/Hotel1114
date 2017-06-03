@@ -98,19 +98,13 @@
             options.template = '<div class="daterangepicker dropdown-menu">' +
                 '<div class="calendar left">' +
                     '<div class="daterangepicker_input row">' +
-                      '<div class="col-sm-4">' +
-                        '<label for="input-mini form-control"> Check-in </label>' + 
-                        '<input class="input-mini form-control" type="text" name="daterangepicker_start" value="" />' +
+                      '<div class="col-sm-6 mui-textfield">' +
+                        '<label> Check-in </label>' + 
+                        '<input type="text" name="daterangepicker_start" value="" />' +
                       '</div>' +
-                      '<div class="col-sm-4">' +
-                        '<label for="input-mini form-control"> Check-out </label>' +
-                        '<input class="input-mini form-control" type="text" name="daterangepicker_end" value="" />' +
-                      '</div>' +
-                      '<div class="calendar-time">' +
-                        '<div></div>' +
-                        '<i class="fa fa-clock-o glyphicon glyphicon-time"></i>' +
-                        '<div></div>' +
-                        '<i class="fa fa-clock-o glyphicon glyphicon-time"></i>' +
+                      '<div class="col-sm-6 mui-textfield">' +
+                        '<label> Check-out </label>' +
+                        '<input type="text" name="daterangepicker_end" value="" />' +
                       '</div>' +
                     '</div>' +
                     '<div class="calendar-table"></div>' +

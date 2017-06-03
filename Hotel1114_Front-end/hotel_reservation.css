@@ -1,61 +1,43 @@
 html {
   font-family: 'Hind', sans-serif;
 }
-h1 {
+.mui--text-display3 {
   margin: 0 auto;
   font-family: 'Barrio', cursive;
   font-size: 400%;
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	display: inline;
 }
-h2 {
+.mui--text-display1 {
   font-weight: bold;
+	margin-bottom: 10px;
 }
-
-hr {
-  border-width: 1px;
-  border-color: black;
-  color: black;
-  margin 0 0;
+.mui-dropdown {
+	display: inline;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	float: right;
+	vertical-align: middle;
 }
-label {
-	font-size: 17px;
+.mui-appbar {
+	margin 0 0 20px 0;
 }
-
-form {
-	width: 0px;
-	height: 0px;
-}
-.header {
-  position: fixed;
-  width: 100%;
-  height: auto;
-  top: 0;
-  z-index: 100;
-  background-color: white;
-}
-
-.container {
-  margin: 102px auto auto auto;
-  width: 80%;
-	min-width: 600px;
-/*	height: 1000px;*/
+.mui-container {
+	margin-top: 20px;
 }
 
 .room_type {
   font-weight: bold;
 }
-
-.date, .room-info {
-	display: inline;
-	vertical-align: middle;
-/*	width: 120px;*/
+.mui-panel {
+	margin: 3px;
+	height: 385px;
 }
 
-.numbers {
-	display: inline;
-	vertical-align: middle;
-	width: 100%;
-}
-
+/*
 .input-box {
 	border: 1px solid #ccc;
 	border-radius: 4px;
@@ -76,6 +58,7 @@ form {
 .box-small {
 	width: 50px;
 }
+*/
 
 #room {
   margin: 0 0 0 30px;
@@ -83,6 +66,13 @@ form {
 
 #total_price {
   padding: 0 30px;
+}
+
+#reserve_confirm {
+	width: 250px;
+	height: 70px;
+	font-size: 25pt;
+	float: right;
 }
 
 .remain_room {
@@ -96,7 +86,6 @@ form {
 .calendar {
 	width: 100%;
 }
-.calendar-table {
-	
+.daterangepicker_input {
+	height: 50px;
 }
-
