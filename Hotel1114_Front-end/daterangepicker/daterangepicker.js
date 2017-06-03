@@ -97,12 +97,12 @@
         if (typeof options.template !== 'string' && !(options.template instanceof $))
             options.template = '<div class="daterangepicker dropdown-menu">' +
                 '<div class="calendar left">' +
-                    '<div class="daterangepicker_input">' +
-                      '<div class="col-md-6">' +
+                    '<div class="daterangepicker_input row">' +
+                      '<div class="col-sm-4">' +
                         '<label for="input-mini form-control"> Check-in </label>' + 
                         '<input class="input-mini form-control" type="text" name="daterangepicker_start" value="" />' +
                       '</div>' +
-                      '<div class="col-md-6">' +
+                      '<div class="col-sm-4">' +
                         '<label for="input-mini form-control"> Check-out </label>' +
                         '<input class="input-mini form-control" type="text" name="daterangepicker_end" value="" />' +
                       '</div>' +
@@ -114,12 +114,6 @@
                       '</div>' +
                     '</div>' +
                     '<div class="calendar-table"></div>' +
-                '</div>' +
-                '<div class="ranges">' +
-                    '<div class="range_inputs">' +
-                        '<button class="applyBtn" disabled="disabled" type="button"></button> ' +
-                        '<button class="cancelBtn" type="button"></button>' +
-                    '</div>' +
                 '</div>' +
             '</div>';
 

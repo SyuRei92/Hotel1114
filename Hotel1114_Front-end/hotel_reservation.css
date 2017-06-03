@@ -20,6 +20,10 @@ label {
 	font-size: 17px;
 }
 
+form {
+	width: 0px;
+	height: 0px;
+}
 .header {
   position: fixed;
   width: 100%;
@@ -29,24 +33,21 @@ label {
   background-color: white;
 }
 
-.center-div {
+.container {
   margin: 102px auto auto auto;
-  width: 800px;
-	height: 1000px;
+  width: 80%;
+	min-width: 600px;
+/*	height: 1000px;*/
 }
 
 .room_type {
   font-weight: bold;
 }
 
-.date {
-	display: inline-block;
+.date, .room-info {
+	display: inline;
 	vertical-align: middle;
-	width: 120px;
-}
-
-.info-right {
-	margin-bottom: 20px;
+/*	width: 120px;*/
 }
 
 .numbers {
@@ -89,8 +90,13 @@ label {
   font-size: 13px;
   color: gray;
 }
-
 .room-type, .personal-info {
 	margin-top: 20px;
+}
+.calendar {
+	width: 100%;
+}
+.calendar-table {
+	
 }
 

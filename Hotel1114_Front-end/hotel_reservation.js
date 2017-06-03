@@ -26,6 +26,15 @@ function queryDate(startDate, endDate) {
 						setRemainingRoom);
 }
 
+// return the list of set of room type and number
+// input: room-number of room, guest-number of guest
+// list of [single: num, double: num, suite, num]
+function calculateRoom(room, guest) {
+	var single, double, suite;
+	
+	
+}
+
 $(document).ready(function () {
   var totalPrice = 0;
 	
@@ -45,6 +54,10 @@ $(document).ready(function () {
 	$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
 		var start = picker.startDate;
 		var end = picker.endDate;
+		
+		$('input[name="startDate"]').val(start.format("YYYY-MM-DD"));
+		$('input[name="endDate"]').val(end.format("YYYY-MM-DD"));
+
 		queryDate(start,end);
 	});
 	
@@ -70,7 +83,9 @@ $(document).ready(function () {
     changePrice();
   });
   
-  //setRemainingRoom();
-  queryDate(moment(),moment().add('days', 1));
+	// initialization
+	$('input[name="startDate"]').val(moment().format("YYYY-MM-DD"));
+	$('input[name="endDate"]').val(moment().add('days', 1).format("YYYY-MM-DD"));
+  queryDate(moment(), moment().add('days', 1));
   bindEvents();
 });
