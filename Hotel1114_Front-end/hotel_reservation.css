@@ -16,11 +16,8 @@ hr {
   color: black;
   margin 0 0;
 }
-
-.date {
-  font-size: 18px;
-  width: 40%;
-  height: auto;
+label {
+	font-size: 17px;
 }
 
 .header {
@@ -34,11 +31,49 @@ hr {
 
 .center-div {
   margin: 102px auto auto auto;
-  width: 600px;
+  width: 800px;
+	height: 1000px;
 }
 
 .room_type {
   font-weight: bold;
+}
+
+.date {
+	display: inline-block;
+	vertical-align: middle;
+	width: 120px;
+}
+
+.info-right {
+	margin-bottom: 20px;
+}
+
+.numbers {
+	display: inline;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.input-box {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #555;
+	height: 30px;
+	line-height: 30px;
+	display: inline;
+	vertical-align: middle;
+	margin: 0 15px 3px 5px;
+	padding: 0 0px 0 10px;
+}
+.box-small {
+	width: 150px;
+}
+.box-middle {
+	width: 100px;
+}
+.box-small {
+	width: 50px;
 }
 
 #room {
@@ -55,6 +90,7 @@ hr {
   color: gray;
 }
 
-.info-title {
-  padding: 3px;
+.room-type, .personal-info {
+	margin-top: 20px;
 }
+

@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Include Required Prerequisites -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-
-    <!-- Include Date Range Picker -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	<head>
+		<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- import CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
     <link href="./hotel_reservation.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
-    
-    <!-- import javascript files -->
-    <script src="./jquery-3.2.1.min.js"></script>
-    <script src="./hotel_reservation.js"></script>
-    <script src="date-range-picker/daterangepicker.js"></script>
   </head>
   <body>
     <div class="header">
@@ -25,66 +17,75 @@
     </div>
     <div class="center-div">
       <h2> Make Reservation </h2>
-      <div>
-        <h3> Check in/out Date </h3>
+      <div class="col-md-6">
         <!-- date range picker -->
-        <input class="date" type="text" name="daterange" value="05/16/2017 - 05/17/2017" />
-        <script type="text/javascript">
-          $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                startDate: moment(),
-                endDate: moment().add('days', 1)
-            }, function(start,end){
-           		queryDate(start,end);
-            });
-            
-          });
-        </script>
+        <input type="hidden" name="daterange" value="05/16/2017 - 05/17/2017" />
       </div>
-
-	<form action="/reservation/doReserve">
-        <input type="hidden" name="startDate"/>
-        <input type="hidden" name="endDate"/>
-      <div>
-        <h3> Rooms </h3>
-        <table id="room">
-          <tr id="single">
-            <td class="room_type"> Single </td>
-            <td class="remain_room"> Remain: 0 </td>
-            <td class="room-number"> <input name="singleRoom" type="number" value="0" min="0" max="100"> </td>
-          </tr>
-          <tr id="double">
-            <td class="room_type"> Double </td>
-            <td class="remain_room"> Remain: 0 </td>
-            <td class="room-number"> <input name="doubleRoom" type="number" value="0" min="0" max="100"> </td>
-            <td id="total_price"> Total: $0</td>
-          </tr>
-          <tr id="suite">
-            <td class="room_type"> Suite </td>
-            <td class="remain_room"> Remain: 0 </td>
-            <td class="room-number"> <input name="suiteRoom" type="number" value="0" min="0" max="100"> </td>
-          </tr>
-        </table>
-      </div>
-      <div class="info">
-        <h3> Personal Information </h3>
-        <table>
-          <tr>
-            <td class="info-title"> Name </td>
-            <td> <input id="name" name="name" type="text" value=""> </td>
-          </tr>
-          <tr>
-            <td class="info-title"> E-Mail </td>
-            <td> <input id="email" name="email" type="email" value=""> </td>
-          </tr>
-          <tr>
-            <td class="info-title"> Phone </td>
-            <td> <input id="phone" name="phone" type="text" value=""> </td>
-          </tr>
-        </table>
-      </div>
-      <input id="reserve_confirm" type="submit" value="Confirm">
-      </form>
-    </div>
-  </body>
+			<div class="col-md-6 info-right">
+				<div class="col-md-6">
+					<label for="room-number"> Rooms </label>
+					<input class="input-box box-small" name="room-number" type="number" value="0" min="0" max="100">
+				</div>
+				<div class="col-md-6">
+					<label for="guest-number"> Guests </label>	
+					<input class="input-box box-small" name="guest-number" type="number" value="0" min="0" max="100">
+				</div>
+				<div class="room-type">
+					<input type="radio" name="filter" value="type1" checked> type 1
+					<input type="radio" name="filter" value="type2"> type 2
+					<input type="radio" name="filter" value="type3"> type 3
+					<input type="radio" name="filter" value="type4"> add your type
+				</div>
+<!--
+					<table id="room">
+						<tr id="single">
+							<td class="room_type"> Single </td>
+							<td class="remain_room"> Remain: 0 </td>
+							<td class="room-number"> <input name="singleRoom" type="number" value="0" min="0" max="100"> </td>
+						</tr>
+						<tr id="double">
+							<td class="room_type"> Double </td>
+							<td class="remain_room"> Remain: 0 </td>
+							<td class="room-number"> <input name="doubleRoom" type="number" value="0" min="0" max="100"> </td>
+							<td id="total_price"> Total: $0</td>
+						</tr>
+						<tr id="suite">
+							<td class="room_type"> Suite </td>
+							<td class="remain_room"> Remain: 0 </td>
+							<td class="room-number"> <input name="suiteRoom" type="number" value="0" min="0" max="100"> </td>
+						</tr>
+					</table>
+-->
+				<form action="/reservation/doReserve">
+					<input type="hidden" name="startDate"/>
+					<input type="hidden" name="endDate"/>
+					<input type="hidden" name="singleRoom" value="0" min="0" max="100">
+					<input type="hidden" name="doubleRoom" value="0" min="0" max="100">
+					<input type="hidden" name="suiteRoom" value="0" min="0" max="100">
+					
+					<table class="personal-info">
+						<tr>
+							<td> <label for="name"> Name </label> </td>
+							<td> <input class="input-box box-long" id="name" name="name" type="text" value=""> </td>
+						</tr>
+						<tr>
+							<td> <label for="email"> E-Mail </label> </td>
+							<td><input class="input-box box-long" id="email" name="email" type="email" value=""> </td>
+						</tr>
+						<tr>
+							<td> <label for="phone"> Phone Number </label> </td>
+							<td> <input class="input-box box-long" id="phone" name="phone" type="text" value=""> </td>
+						</tr>
+					</table>
+					<input id="reserve_confirm" type="submit" value="Confirm">
+					</form>
+				</div>
+		</div>
+		<!-- import javascript -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
+    <script src="./hotel_reservation.js"></script>
+	</body>
 </html>
