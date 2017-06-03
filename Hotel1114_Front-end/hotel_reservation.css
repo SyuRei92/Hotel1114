@@ -10,6 +10,7 @@ html {
 	left: 10px;
 	display: inline;
 }
+
 .mui--text-display1 {
   font-weight: bold;
 	margin-bottom: 10px;
@@ -29,36 +30,11 @@ html {
 	margin-top: 20px;
 }
 
+
 .room_type {
   font-weight: bold;
 }
-.mui-panel {
-	margin: 3px;
-	height: 385px;
-}
 
-/*
-.input-box {
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	color: #555;
-	height: 30px;
-	line-height: 30px;
-	display: inline;
-	vertical-align: middle;
-	margin: 0 15px 3px 5px;
-	padding: 0 0px 0 10px;
-}
-.box-small {
-	width: 150px;
-}
-.box-middle {
-	width: 100px;
-}
-.box-small {
-	width: 50px;
-}
-*/
 
 #room {
   margin: 0 0 0 30px;
