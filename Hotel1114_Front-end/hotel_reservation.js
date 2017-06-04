@@ -132,7 +132,7 @@ $(document).ready(function () {
 			}
 			
 			if (single_flag == true && double_flag == true && suite_flag == true) {
-					custom_class = "mui--is-active"
+					custom_class = "mui--is-active";
 			}
 			
 			new_tab = `
@@ -160,7 +160,15 @@ $(document).ready(function () {
 					</div>
 				</div>`;
 			$("#room_number").append(new_tab);
-//			$('li.mui--is-active').append("<div id='selected'> Selected </div>");
+			
+			// make sold out text to red
+			$(".sold-out").children().css("color", "#FF0800");
+			$(".sold-out").children().css("font-weight", "700");
+			
+			// clear old room number value
+			$('input[name="singleRoom"]').val("0");
+			$('input[name="doubleRoom"]').val("0");
+			$('input[name="suiteRoom"]').val("0");
 			
 			// store the room number to input in form tag
 			if (single_class == "mui--is-active") {
@@ -177,20 +185,29 @@ $(document).ready(function () {
 			console.log($('input[name="suiteRoom"]').val());
 			
 			function setRoom (ev) {
-//				$("#selected").remove();
-//				$('li.mui--is-active').append("<div id='selected'> Selected </div>");
 				// make not click sold out tab.
 				if ($(`[data-mui-controls=${ev.paneId}]`).parent().attr("class") == "sold-out mui--is-active") {
-					$(`[data-mui-controls=${ev.paneId}]`).css("color", "#FF0800");
-					$(`[data-mui-controls=${ev.paneId}]`).css("font-weight", "700");
-					$(".mui-tabs__bar").after(`<div id="warning" style="display:none;color:#FF0800;"> The ${ev.paneId} rooms are sold out! Please, select other rooms </div>`);
-					$("#warning").fadeIn(1000);
-					$("#warning").fadeOut(2000);
+					// add warning when there is no other warning messages
+					console.log($("div#warning").attr("id"));
+					if (typeof $("div#warning").attr("id") == "undefined") {
+						$(".mui-tabs__bar").before('<div id="warning" style="color: #FF0800; text-align: center; font-weight: 700; font-size: 15px; line-height: 15px; height: 0px;"> Please, select other rooms! </div>');
+						$("#warning").animate({
+							height: "15px"
+						}, 300).delay(500).animate({
+							height: "0px"
+						}, 500, function () {
+							// clear all warnings
+							$("div#warning").remove();
+						});
+					}
 					mui.tabs.activate(ev.relatedPaneId);
+					return;
+						
 				}
 				$('input[name="singleRoom"]').val("0");
 				$('input[name="doubleRoom"]').val("0");
 				$('input[name="suiteRoom"]').val("0");
+				
 				if (ev.paneId != "custom") {
 					$(`input[name="${ev.paneId}Room"]`).val($(`[data-mui-controls=${ev.paneId}]`).data('room'));
 				}
