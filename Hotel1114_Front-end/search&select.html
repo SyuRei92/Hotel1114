@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+ 	<head>
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!-- import CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link href="./hotel_reservation.css" rel="stylesheet" />
+		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+    	<link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
+    	<link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
+		<link href="./search_reservation.css" rel="stylesheet" />
+		
+    	<!-- import javascript files -->
+		 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script src="https://cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+		<script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
+    	<script src="./jquery-3.2.1.min.js"></script>
+    	<script src="./search_reservation.js"></script>
+  	</head>
+  	<body>
+		<div class="mui-appbar">
+			<div class="mui--text-display3" href="search&select.html">Hotel 1114</div>
+			<div class="mui-dropdown">
+				<button class="mui-btn mui-btn" data-mui-toggle="dropdown">
+					MENU
+					<span class="mui-caret"></span>
+				</button>
+				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
+					<li><a href="mainpage.html"> Make new reservation </a></li>
+					<li><a href="search&select.html"> Check reservation </a></li>
+				</ul>
+			</div>
+		</div>
+		
+	  	<div class="mui-container">
+			<div class="mui--text-display1"> Search a Reservation </div>
+			<form class="mui-form--inline" action="/reservation/searchReservation" align="center">
+				<div class="mui-textfield">
+					<input class="mui-textfield mui-col-md-8" type="text" name="condition" placeholder="예약번호/이름/이메일/전화번호" id="cond">
+				</div>
+				<input class="mui-btn mui-btn--raised mui-btn--primary" type="button" value="Search" id="search">
+			</form>
+			</br>
+			<div class="mui-panel" width=700px>
+				<table class="mui-table mui-table--bordered" id="reservations">
+					<thead>
+						<th width=160px>Reservation Number</td>
+						<th width=60px>Name</td>
+						<th width=180px>E-mail address</td>
+						<th width=110px>Phone number</td>
+						<th width=100px></td>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan="5" align="center">No results found.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+  	</body>
+</html>
