@@ -51,11 +51,13 @@ html {
 	float: right;
 }
 
+/*
 .remain_room {
   padding: 2px;
   font-size: 13px;
   color: gray;
 }
+*/
 .room-type, .personal-info {
 	margin-top: 20px;
 }

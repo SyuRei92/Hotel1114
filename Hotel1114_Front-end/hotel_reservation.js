@@ -1,5 +1,5 @@
 var single_limit = 100, double_limit = 100, suite_limit = 100;
-var toggleEls = document.querySelectorAll('[data-mui-controls^="pane-events-"]');
+var toggleEls = [];
 
 function setRemainingRoom(data) {
 	if (data.responseCode !== 0) { // No available rooms
@@ -63,11 +63,31 @@ $(document).ready(function () {
 	});
 	
   function bindEvents() {
-    // click payment confirm button
-    $(document).on("click", "#payment_confirm", function () {
-      alert("Success!");
-      location.href = "./mainpage.html";
-    });
+//    // click payment confirm button
+//    $(document).on("click", "#payment_confirm", function () {
+//      alert("Success!");
+//      location.href = "./mainpage.html";
+//    });
+		//for debug
+		$('input[name="singleRoom"]').bind('input', function() {
+			console.log("========");
+			console.log($('input[name="singleRoom"]').val());
+			console.log($('input[name="doubleRoom"]').val());
+			console.log($('input[name="suiteRoom"]').val());
+
+		});
+		$('input[name="doubleRoom"]').bind('input', function() {
+			console.log("========");
+			console.log($('input[name="singleRoom"]').val());
+			console.log($('input[name="doubleRoom"]').val());
+			console.log($('input[name="suiteRoom"]').val());
+		});
+		$('input[name="suiteRoom"]').bind('input', function() {
+			console.log("========");
+			console.log($('input[name="singleRoom"]').val());
+			console.log($('input[name="doubleRoom"]').val());
+			console.log($('input[name="suiteRoom"]').val());
+		});
 		
 		// enters guest number
 		$('input[name="guest-number"]').bind('input', function () {
@@ -85,6 +105,7 @@ $(document).ready(function () {
 			if (single > single_limit) {
 				single_flag = true;
 				single_result = "Sold Out";
+				single_class = "sold-out";
 			} else {
 				single_class = "mui--is-active";
 				single_result = String(single) + " Single";
@@ -92,6 +113,7 @@ $(document).ready(function () {
 			if (double > double_limit) {
 				double_flag = true;
 				double_result = "Sold Out";
+				double_class = "sold-out";
 			} else {
 				if (single_flag == true) {
 					double_class = "mui--is-active";
@@ -101,6 +123,7 @@ $(document).ready(function () {
 			if (suite > suite_limit) {
 				suite_flag = true;
 				suite_result = "Sold Out";
+				suite_class = "sold-out";
 			} else {
 				if (single_flag == true && double_flag == true) {
 					suite_class = "mui--is-active";
@@ -114,15 +137,15 @@ $(document).ready(function () {
 			
 			new_tab = `
 				<ul class="mui-tabs__bar mui-tabs__bar--justified">
-					<li class="${single_class}"><a id="single" data-mui-toggle="tab" data-mui-controls="pane-events-1" data-room="${single}"> ${single_result} </a></li>
-					<li class="${double_class}"><a id="double" data-mui-toggle="tab" data-mui-controls="pane-events-2" data-room="${double}"> ${double_result} </a></li>
-					<li class="${suite_class}"><a id="suite" data-mui-toggle="tab" data-mui-controls="pane-events-3" data-room="${suite}"> ${suite_result} </a></li>
-					<li class="${custom_class}"><a data-mui-toggle="tab" data-mui-controls="pane-events-4"> Custom </a></li>
+					<li class="${single_class}"><a data-mui-toggle="tab" data-mui-controls="single" data-room="${single}"> ${single_result} </a></li>
+					<li class="${double_class}"><a data-mui-toggle="tab" data-mui-controls="double" data-room="${double}"> ${double_result} </a></li>
+					<li class="${suite_class}"><a data-mui-toggle="tab" data-mui-controls="suite" data-room="${suite}"> ${suite_result} </a></li>
+					<li class="${custom_class}"><a data-mui-toggle="tab" data-mui-controls="custom"> Custom </a></li>
 				</ul>
-				<div class="mui-tabs__pane ${single_class}" id="pane-events-1"></div>
-				<div class="mui-tabs__pane ${double_class}" id="pane-events-2"></div>
-				<div class="mui-tabs__pane ${suite_class}" id="pane-events-3"></div>
-				<div class="mui-tabs__pane ${custom_class}" id="pane-events-4">
+				<div class="mui-tabs__pane ${single_class}" id="single"></div>
+				<div class="mui-tabs__pane ${double_class}" id="double"></div>
+				<div class="mui-tabs__pane ${suite_class}" id="suite"></div>
+				<div class="mui-tabs__pane ${custom_class}" id="custom">
 					<div class="mui-textfield mui-col-md-4">
 						<label> Single Room </label>
 						<input id="custom_single" type="number" min="0" max="${single_limit}" value="0">
@@ -137,6 +160,9 @@ $(document).ready(function () {
 					</div>
 				</div>`;
 			$("#room_number").append(new_tab);
+//			$('li.mui--is-active').append("<div id='selected'> Selected </div>");
+			
+			// store the room number to input in form tag
 			if (single_class == "mui--is-active") {
 				$('input[name="singleRoom"]').val(single);
 			} else if (double_class == "mui--is-active") {
@@ -144,37 +170,51 @@ $(document).ready(function () {
 			} else if (suite_class == "mui--is-active"){
 				$('input[name="suiteRoom"]').val(suite);
 			}
-			// get toggle elements
-			var toggleEls = document.querySelectorAll('[data-mui-controls^="pane-events-"]');
+			
+			console.log("========");
+			console.log($('input[name="singleRoom"]').val());
+			console.log($('input[name="doubleRoom"]').val());
+			console.log($('input[name="suiteRoom"]').val());
+			
 			function setRoom (ev) {
-				if (ev.paneId == "pane-events-1") {
-					$('input[name="singleRoom"]').val($("#single").data('room'));
-					$('input[name="doubleRoom"]').val("0");
-					$('input[name="suiteRoom"]').val("0");
-				} else if (ev.paneId == "pane-events-2") {
-					$('input[name="singleRoom"]').val("0");
-					$('input[name="doubleRoom"]').val($("#double").data('room'));
-					$('input[name="suiteRoom"]').val("0");
-				} else if (ev.paneId == "pane-events-3") {
-					$('input[name="singleRoom"]').val("0");
-					$('input[name="doubleRoom"]').val("0");
-					$('input[name="suiteRoom"]').val($("#suite").data('room'));
-				} else if (ev.paneId == "pane-events-4") {
-					$('input[name="singleRoom"]').val("0");
-					$('input[name="doubleRoom"]').val("0");
-					$('input[name="suiteRoom"]').val("0");
+//				$("#selected").remove();
+//				$('li.mui--is-active').append("<div id='selected'> Selected </div>");
+				// make not click sold out tab.
+				if ($(`[data-mui-controls=${ev.paneId}]`).parent().attr("class") == "sold-out mui--is-active") {
+					$(`[data-mui-controls=${ev.paneId}]`).css("color", "#FF0800");
+					$(`[data-mui-controls=${ev.paneId}]`).css("font-weight", "700");
+					mui.tabs.activate(ev.relatedPaneId);
 				}
+				$('input[name="singleRoom"]').val("0");
+				$('input[name="doubleRoom"]').val("0");
+				$('input[name="suiteRoom"]').val("0");
+				if (ev.paneId != "custom") {
+					$(`input[name="${ev.paneId}Room"]`).val($(`[data-mui-controls=${ev.paneId}]`).data('room'));
+				}
+				console.log("========");
+				console.log($('input[name="singleRoom"]').val());
+				console.log($('input[name="doubleRoom"]').val());
+				console.log($('input[name="suiteRoom"]').val());
 			}
-
+			// get toggle elements
+			var toggleEls = [];
+			toggleEls.push(document.querySelector('[data-mui-controls="single"]'));
+			toggleEls.push(document.querySelector('[data-mui-controls="double"]'));
+			toggleEls.push(document.querySelector('[data-mui-controls="suite"]'));
+			toggleEls.push(document.querySelector('[data-mui-controls="custom"]'));
 			// attach event handlers
 			for (var i=0; i < toggleEls.length; i++) {
-				toggleEls[i].addEventListener('mui.tabs.showstart', setRoom);
+				toggleEls[i].addEventListener('mui.tabs.showend', setRoom);
 			}
 			
 			function setCustom() {
 				$('input[name="singleRoom"]').val($("#custom_single").val());
 				$('input[name="doubleRoom"]').val($("#custom_double").val());
 				$('input[name="suiteRoom"]').val($("#custom_suite").val());
+				console.log("========");
+				console.log($('input[name="singleRoom"]').val());
+				console.log($('input[name="doubleRoom"]').val());
+				console.log($('input[name="suiteRoom"]').val());
 			}
 
 			$('#custom_single').bind('input', setCustom);
