@@ -126,4 +126,12 @@ reservationController.cancelReservation=function(rid, nextJob){
 	dao.invalidate(rid, function(documents){nextJob(documents);});
 };
 
+
+// 예약 변경하기
+// 방 종류별 갯수는 어떻게 받아올까
+// function에는 뭐가 들어가야 할까?
+reservationController.modifyReservation = function(reservationObj, phoneNumber, ???) {
+	dao.modifyReservation(reservationObj, phoneNumber, ???, function(documents){nextJob(documents);});
+};
+
 module.exports=reservationController;

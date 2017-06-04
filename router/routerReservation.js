@@ -103,4 +103,63 @@ router.get('/cancelReservation',function(req,res){
 	);
 });
 
+
+// 예약 변경
+router.get('/modifyReservation', function(req, res) {
+	// 1. 해당 req.rid에 해당하는 예약이 있는지 확인
+	// 2-1. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
+	// 2-2. 보내온 방 갯수가 사용 가능한 방 갯수인지 확인. 불가능하면 response하고 종료
+	// 3-1. 기존 예약의 시작날짜/종료날짜, 각 방의 갯수를 획득.
+	// 3-2. 해당 날짜의 남은 방 갯수를 획득 후 기존 예약의 방 갯수를 가산.(예약 가능한 방의 갯수를 계산)
+	// 4-1. 방의 갯수가 너무 많아서 예약이 불가능하면 불가능하다고 응답하고 종료.
+	// 4-2. 정상적인 방 갯수라면 reservationController에 있는 함수 modifyReservation을 실행. 근데 Rooms는 어떻게 넘겨줘야 할 지 고민중.
+	// 5-1. 성공했다면 res에 성공했다고 보냄
+	// 5-2. 실패했다면 res에 실패한 이유를 보냄. 실패하는 경우가 있는지 모르겠어서 일단 안 함.
+
+	// part 1
+	reservationController.findReservationById(
+		req.rid,
+		function(reservationObj) {
+			// part 2-1
+			if (reservationObj == null) {
+				res.json(util.buildResponse(util.responseCode.FAILURE, null)); // 정확한 문구 아직 모름
+			}
+			// part 2-2
+			else {
+				// part 3-1
+				startDate = 
+				endDate = 
+				singleRoom = 
+				doubleRoom = 
+				suiteRoom = 
+
+				// part 3-2
+				reservationController.availableRooms(startDate, endDate); // 변수 더 필요하니 확인
+				singleRoom += 
+				doubleRoom += 
+				suiteRoom += 
+
+				// part 4-1
+				if (싱글룸 > singleRoom || 더블룸 > doubleRoom || 스위트룸 > suiteRoom) {
+					res.json(util.buildResponse(util.responseCode.FAILURE, null)); // 방을 너무 많이 선택했다!
+				}
+				// part 4-2
+				else {
+					reservationController.modifyReservation(
+						reservationController.modifyReservation(
+							reservationObj,
+							전화번호,
+							변경된 방,
+							function(documents) {
+								// part 5-1
+								res.json(util.buildResponse(util.responseCode.SUCCESS, null));
+							}
+						)
+					);
+				}
+			}
+		}
+	)
+});
+
 module.exports = router;
