@@ -183,6 +183,9 @@ $(document).ready(function () {
 				if ($(`[data-mui-controls=${ev.paneId}]`).parent().attr("class") == "sold-out mui--is-active") {
 					$(`[data-mui-controls=${ev.paneId}]`).css("color", "#FF0800");
 					$(`[data-mui-controls=${ev.paneId}]`).css("font-weight", "700");
+					$(".mui-tabs__bar").after(`<div id="warning" style="display:none;color:#FF0800;"> The ${ev.paneId} rooms are sold out! Please, select other rooms </div>`);
+					$("#warning").fadeIn(1000);
+					$("#warning").fadeOut(2000);
 					mui.tabs.activate(ev.relatedPaneId);
 				}
 				$('input[name="singleRoom"]').val("0");
