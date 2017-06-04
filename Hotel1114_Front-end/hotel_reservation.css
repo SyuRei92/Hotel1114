@@ -30,11 +30,9 @@ html {
 	margin-top: 20px;
 }
 
-
 .room_type {
   font-weight: bold;
 }
-
 
 #room {
   margin: 0 0 0 30px;
@@ -44,20 +42,13 @@ html {
   padding: 0 30px;
 }
 
-#reserve_confirm {
-	width: 250px;
-	height: 70px;
+#to_payment {
+	width: 240px;
+	height: 72px;
 	font-size: 25pt;
 	float: right;
 }
 
-/*
-.remain_room {
-  padding: 2px;
-  font-size: 13px;
-  color: gray;
-}
-*/
 .room-type, .personal-info {
 	margin-top: 20px;
 }

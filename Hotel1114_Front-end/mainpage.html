@@ -27,41 +27,39 @@
     </div>
 		
     <div class="mui-container">
-      <div class="mui--text-display1"> Make New Reservation </div>
+      <div class="mui--text-display1" id="name_make"> Make New Reservation </div>
 			<div class="mui-row">
 				<div class="mui-col-xs-12 mui-col-md-6">
 					<div class="mui-panel">
 						<legend> Dates </legend>
-					<!-- date range picker -->
-					<input type="hidden" name="daterange" value="" />
-				</div>
+						<!-- date range picker -->
+						<input type="hidden" name="daterange" value="" />
+					</div>
 				</div>
 				<div class="mui-col-xs-12 mui-col-md-6">
-					<div class="mui-panel">
-						<legend> Rooms </legend>
-						<div class="mui-row">
-							<div class="mui-textfield mui-col-md-2">
-								<label> Guests </label>	
-								<input name="guest-number" type="number" placeholder="0" value="" min="0">
-							</div>
-							<div class="mui-col-md-10" id="room_number">
-
+					<form name="reserve_form" class="mui-form" action="./payment.html">
+						<input type="hidden" name="startDate" value="" required >
+						<input type="hidden" name="endDate" value="" required >
+						<input type="hidden" name="singleRoom" value="" required >
+						<input type="hidden" name="doubleRoom" value="" required >
+						<input type="hidden" name="suiteRoom" value="" required >
+						<div class="mui-panel">
+							<legend> Rooms </legend>
+							<div class="mui-row">
+								<div class="mui-textfield mui-col-md-2">
+									<label> Guests </label>
+									<input name="guest-number" type="number" value="" min="0" required>
+								</div>
+								<div class="mui-col-md-10" id="room_number"></div>
 							</div>
 						</div>
-					</div>
-					<div class="mui-panel">
-						<legend> Personal Information </legend>
-						<form class="mui-form" action="/reservation/doReserve" style="width: 100%;">
-							<input type="hidden" name="startDate" value="test" required >
-							<input type="hidden" name="endDate" value="test" required >
-							<input type="hidden" name="singleRoom" value="0" required >
-							<input type="hidden" name="doubleRoom" value="0" required >
-							<input type="hidden" name="suiteRoom" value="0" required >
+						<div class="mui-panel">
+							<legend> Personal Information </legend>
+
 							<div class="mui-textfield mui-col-md-6">
 								<label> Name </label>
 								<input name="name" type="text" value="" required>
 							</div>
-
 							<div class="mui-textfield mui-col-md-8">
 								<label> E-Mail Address </label>
 								<input name="email" type="email" value="" required>
@@ -70,9 +68,9 @@
 								<label> Phone Number </label>
 								<input name="phoneNumber" type="text" value="">
 							</div>
-							<input class="mui-btn mui-btn--raised mui-btn--primary" id="reserve_confirm" type="submit" value="Reserve">
-						</form>
-					</div>
+						</div>
+						<button class="mui-btn mui-btn--raised mui-btn--primary" id="to_payment" type="submit"> Continue </button>
+					</form>
 				</div>
 			</div>
 		</div>
