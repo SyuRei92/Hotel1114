@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- import CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
 		<link href="./css/common.css" rel="stylesheet" />
+		<link href="./css/payment.css" rel="stylesheet" />
   </head>
 	<body>
 		<div class="mui-appbar">
@@ -20,21 +19,22 @@
 					<span class="mui-caret"></span>
 				</button>
 				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
-					<li><a href="mainpage.html"> Make new reservation </a></li>
-					<li><a href="#"> Check reservation </a></li>
+					<li><a href="./mainpage.html"> Make Reservation </a></li>
+					<li><a href="./search&select.html"> Search Reservation </a></li>
 				</ul>
 			</div>
-    </div>
+		</div>
 		<div class="mui-container">
 			<div class="mui-col-xs-12 mui-col-md-6">
 				<div class="mui-panel">
-					<legend> Reservation Information </legend>
+					<div class="mui--text-headline"> Reservation Information </div>
+					<div id="reservationInfo"> Your reservation info should be displayed here </div>
 				</div>
 			</div>
 			<div class="mui-col-xs-12 mui-col-md-6">
 				<div class="mui-panel">
+					<div class="mui--text-headline"> Payment </div>
 					<form action="./complete.html">
-						<legend> Payment </legend>
 						<div class="mui--text-caption"> Please, select a payment method </div>
 						<ul class="mui-tabs__bar">
 							<li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="credit"> Credit Card </a></li>
@@ -46,20 +46,18 @@
 						<div class="mui-tabs__pane" id="virtual_acc">
 							<div> Payment Details of Virtual Account </div>
 						</div>
-						<input type="checkbox" id="payment_checker" required>
-						<!-- to test linking to complete page, remove style attribute -->
-						<input type="submit" id="to_complete" style="display:none;"> 
+						<!-- to test linking to complete page, remove style attribute style="display:none;" -->
+						<input type="checkbox" id="payment_checker"  required>
+						
+						<input type="submit" id="to_complete" > 
 					</form>
-					<button class="mui-btn mui-btn--raised mui-btn--accent" id="payment_complete"> Confirm </button>
+					<button class="mui-btn mui-btn--raised mui-btn--accent mui-col-xs-12 mui-col-md-6" id="payment_complete"> Confirm </button>
 				</div>
 			</div>
 		</div>
 		<!-- import javascript -->
 		<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 		<script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
-		<script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
 		<script type="text/javascript" src="./payment.js"></script>
 	</body>
 </html>
