@@ -31,3 +31,15 @@ body {
 .mui-container {
 	margin-top: 20px;
 }
+
+a{
+	color: white;
+}
+
+a:link{
+	text-decoration: none;
+}
+
+a:hover{
+	color: white;
+}
