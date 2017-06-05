@@ -29,7 +29,6 @@ $(document).ready(function(){
 		}
 	}
 	
-	
 	//응답의 format은 아래처럼 해주셨으면 합니다.
 	// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234];
 	function search_rsv(data){

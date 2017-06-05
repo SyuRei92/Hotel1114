@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- import CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link href="./hotel_reservation.css" rel="stylesheet" />
+		<link href="./common.css" rel="stylesheet" />
 		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
-		<link href="./payment.css" rel="stylesheet" />
+		
   </head>
 	<body>
 		<div class="mui-appbar">
@@ -27,23 +27,32 @@
 			</div>
     </div>
 		<div class="mui-container">
-			<div class="mui-panel center-div">
-				<form action="./complete.html">
-					<legend> Payment </legend>
-					<div class="mui--text-caption"> Please, select a payment method </div>
-					<ul class="mui-tabs__bar">
-						<li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="credit"> Credit Card </a></li>
-						<li><a data-mui-toggle="tab" data-mui-controls="virtual_acc"> Virtual Account </a></li>
-					</ul>
-					<div class="mui-tabs__pane mui--is-active" id="credit">
-						<div> Payment Detail of Credit Card </div>
-					</div>
-					<div class="mui-tabs__pane" id="virtual_acc">
-						<div> Payment Detail of Virtual Account </div>
-					</div>
-					<input type="submit" id="to_complete" style="display:none;">
-				</form>
-				<button class="mui-btn mui-btn--raised mui-btn--accent" id="payment_complete"> Confirm </button>
+			<div class="mui-col-xs-12 mui-col-md-6">
+				<div class="mui-panel">
+					<legend> Reservation Information </legend>
+				</div>
+			</div>
+			<div class="mui-col-xs-12 mui-col-md-6">
+				<div class="mui-panel">
+					<form action="./complete.html">
+						<legend> Payment </legend>
+						<div class="mui--text-caption"> Please, select a payment method </div>
+						<ul class="mui-tabs__bar">
+							<li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="credit"> Credit Card </a></li>
+							<li><a data-mui-toggle="tab" data-mui-controls="virtual_acc"> Virtual Account </a></li>
+						</ul>
+						<div class="mui-tabs__pane mui--is-active" id="credit">
+							<div> Payment Details of Credit Card </div>
+						</div>
+						<div class="mui-tabs__pane" id="virtual_acc">
+							<div> Payment Details of Virtual Account </div>
+						</div>
+						<input type="checkbox" id="payment_checker" required>
+						<!-- to test linking to complete page, remove style attribute -->
+						<input type="submit" id="to_complete" style="display:none;"> 
+					</form>
+					<button class="mui-btn mui-btn--raised mui-btn--accent" id="payment_complete"> Confirm </button>
+				</div>
 			</div>
 		</div>
 		<!-- import javascript -->

@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- import CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link href="./hotel_reservation.css" rel="stylesheet" />
+		<link href="./css/common.css" rel="stylesheet" />
 		<link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
   </head>
-  <body>
+  <body style="font-family: 'Hind', sans-serif; background-color: #EEF4FF;">
     <div class="mui-appbar">
 			<div class="mui--text-display3" href="mainpage.html">Hotel 1114</div>
 			<div class="mui-dropdown">
@@ -20,58 +20,67 @@
 					<span class="mui-caret"></span>
 				</button>
 				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
-					<li><a href="mainpage.html"> Make new reservation </a></li>
-					<li><a href="#"> Check reservation </a></li>
+					<li><a href="./mainpage.html"> Make new reservation </a></li>
+					<li><a href="./search&select.html"> Check reservation </a></li>
 				</ul>
 			</div>
     </div>
-		
     <div class="mui-container">
       <div class="mui--text-display1" id="name_make"> Make New Reservation </div>
 			<div class="mui-row">
-				<div class="mui-col-xs-12 mui-col-md-6">
+				<div class="mui-col-xs-12 mui-col-md-5">
 					<div class="mui-panel">
 						<legend> Dates </legend>
 						<!-- date range picker -->
 						<input type="hidden" name="daterange" value="" />
 					</div>
 				</div>
-				<div class="mui-col-xs-12 mui-col-md-6">
-					<form name="reserve_form" class="mui-form" action="./payment.html">
-						<input type="hidden" name="startDate" value="" required >
-						<input type="hidden" name="endDate" value="" required >
-						<input type="hidden" name="singleRoom" value="" required >
-						<input type="hidden" name="doubleRoom" value="" required >
-						<input type="hidden" name="suiteRoom" value="" required >
+				<form name="reserve_form" class="mui-form" action="./payment.html">
+					<input type="hidden" name="startDate" value="" required >
+					<input type="hidden" name="endDate" value="" required >
+					<input type="hidden" name="singleRoom" value="" required >
+					<input type="hidden" name="doubleRoom" value="" required >
+					<input type="hidden" name="suiteRoom" value="" required >
+					<div class="mui-col-xs-12 mui-col-md-7">
 						<div class="mui-panel">
-							<legend> Rooms </legend>
-							<div class="mui-row">
-								<div class="mui-textfield mui-col-md-2">
-									<label> Guests </label>
-									<input name="guest-number" type="number" value="" min="0" required>
-								</div>
-								<div class="mui-col-md-10" id="room_number"></div>
+						<legend> Rooms </legend>
+						<div class="mui-row">
+							<div class="mui-textfield mui-col-xs-12 mui-col-md-2">
+								<label> Guests </label>
+								<input name="guest-number" type="number" value="0" min="0" required>
 							</div>
+							<div class="mui-col-md-10" id="room_number"></div>
 						</div>
+					</div>
+					</div>
+					<div class="mui-col-xs-12 mui-col-md-7">
 						<div class="mui-panel">
 							<legend> Personal Information </legend>
-
-							<div class="mui-textfield mui-col-md-6">
+							<div class="mui-textfield mui-col-md-5 mui-col-xs-12">
 								<label> Name </label>
 								<input name="name" type="text" value="" required>
 							</div>
-							<div class="mui-textfield mui-col-md-8">
+							<div class="mui-textfield mui-col-md-7 mui-col-xs-12">
 								<label> E-Mail Address </label>
 								<input name="email" type="email" value="" required>
 							</div>
-							<div class="mui-textfield mui-col-md-8">
-								<label> Phone Number </label>
+							<div class="mui-textfield mui-col-md-6 mui-col-xs-12">
+								<label> Phone Number (Optional) </label>
 								<input name="phoneNumber" type="text" value="">
 							</div>
 						</div>
-						<button class="mui-btn mui-btn--raised mui-btn--primary" id="to_payment" type="submit"> Continue </button>
-					</form>
-				</div>
+					</div>
+					<div class="mui-col-xs-12 mui-col-md-7">
+						<div class="mui-panel">
+							<div class="mui-textfield mui-col-xs-12 mui-col-md-6">
+								<label> Reservation Password </label>
+								<!-- shoud be encrypted.. -->
+								<input name="password" type="password" value="" required>
+							</div>
+							<button class="mui-btn mui-btn--raised mui-btn--primary mui-col-xs-12 mui-col-md-6" id="to_payment" type="submit"> Continue </button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 		<!-- import javascript -->
@@ -80,6 +89,6 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 		<script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
     <script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
-    <script src="./hotel_reservation.js"></script>
+    <script src="./js/hotel_reservation.js"></script>
 	</body>
 </html>

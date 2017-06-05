@@ -1,6 +1,4 @@
-html {
-  font-family: 'Hind', sans-serif;
-}
+/* for mui */
 .mui--text-display3 {
   margin: 0 auto;
   font-family: 'Barrio', cursive;
@@ -10,7 +8,6 @@ html {
 	left: 10px;
 	display: inline;
 }
-
 .mui--text-display1 {
   font-weight: bold;
 	margin-bottom: 10px;
@@ -30,31 +27,26 @@ html {
 	margin-top: 20px;
 }
 
-.room_type {
-  font-weight: bold;
-}
-
-#room {
-  margin: 0 0 0 30px;
-}
-
-#total_price {
-  padding: 0 30px;
-}
-
-#to_payment {
-	width: 240px;
-	height: 72px;
-	font-size: 25pt;
-	float: right;
-}
-
-.room-type, .personal-info {
-	margin-top: 20px;
-}
+/* for date range picker */
 .calendar {
 	width: 100%;
 }
 .daterangepicker_input {
 	height: 50px;
+}
+
+/* etc */
+#to_payment {
+	height: 72px;
+	font-size: 20pt;
+}
+#payment_complete {
+	width: 240px;
+	height: 72px;
+	font-size: 25pt;
+	float: right;
+}
+.center-div {
+	width: 60%;
+	margin: 0 auto;
 }
