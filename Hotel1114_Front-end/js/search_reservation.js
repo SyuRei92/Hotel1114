@@ -1,16 +1,11 @@
 $(document).ready(function(){
-
 	var all_list = [];
 	var rsv_list = [];
-	
 	var detailed_row = -1;
 	all_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234]);
 	all_list.push([["박기완", "010-1234-5678", "zprime0920@kaist.ac.kr"], "12346", ["2017/01/03", "2017/01/04"], 2, [0, 1, 0], 5678]);
-	all_list.push([["김현성", "010-6545-5483", "hskimbusan@naver.com"], "12347", ["2017/01/01", "2017/01/02"], 4, [0, 0, 1], 1234]);	
-	
-	
+	all_list.push([["김현성", "010-6545-5483", "hskimbusan@naver.com"], "12347", ["2017/01/01", "2017/01/02"], 4, [0, 0, 1], 1234]);
 	var rsv_table = document.getElementById("reservations");
-	
 	var numRow = rsv_table.rows.length;
 
 	function delete_rsv(data){
@@ -78,9 +73,7 @@ $(document).ready(function(){
 				  +'?rid='+rid+'?singleRoom='+singleRoom+'?doubleRoom='+doubleRoom+'?suiteRoom='+suiteRoom+'?phone='+phone, modify_rsv);
 	}
 	
-	$(document).on("click", "#search", function(){
-		searchReservation();
-	});
+	
 	/*
 	function searchReservation(){
 		rsv_list = [];
@@ -135,6 +128,8 @@ $(document).ready(function(){
 				  +'?condition='+cond, search_rsv);
 	}
 	
+	
+	$(document).on("click", "#search", searchReservation);
 	$(document).on("click", "#detail", function() {
         var selector = $(this).data('selector');
 		showDetail(selector);
