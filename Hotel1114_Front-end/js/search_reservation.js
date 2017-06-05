@@ -1,10 +1,6 @@
 $(document).ready(function(){
-	var all_list = [];
 	var rsv_list = [];
 	var detailed_row = -1;
-	all_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234]);
-	all_list.push([["박기완", "010-1234-5678", "zprime0920@kaist.ac.kr"], "12346", ["2017/01/03", "2017/01/04"], 2, [0, 1, 0], 5678]);
-	all_list.push([["김현성", "010-6545-5483", "hskimbusan@naver.com"], "12347", ["2017/01/01", "2017/01/02"], 4, [0, 0, 1], 1234]);
 	var rsv_table = document.getElementById("reservations");
 	var numRow = rsv_table.rows.length;
 
@@ -73,63 +69,27 @@ $(document).ready(function(){
 				  +'?rid='+rid+'?singleRoom='+singleRoom+'?doubleRoom='+doubleRoom+'?suiteRoom='+suiteRoom+'?phone='+phone, modify_rsv);
 	}
 	
-	
-	/*
-	function searchReservation(){
-		rsv_list = [];
-		for (i = 0; i < all_list.length; i++){
-			if (all_list[i][1] == $("#cond").val())
-				rsv_list.push(all_list[i]);
-			
-			if (all_list[i][0][0] == $("#cond").val())
-				rsv_list.push(all_list[i]);
-			
-			if (all_list[i][0][1] == $("#cond").val())
-				rsv_list.push(all_list[i]);
-			
-			if (all_list[i][0][2] == $("#cond").val())
-				rsv_list.push(all_list[i]);
-		}
-		
-		var numRow = rsv_table.rows.length;
-		for (i = 1; i < numRow; i++){
-			rsv_table.deleteRow(1);
-		}
-	
-		if (rsv_list.length == 0){
-			var newRow = rsv_table.insertRow(1);
-			var newCell1 = newRow.insertCell(0);
-			newCell1.colSpan = 5;
-			
-			newCell1.innerHTML = "No results found."
-		}
-		for (i = 0; i < rsv_list.length; i++){
-			var newRow = rsv_table.insertRow(i+1);
-			var newCell1 = newRow.insertCell(0);
-			var newCell2 = newRow.insertCell(1);
-			var newCell3 = newRow.insertCell(2);
-			var newCell4 = newRow.insertCell(3);
-			var newCell5 = newRow.insertCell(4);
-
-			newCell1.innerHTML = rsv_list[i][1];
-			newCell2.innerHTML = rsv_list[i][0][0];
-			newCell3.innerHTML = rsv_list[i][0][2];
-			newCell4.innerHTML = rsv_list[i][0][1];
-
-			var check_detail = '<input type="button" value="Check details" id="detail" data-selector='+i+'>';
-			newCell5.innerHTML = check_detail;
-
-		}
-	}*/
-	
 	function searchReservation(){
 		cond = $("#cond").val();
+		var search_type;
+		
+		if (cond.split('@').length == 2) search_type = "e-mail";
+		else if (cond.split('-').length == 3) search_type = "phone";
+		else if (/\d/.test(cond)) search_type = "rid";
+		else search_type = "name"; // 이름엔 숫자가 안 들어간다고 가정했습니다.
+		
 		$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
-				  +'?condition='+cond, search_rsv);
+				  +'?condition='+cond+'?search_type='+search_type, search_rsv);
 	}
 	
-	
 	$(document).on("click", "#search", searchReservation);
+	
+	$("#cond").keyup(function(event){
+		if (event.keyCode == 13){
+			$("#search").click();
+		}
+	});
+	
 	$(document).on("click", "#detail", function() {
         var selector = $(this).data('selector');
 		showDetail(selector);
@@ -145,7 +105,6 @@ $(document).ready(function(){
 		var i = detailed_row - 2;
 		if (ans){
 			alert("Cancel complete. You will be refunded.");
-			// send query
 			queryCancel(rsv_list[i][1]);
 			window.location.reload();
 		}
@@ -154,7 +113,7 @@ $(document).ready(function(){
 	$(document).on("click", "#modify", function(){
 		rsv_table.deleteRow(detailed_row);
 		var newRow = rsv_table.insertRow(detailed_row);
-		var i = detailed_row - 2;
+		var i = detailed_row-2;
 		var newCell1 = newRow.insertCell(0);
 		newCell1.colSpan = 5;
 		
