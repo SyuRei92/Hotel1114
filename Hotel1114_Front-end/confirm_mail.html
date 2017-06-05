@@ -2,20 +2,54 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<!-- import CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link href="./confirm_mail.css" rel="stylesheet" />
 		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
-    	<link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
-    	<link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
+  	<link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
+  	<style type="text/css">
+	  	body {
+				font-family: 'Hind', sans-serif;
+				background-color: #EEF4FF;
+			}
+			/* for mui */
+			.mui--text-display3 {
+			  margin: 0 auto;
+			  font-family: 'Barrio', cursive;
+			  font-size: 400%;
+				position: absolute;
+				top: 5px;
+				left: 10px;
+				display: inline;
+			}
+			.mui--text-display1 {
+			  font-weight: bold;
+				margin-bottom: 10px;
+			}
+			.mui-dropdown {
+				display: inline;
+				position: absolute;
+				top: 5px;
+				right: 10px;
+				float: right;
+				vertical-align: middle;
+			}
+			.mui-appbar {
+				margin 0 0 20px 0;
+			}
+			.mui-container {
+				margin-top: 20px;
+			}
+			th{
+				width: 110px;
+			}
+		</style>
 	</head>
 	<!--<body style="background-image:url(./background/bg.png); background-repeat:no-repeat;">-->
 	<body>
 		<div class="mui-appbar">
-			<div class="mui--text-display3" href="mainpage.html">Hotel 1114</div>
+			<div class="mui--text-display3"> Hotel 1114 </div>
 		</div>
 	  	<div class="mui-container">
 			
@@ -30,7 +64,7 @@
 				</tr>
 				<tr>
 					<th> E-mail : </th>
-					<td> hskimbusan@kaist.ac.kr</td>
+					<td> hskimbusan@kaist.ac.kr </td>
 				</tr>
 				<tr>
 					<th> Phone number : </th>
@@ -45,13 +79,6 @@
 					<td><a href="/reservation/searchReservation?condition=12345">12345</a></td>
 				</tr>
 			</table>
-		
 	  	</div>
-		<!-- import javascript -->
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-		<script src="https://cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
-		<script type="text/javascript" src="./daterangepicker/daterangepicker.js"></script>
 	</body>
 </html>
