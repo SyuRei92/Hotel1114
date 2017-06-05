@@ -1,0 +1,13 @@
+/* for date range picker */
+.calendar {
+	width: 100%;
+}
+.daterangepicker_input {
+	height: 50px;
+}
+
+/* etc */
+#to_payment {
+	height: 72px;
+	font-size: 20pt;
+}
