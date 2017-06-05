@@ -74,8 +74,10 @@ $(document).ready(function(){
 		var search_type;
 		
 		if (cond.split('@').length == 2) search_type = "e-mail";
-		else if (cond.split('-').length == 3) search_type = "phone";
-		else if (/\d/.test(cond)) search_type = "rid";
+		else if (!/[A-Za-z]/.test(cond)) {
+			if (cond.length == 24) search_type = "rid";
+			else search_type = "phone";
+		}
 		else search_type = "name"; // 이름엔 숫자가 안 들어간다고 가정했습니다.
 		
 		$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
