@@ -140,12 +140,24 @@ $(document).ready(function(){
 	$(document).on("click", "#confirm", function(){
 		var ans = confirm("Do you want to modify the reservation?");
 		if (ans){
-			alert("Modified Complete. Your payment before will be refunded.");
-			// go to payment page
-			console.log(detailed_row);
+			var newsingle = $("#newsingle").val();
+			var newdouble = $("#newdouble").val();
+			var newsuite = $("#newsuite").val();
+			var newphone = $("#newphone").val();
 			
-			queryModify(rsv_list[detailed_row-2][1], $("#newsingle").val(), $("#newdouble").val(), $("#newsuite").val(), $("#newphone").val());
-			window.location.reload();
+			if (newsingle != rsv_list[detailed_row-2][4][0] || newdouble != rsv_list[detailed_row-2][4][1] || newsuite != rsv_list[detailed_row-2][4][2]){
+				alert("Modified Complete. Your payment before will be refunded.");
+				// go to payment page
+				window.location.href = "./payment.html?startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
+					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&guest-number=1&name="+rsv_list[detailed_row-2][0][0]+
+					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][5];
+			}
+			else {
+				alert("Modified Complete.");
+				window.location.reload();
+			}
+			
+			queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
 		}
 	});
 	
