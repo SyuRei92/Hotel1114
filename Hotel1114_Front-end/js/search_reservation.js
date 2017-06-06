@@ -22,6 +22,15 @@ $(document).ready(function(){
 		}
 	}
 	
+	var q = location.search;
+	if(q.split("=")[1].length > 0){
+		var cond_rid = q.split('=')[1];
+		$("#cond").val(cond_rid);
+		searchReservation();
+		showDetail_correct(0);
+	}
+	
+	
 	//응답의 format은 아래처럼 해주셨으면 합니다.
 	// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234];
 	function search_rsv(data){
@@ -29,10 +38,10 @@ $(document).ready(function(){
 			return;
 		} else {
 			rsv_list = data.result;
-		}
-		/*rsv_list = [];
+		}/*
+		rsv_list = [];
 		rsv_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234]);
-		rsv_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234]);*/
+		rsv_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12346", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234]);*/
 		var numRow = rsv_table.rows.length;
 		for (i = 1; i < numRow; i++){
 			rsv_table.deleteRow(1);
@@ -178,22 +187,41 @@ $(document).ready(function(){
 	$(document).on("click", "#cancelmodify", function(){
 		rsv_table.deleteRow(detailed_row);
 		var i = detailed_row-2;
+		showDetail_correct(i);
+	});
+	
+	function showDetail(i){
+		var pwd = prompt("Please enter reservation password:", '');
+		
+		if (pwd != null){
+			if (pwd == rsv_list[i][4]){
+				showDetail_correct(i);
+			}
+			else{
+				alert("Invalid password");
+			}
+		}
+	}
+	
+	function showDetail_correct(i){
+		detailed_row = i+2;
+		$(":button[id^='detail']").prop('disabled', true);
 		var newRow = rsv_table.insertRow(i+2);
 		var newCell1 = newRow.insertCell(0);
 
 		var rsv_detail = 
-			"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
-				"<th colspan=2> Reservation Detail </th>"+
-				"<tr>"+
-					"<td> Dates </td>"+
-					"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
-				"<tr>"+
-					"<td> Rooms </td>"+
-					"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Single </label>"+rsv_list[i][3][0]+"</div>"+
-						"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Double </label>"+rsv_list[i][3][1]+"</div>"+
-						"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Suite </label>"+rsv_list[i][3][2]+"</div></td></tr>"+
-			"</table>";
-		
+		"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
+			"<th colspan=2> Reservation Detail </th>"+
+			"<tr>"+
+				"<td> Dates </td>"+
+				"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
+			"<tr>"+
+				"<td> Rooms </td>"+
+				"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Single </label>"+rsv_list[i][3][0]+"</div>"+
+					"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Double </label>"+rsv_list[i][3][1]+"</div>"+
+					"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Suite </label>"+rsv_list[i][3][2]+"</div></td></tr>"+
+		"</table>";
+
 		newCell1.innerHTML = rsv_detail;
 
 		var backbutton = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='back'>" + '<i class="fa fa-arrow-left" aria-hidden="true"></i>'+ " Back </button>"
@@ -205,46 +233,5 @@ $(document).ready(function(){
 		newCell1.innerHTML += backbutton;
 		newCell1.colSpan = 5;
 		newCell1.style.textAlign = "left";
-	});
-	
-	function showDetail(i){
-		var pwd = prompt("Please enter reservation password:", '');
-		
-		if (pwd != null){
-			if (pwd == rsv_list[i][4]){
-				detailed_row = i+2;
-				$(":button[id^='detail']").prop('disabled', true);
-				var newRow = rsv_table.insertRow(i+2);
-    			var newCell1 = newRow.insertCell(0);
-				
-			var rsv_detail = 
-				"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
-					"<th colspan=2> Reservation Detail </th>"+
-					"<tr>"+
-						"<td> Dates </td>"+
-						"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
-					"<tr>"+
-						"<td> Rooms </td>"+
-						"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Single </label>"+rsv_list[i][3][0]+"</div>"+
-							"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Double </label>"+rsv_list[i][3][1]+"</div>"+
-							"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Suite </label>"+rsv_list[i][3][2]+"</div></td></tr>"+
-				"</table>";
-				
-				newCell1.innerHTML = rsv_detail;
-				
-				var backbutton = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='back'>" + '<i class="fa fa-arrow-left" aria-hidden="true"></i>'+ " Back </button>"
-				var modify_rsv = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='modify'>" + '<i class="fa fa-pencil" aria-hidden="true"></i>'+ " Modify </button>"
-				var cancel_rsv = "<button style='background-color:#F32176' class='mui-btn mui-btn--raised mui-btn--primary' id='cancel'>" + '<i class="fa fa-times" aria-hidden="true"></i>' + " Cancel </button>"
-				
-				newCell1.innerHTML += modify_rsv;
-				newCell1.innerHTML += cancel_rsv;
-				newCell1.innerHTML += backbutton;
-				newCell1.colSpan = 5;
-				newCell1.style.textAlign = "left";
-			}
-			else{
-				alert("Invalid password");
-			}
-		}
 	}
 });
