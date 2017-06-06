@@ -63,6 +63,21 @@ reservationController.findReservationById=function(rid,nextJob){
 	dao.queryRid(rid,function(document){nextJob(document);});
 };
 
+//이름으로 찾기
+reservationController.findReservationByName=function(name,nextJob){
+	dao.queryName(name,function(document){nextJob(document);});
+};
+
+//Email로 찾기
+reservationController.findReservationByEmail=function(email,nextJob){
+	dao.queryEmail(email,function(document){nextJob(document);});
+};
+
+//전화번호로 찾기
+reservationController.findReservationByPhone=function(phone,nextJob){
+	dao.queryPhone(phone,function(document){nextJob(document);});
+};
+
 // 계정으로 찾기
 reservationController.findReservationByAccount=function(cid,nextJob){
 	dao.queryCid(cid,function(documents){nextJob(documents);});
