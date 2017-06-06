@@ -7,6 +7,7 @@
 		<!-- import CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="./daterangepicker/daterangepicker.css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
 		<link href="./css/common.css" rel="stylesheet" />
@@ -14,24 +15,37 @@
   </head>
   <body>
     <div class="mui-appbar">
+<<<<<<< HEAD
 		<div class="mui--text-display3"><a href="./mainpage.html">Hotel 1114</a></div>
 		<div class="mui-dropdown">
-		<button class="mui-btn mui-btn" data-mui-toggle="dropdown">
-			MENU
-			<span class="mui-caret"></span>
+		<button class="mui-btn mui-btn" data-mui-toggle="dropdown" style="max-width:160px; padding:0">
+			<div class="mui-col-md-4"><i class="fa fa-bars" aria-hidden="true"></i></div>
+			<div class="mui-col-md-8" style="padding-left:0; padding-right:10px">MENU</div>
 		</button>
 			<ul class="mui-dropdown__menu mui-dropdown__menu--right">
 				<li><a href="./mainpage.html"> Make Reservation </a></li>
 				<li><a href="./search&select.html"> Search Reservation </a></li>
 			</ul>	
+=======
+			<div id="title" class="mui--text-display3 mui-col-xs-10"><a href="./mainpage.html">Hotel 1114</a></div>
+			<div id="menu" class="mui-dropdown">
+				<button class="mui-btn mui-btn mui-col-xs-12" data-mui-toggle="dropdown">
+					MENU
+					<span class="mui-caret"></span>
+				</button>
+				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
+					<li><a href="./mainpage.html"> Make Reservation </a></li>
+					<li><a href="./search&select.html"> Search Reservation </a></li>
+				</ul>
+			</div>
+>>>>>>> f6455467847fb32c3ad4e56cf98b3bd2c5747c47
 		</div>	
-	</div>	
     <div class="mui-container">
       <div class="mui--text-display1" id="name_make"> Make New Reservation </div>
 			<div class="mui-row">
 				<div class="mui-col-xs-12 mui-col-md-5">
 					<div class="mui-panel">
-						<legend> Dates </legend>
+						<legend> <i class="fa fa-calendar" aria-hidden="true"></i> Dates </legend>
 						<!-- date range picker -->
 						<input type="hidden" name="daterange" value="" />
 					</div>
@@ -44,10 +58,10 @@
 					<input type="hidden" name="suiteRoom" value="" required >
 					<div class="mui-col-xs-12 mui-col-md-7">
 						<div class="mui-panel">
-						<legend> Rooms </legend>
+							<legend> <i class="fa fa-bed" aria-hidden="true"></i> Rooms </legend>
 						<div class="mui-row">
 							<div class="mui-textfield mui-col-xs-12 mui-col-md-2">
-								<label> Guests </label>
+								<label> <i class="fa fa-users" aria-hidden="true"></i> Guests </label>
 								<input name="guest-number" type="number" value="0" min="0" required>
 							</div>
 							<div class="mui-col-md-10" id="room_number"></div>
@@ -56,17 +70,17 @@
 					</div>
 					<div class="mui-col-xs-12 mui-col-md-7">
 						<div class="mui-panel">
-							<legend> Personal Information </legend>
+							<legend> <i class="fa fa-id-card-o" aria-hidden="true"></i> Personal Information </legend>
 							<div class="mui-textfield mui-col-md-5 mui-col-xs-12">
-								<label> Name </label>
+								<label> <i class="fa fa-user" aria-hidden="true"></i> Name </label>
 								<input name="name" type="text" value="" required>
 							</div>
 							<div class="mui-textfield mui-col-md-7 mui-col-xs-12">
-								<label> E-Mail Address </label>
+								<label> <i class="fa fa-envelope" aria-hidden="true"></i> E-Mail Address </label>
 								<input name="email" type="email" value="" required>
 							</div>
 							<div class="mui-textfield mui-col-md-6 mui-col-xs-12">
-								<label> Phone Number (Optional) </label>
+								<label> <i class="fa fa-phone" aria-hidden="true"></i> Phone Number (Optional) </label>
 								<input name="phoneNumber" type="text" value="">
 							</div>
 						</div>
@@ -74,7 +88,7 @@
 					<div class="mui-col-xs-12 mui-col-md-7">
 						<div class="mui-panel">
 							<div class="mui-textfield mui-col-xs-12 mui-col-md-6">
-								<label> Reservation Password </label>
+								<label> <i class="fa fa-lock" aria-hidden="true"></i> Reservation Password </label>
 								<!-- shoud be encrypted.. -->
 								<input name="password" type="password" value="" required>
 							</div>

@@ -22,6 +22,9 @@ class Rooms {
 				this.doubleRoom-util.zeroIfNull(r.doubleRoom),
 				this.suiteRoom-util.zeroIfNull(r.suiteRoom));
 	}
+	negate(){
+		return new Rooms(-this.singleRoom,-this.doubleRoom,-this.suiteRoom);
+	}
 	toJson(){
 		return {singleRoom:this.singleRoom,
 			doubleRoom:this.doubleRoom,

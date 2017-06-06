@@ -1,9 +1,10 @@
 const Rooms=require('./Rooms');
 const CustomerInfo=require('./CustomerInfo');
+const Util=require('../controller/HotelUtil');
 
 module.exports=
 class Reservation { 
-	constructor(cid,timestamp,startDate,endDate,rooms,customerInfo,status,validity,id) {
+	constructor(cid,timestamp,startDate,endDate,rooms,customerInfo,status,validity,password,id) {
 		this.cid=cid;
 		this.timestamp=timestamp;
 		this.startDate=startDate; // - Date 형식의 체크인 날짜 (ex : “20170531”)
@@ -13,6 +14,7 @@ class Reservation {
 		this.status=status;
 		this.validity=validity;
 		this.id=id;
+		this.password=password;
 	}
 	/* Status-validity Table
 	 * Status		| Valid					| Invalid
@@ -55,18 +57,30 @@ class Reservation {
 			rooms:this.rooms.toJson(),
 			customerInfo:this.customerInfo.toJson(),
 			status:this.status,
-			validity:this.validity};
+			validity:this.validity,
+			password:this.password};
 		if(this.id) v.id=this.id;
 		return v;
+	}
+	arrayForm(){
+		//응답의 format은 아래처럼 해주셨으면 합니다.
+		// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234];
+		return [[this.customerInfo.name,this.customerInfo.phoneNumber,this.customerInfo.email],this.id,
+			[Util.date2String(this.startDate),Util.date2String(this.endDate)],0,
+			[this.rooms.singleRoom,this.rooms.doubleRoom,this.rooms.suiteRoom],this.password];
 	}
 	static buildFromJson(obj){
 		console.log(obj);
 		return new Reservation(obj.cid,obj.timestamp,obj.startDate,obj.endDate,
 			Rooms.buildFromJson(obj.rooms),CustomerInfo.buildFromJson(obj.customerInfo),
-			obj.status,obj.validity,obj._id);
+			obj.status,obj.validity,obj.password,obj._id);
 	}
 	static buildFromJsonArray(obj){
 		for(var i in obj) obj[i]=this.buildFromJson(obj[i]);
+		return obj;
+	}
+	static arrayFormMultiple(obj){
+		for(var i in obj) obj[i]=obj[i].arrayForm();
 		return obj;
 	}
 };

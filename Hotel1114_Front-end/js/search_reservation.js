@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var single_limit = 100, double_limit = 100, suite_limit = 100;
+	
 	var rsv_list = [];
 	var detailed_row = -1;
 	var rsv_table = document.getElementById("reservations");
@@ -21,14 +23,16 @@ $(document).ready(function(){
 	}
 	
 	//응답의 format은 아래처럼 해주셨으면 합니다.
-	// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234];
+	// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234];
 	function search_rsv(data){
 		if (data.responseCode !== 0){
 			return;
 		} else {
 			rsv_list = data.result;
 		}
-		//rsv_list = [[["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234]];
+		/*rsv_list = [];
+		rsv_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234]);
+		rsv_list.push([["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], [2, 0, 0], 1234]);*/
 		var numRow = rsv_table.rows.length;
 		for (i = 1; i < numRow; i++){
 			rsv_table.deleteRow(1);
@@ -66,7 +70,7 @@ $(document).ready(function(){
 	
 	function queryModify(rid, singleRoom, doubleRoom, suiteRoom, phone){
 		$.getJSON('http://'+document.location.host+'/reservation/modifyReservation'
-				  +'?rid='+rid+'?singleRoom='+singleRoom+'?doubleRoom='+doubleRoom+'?suiteRoom='+suiteRoom+'?phone='+phone, modify_rsv);
+				  +'?rid='+rid+'&singleRoom='+singleRoom+'&doubleRoom='+doubleRoom+'&suiteRoom='+suiteRoom+'&phone='+phone, modify_rsv);
 	}
 	
 	function searchReservation(){
@@ -79,10 +83,10 @@ $(document).ready(function(){
 			else search_type = "phone";
 		}
 		else search_type = "name"; // 이름엔 숫자가 안 들어간다고 가정했습니다.
-		
-		$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
-				  +'?condition='+cond+'?search_type='+search_type, search_rsv);
-		//search_rsv();
+
+		/*$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
+				  +'?condition='+cond+'&search_type='+search_type, search_rsv);*/
+		search_rsv();
 	}
 	
 	$(document).on("click", "#search", searchReservation);
@@ -120,16 +124,26 @@ $(document).ready(function(){
 		var newCell1 = newRow.insertCell(0);
 		newCell1.colSpan = 5;
 		
-		newCell1.innerHTML = "Reservation Modify"+"</br>";
-		newCell1.innerHTML += "Date : " + rsv_list[i][2][0] + "~" + rsv_list[i][2][1] + "</br>";
+		var rsv_detail = 
+			"<div><table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
+				"<th colspan=2> Reservation Modify </th>"+
+				"<tr>"+
+					"<td> Dates </td>"+
+					"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
+				"<tr>"+
+					"<td> Rooms </td>"+
+					"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0'><label>Single </label><input type='number' id='newsingle' min=0 max="+single_limit+" value=" + rsv_list[i][3][0] + "></div>"+
+						"<div class='mui-textfield mui-col-md-4' style='padding-left:0'><label>Double </label><input type='number' id='newdouble' min=0 max="+double_limit+" value=" + rsv_list[i][3][1] + "></div>"+
+						"<div class='mui-textfield mui-col-md-4' style='padding-left:0'><label>Suite </label><input type='number' id='newsuite' min=0 max="+suite_limit+" value=" + rsv_list[i][3][2] + "></div></td></tr>"+
+				"<tr>"+
+					"<td> Phone number </td>"+
+					"<td><div class='mui-textfield'><input type='text' id='newphone' style='width:120px' value=" + rsv_list[i][0][1] + "></div></td></tr>";
+			"</table></div>";
 		
-		newCell1.innerHTML += "Single : " + "<input type='text' id='newsingle' value=" + rsv_list[i][4][0] + ">" + "</br>";
-		newCell1.innerHTML += "Double : " + "<input type='text' id='newdouble' value=" + rsv_list[i][4][1] + ">" + "</br>";
-		newCell1.innerHTML += "Suite : " + "<input type='text' id='newsuite' value=" + rsv_list[i][4][2] + ">" + "</br>";
-		newCell1.innerHTML += "Phone number : " + "<input type='text' id='newphone' value=" + rsv_list[i][0][1] + ">" + "</br>";
+		newCell1.innerHTML = rsv_detail;
 		
-		var cancelbutton = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Back' id='cancelmodify'>"
-		var confirm_modify = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Confirm' id='confirm'>"
+		var cancelbutton = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='cancelmodify'>" + '<i class="fa fa-arrow-left" aria-hidden="true"></i>'+ " Back </button>"
+		var confirm_modify = "<button class='mui-btn mui-btn--raised mui-btn--primary' value='Confirm' id='confirm'>" + '<i class="fa fa-check" aria-hidden="true"></i>' + " Confirm </button>"
 		
 		newCell1.innerHTML += confirm_modify;
 		newCell1.innerHTML += cancelbutton;
@@ -145,19 +159,25 @@ $(document).ready(function(){
 			var newsuite = $("#newsuite").val();
 			var newphone = $("#newphone").val();
 			
-			if (newsingle != rsv_list[detailed_row-2][4][0] || newdouble != rsv_list[detailed_row-2][4][1] || newsuite != rsv_list[detailed_row-2][4][2]){
+			if (newsingle != rsv_list[detailed_row-2][3][0] || newdouble != rsv_list[detailed_row-2][3][1] || newsuite != rsv_list[detailed_row-2][3][2]){
 				alert("Modified Complete. Your payment before will be refunded.");
 				// go to payment page
+<<<<<<< HEAD
 				window.location.href = "./payment.html?startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
+					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&rid="+rsv_list[detailed_row-2][1]+"&name="+rsv_list[detailed_row-2][0][0]+
+					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][4];
+=======
+				window.location.href = "./payment.html?rid="+rsv_list[detailed_row-2][1]+"&startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
 					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&guest-number=1&name="+rsv_list[detailed_row-2][0][0]+
 					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][5];
+>>>>>>> f6455467847fb32c3ad4e56cf98b3bd2c5747c47
 			}
 			else {
 				alert("Modified Complete.");
 				window.location.reload();
 			}
 			
-			queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
+			//queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
 		}
 	});
 	
@@ -167,15 +187,24 @@ $(document).ready(function(){
 		var newRow = rsv_table.insertRow(i+2);
 		var newCell1 = newRow.insertCell(0);
 
-		newCell1.innerHTML = "Reservation Detail"+"</br>";
-		newCell1.innerHTML += "Date : " + rsv_list[i][2][0] + "~" + rsv_list[i][2][1] + "</br>";
-		newCell1.innerHTML += "Single : " + rsv_list[i][4][0] + "</br>";
-		newCell1.innerHTML += "Double : " + rsv_list[i][4][1] + "</br>";
-		newCell1.innerHTML += "Suite : " + rsv_list[i][4][2] + "</br>";
+		var rsv_detail = 
+			"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
+				"<th colspan=2> Reservation Detail </th>"+
+				"<tr>"+
+					"<td> Dates </td>"+
+					"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
+				"<tr>"+
+					"<td> Rooms </td>"+
+					"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Single </label>"+rsv_list[i][3][0]+"</div>"+
+						"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Double </label>"+rsv_list[i][3][1]+"</div>"+
+						"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Suite </label>"+rsv_list[i][3][2]+"</div></td></tr>"+
+			"</table>";
+		
+		newCell1.innerHTML = rsv_detail;
 
-		var backbutton = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Back' id='back'>"
-		var modify_rsv = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Modify' id='modify'>"
-		var cancel_rsv = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Cancel' id='cancel'>"
+		var backbutton = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='back'>" + '<i class="fa fa-arrow-left" aria-hidden="true"></i>'+ " Back </button>"
+		var modify_rsv = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='modify'>" + '<i class="fa fa-pencil" aria-hidden="true"></i>'+ " Modify </button>"
+		var cancel_rsv = "<button style='background-color:#F32176' class='mui-btn mui-btn--raised mui-btn--primary' id='cancel'>" + '<i class="fa fa-times" aria-hidden="true"></i>' + " Cancel </button>"
 
 		newCell1.innerHTML += modify_rsv;
 		newCell1.innerHTML += cancel_rsv;
@@ -188,21 +217,30 @@ $(document).ready(function(){
 		var pwd = prompt("Please enter reservation password:", '');
 		
 		if (pwd != null){
-			if (pwd == rsv_list[i][5]){
+			if (pwd == rsv_list[i][4]){
 				detailed_row = i+2;
 				$(":button[id^='detail']").prop('disabled', true);
 				var newRow = rsv_table.insertRow(i+2);
     			var newCell1 = newRow.insertCell(0);
 				
-				newCell1.innerHTML = "Reservation Detail"+"</br>";
-				newCell1.innerHTML += "Date : " + rsv_list[i][2][0] + "~" + rsv_list[i][2][1] + "</br>";
-				newCell1.innerHTML += "Single : " + rsv_list[i][4][0] + "</br>";
-				newCell1.innerHTML += "Double : " + rsv_list[i][4][1] + "</br>";
-				newCell1.innerHTML += "Suite : " + rsv_list[i][4][2] + "</br>";
+			var rsv_detail = 
+				"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
+					"<th colspan=2> Reservation Detail </th>"+
+					"<tr>"+
+						"<td> Dates </td>"+
+						"<td>"+ rsv_list[i][2][0] + " ~ " + rsv_list[i][2][1] +"</td></tr>"+
+					"<tr>"+
+						"<td> Rooms </td>"+
+						"<td><div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Single </label>"+rsv_list[i][3][0]+"</div>"+
+							"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Double </label>"+rsv_list[i][3][1]+"</div>"+
+							"<div class='mui-textfield mui-col-md-4' style='padding-left:0; margin-bottom:0'><label>Suite </label>"+rsv_list[i][3][2]+"</div></td></tr>"+
+				"</table>";
 				
-				var backbutton = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Back' id='back'>"
-				var modify_rsv = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Modify' id='modify'>"
-				var cancel_rsv = "<input type='button' class='mui-btn mui-btn--raised mui-btn--primary' value='Cancel' id='cancel'>"
+				newCell1.innerHTML = rsv_detail;
+				
+				var backbutton = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='back'>" + '<i class="fa fa-arrow-left" aria-hidden="true"></i>'+ " Back </button>"
+				var modify_rsv = "<button class='mui-btn mui-btn--raised mui-btn--primary' id='modify'>" + '<i class="fa fa-pencil" aria-hidden="true"></i>'+ " Modify </button>"
+				var cancel_rsv = "<button style='background-color:#F32176' class='mui-btn mui-btn--raised mui-btn--primary' id='cancel'>" + '<i class="fa fa-times" aria-hidden="true"></i>' + " Cancel </button>"
 				
 				newCell1.innerHTML += modify_rsv;
 				newCell1.innerHTML += cancel_rsv;

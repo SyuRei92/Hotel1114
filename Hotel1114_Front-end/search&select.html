@@ -7,35 +7,44 @@
 		<!-- import CSS -->
 		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 		<link href="./css/common.css" rel="stylesheet" />
   </head>
   <body>
 		<div class="mui-appbar">
+<<<<<<< HEAD
 		<div class="mui--text-display3"><a href="./mainpage.html">Hotel 1114</a></div>
 			<div class="mui-dropdown">
-				<button class="mui-btn mui-btn" data-mui-toggle="dropdown">
+				<button class="mui-btn mui-btn" data-mui-toggle="dropdown" style="max-width:160px; padding:0">
+					<div class="mui-col-md-4"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					<div class="mui-col-md-8" style="padding-left:0; padding-right:10px">MENU</div>
+=======
+			<div id="title" class="mui--text-display3 mui-col-xs-10"><a href="./mainpage.html">Hotel 1114</a></div>
+			<div id="menu" class="mui-dropdown">
+				<button class="mui-btn mui-btn mui-col-xs-12" data-mui-toggle="dropdown">
 					MENU
 					<span class="mui-caret"></span>
+>>>>>>> f6455467847fb32c3ad4e56cf98b3bd2c5747c47
 				</button>
 				<ul class="mui-dropdown__menu mui-dropdown__menu--right">
 					<li><a href="./mainpage.html"> Make Reservation </a></li>
 					<li><a href="./search&select.html"> Search Reservation </a></li>
 				</ul>
 			</div>
-		</div>
+		</div>	
 		<div class="mui-container">
 			<div class="mui--text-display1"> Search a Reservation </div>
 			<div class="mui-panel">
 				<div class="mui-textfield mui-col-md-8">
 					<input type="text" name="condition" placeholder="예약번호/이름/이메일/전화번호" id="cond">
 				</div>
-				<button type="submit" class="mui-btn mui-btn--raised mui-btn--primary" id="search"> Search </button>
-				<table class="mui-table mui-table--bordered" id="reservations">
+				<button type="submit" class="mui-btn mui-btn--raised mui-btn--primary" id="search"> <i class="fa fa-search" aria-hidden="true"></i> Search </button>
+				<table class="mui-table mui-table--bordered" id="reservations" style="font-size:16px;">
 					<thead>
 						<th width=160px> Reservation Number </th>
-						<th width=60px> Name </th>
-						<th width=180px> E-mail address </th>
-						<th width=110px> Phone number </th>
+						<th width=60px> <i class="fa fa-user" aria-hidden="true"></i> Name </th>
+						<th width=180px> <i class="fa fa-envelope" aria-hidden="true"></i> E-mail address </th>
+						<th width=110px> <i class="fa fa-phone" aria-hidden="true"></i> Phone number </th>
 						<th width=100px></th>
 					</thead>
 					<tbody>

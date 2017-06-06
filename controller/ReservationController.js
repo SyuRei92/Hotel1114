@@ -11,7 +11,7 @@ const ContactManager=require('./ContactManager');
 //SeqD MakeReservation Step 09 arrives here
 // room: Rooms 객체, 예약할 종류별 방의 개수
 reservationController.reserve=
-	function(customerInfo, startDate,endDate,rooms,hotel,nextJob,failJob){
+	function(customerInfo, startDate,endDate,rooms,hotel,password,nextJob,failJob){
 	// TODO Check variables here
 
 	var startDate_reservation=new Date(startDate.getTime());
@@ -49,7 +49,7 @@ reservationController.reserve=
 		updater(startDate,endDate,function(){
 			// 객체 만들기
 			var reservation=new Reservation(0,0,startDate_reservation,endDate_reservation,rooms,
-					customerInfo,"","");
+					customerInfo,"","",password);
 			reservation.setNew();
 			//SeqD MakeReservation Step 16(createReservation)
 			dao.insert(reservation,function(id){nextJob(id);});
@@ -60,7 +60,23 @@ reservationController.reserve=
 
 // 예약 번호로 찾기
 reservationController.findReservationById=function(rid,nextJob){
+	console.log(rid);
 	dao.queryRid(rid,function(document){nextJob(document);});
+};
+
+//이름으로 찾기
+reservationController.findReservationByName=function(name,nextJob){
+	dao.queryName(name,function(document){nextJob(document);});
+};
+
+//Email로 찾기
+reservationController.findReservationByEmail=function(email,nextJob){
+	dao.queryEmail(email,function(document){nextJob(document);});
+};
+
+//전화번호로 찾기
+reservationController.findReservationByPhone=function(phone,nextJob){
+	dao.queryPhone(phone,function(document){nextJob(document);});
 };
 
 // 계정으로 찾기
@@ -128,9 +144,21 @@ reservationController.makePayment=function(){
 
 // 예약 취소하기
 // rid: 예약 번호
-// 컨트롤러 단에서 처리할 일은 특별히 없으며, DAO의 invalidate를 릴레이합니다.
 reservationController.cancelReservation=function(rid, nextJob){
-	dao.invalidate(rid, function(documents){nextJob(documents);});
+	reservationController.findReservationById(									// 1. 해당 id에 대한 예약이 있는지 확인합니다.
+		rid,															// 입력받은 id는 req.query.id로 넘어옵니다.
+		function(reservationObj) {
+			if (reservationObj == null){										// 2. 예약이 없다면 실패
+				nextJob(util.buildResponse(util.responseCode.FAILURE, null));
+				return;
+			}
+			dao.invalidate(rid, function(documents){
+				dao.updateRoomsByDateRange(reservationObj.startDate,reservationObj.endDate,
+						reservationObj.rooms.negate(),'Hotel1114',function(){
+					nextJob();
+				});
+			});
+	});
 };
 
 
@@ -161,8 +189,12 @@ reservationController.modifyReservation = function(rid, rooms_new, phoneNumber, 
 						nextJob(util.buildResponse(util.responseCode.FAILURE, null));
 						return;
 					}
-					dao.modifyReservation(rid, rooms, phoneNumber, function(){				// 4-2. DAO를 불러서 실제 예약을 진행합니다.
-						nextJob(util.buildResponse(util.responseCode.SUCCESS, null));		// 성공
+					console.log(rooms_new);
+					dao.modifyReservation(rid, rooms_new, phoneNumber, function(){				// 4-2. DAO를 불러서 실제 예약을 진행합니다.
+						dao.updateRoomsByDateRange(startDate,endDate,
+								rooms_new.subtract(rooms_old),'Hotel1114',function(){
+							nextJob(util.buildResponse(util.responseCode.SUCCESS, null));		// 성공
+						});
 					});	
 			});
 		}
