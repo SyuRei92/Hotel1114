@@ -6,58 +6,73 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<!-- import CSS -->
-		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<!--<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />-->
   	<link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet"/>
   	<style type="text/css">
 	  	body {
-				font-family: 'Hind', sans-serif;
-				background-color: #EEF4FF;
-			}
-			/* for mui */
-			.mui--text-display3 {
-			  margin: 0 auto;
-			  font-family: 'Barrio', cursive;
-			  font-size: 400%;
-				position: absolute;
-				top: 5px;
-				left: 10px;
-				display: inline;
-			}
-			.mui--text-display1 {
-			  font-weight: bold;
-				margin-bottom: 10px;
-			}
-			.mui-dropdown {
-				display: inline;
-				position: absolute;
-				top: 5px;
-				right: 10px;
-				float: right;
-				vertical-align: middle;
-			}
-			.mui-appbar {
-				margin 0 0 20px 0;
-			}
-			.mui-container {
-				margin-top: 20px;
-			}
-			th{
-				width: 110px;
-			}
-		</style>
+			font-family: 'Hind', sans-serif;
+			background-color: #EEF4FF;			
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 1.429;
+			color: rgba(0,0,0,.87);
+			margin:0;
+		}
+		.text-display3 {
+			margin: 0 auto;
+			font-family: 'Barrio', cursive;
+			font-size: 400%;
+			position: absolute;
+			top: 5px;
+			left: 10px;
+			display: inline;
+			color: white;
+			line-height: 56px;
+		}
+		.text-display1 {
+		  font-weight: bold;
+			margin-bottom: 10px;
+		}
+		.appbar {
+			margin 0 0 20px 0;
+			height:64px;
+			background-color: #2196F3
+		}
+		.container {
+			margin-top: 20px;
+			max-width: 1170px;
+
+			box-sizing: border-box;
+			margin-right: auto;
+			margin-left: auto;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		th{
+			width: 110px;
+		}
+		table{
+		    width: 100%;
+			max-width: 100%;
+			margin-bottom: 20px;
+		}
+		td{
+			padding: 10px;
+    		line-height: 1.429;
+		}
+	</style>
 	</head>
-	<!--<body style="background-image:url(./background/bg.png); background-repeat:no-repeat;">-->
 	<body>
-		<div class="mui-appbar">
-			<div class="mui--text-display3"> Hotel 1114 </div>
+		<div class="appbar">
+			<div class="text-display3"> Hotel 1114 </div>
 		</div>
-	  	<div class="mui-container">
+	  	<div class="container">
 			
-			<div class="mui--text-display1" style="font-size:25px"> Thank you for using our hotel!!</div>
-		  	<div class="mui--text-display1" style="font-size:15px; line-height:25px">
+			<div class="text-display1" style="font-size:25px"> Thank you for using our hotel!!</div>
+		  	<div class="text-display1" style="font-size:15px; line-height:25px">
 				Here is your reservation information. To modify or cancel the reservation, click the reservation number.
 		  	</div>
-			<table class="mui-table">
+			<table>
 				<tr>
 					<th rowspan=4><img src="./image/success.png"></th>
 				</tr>
@@ -74,7 +89,7 @@
 					<td><a href="/reservation/searchReservation?condition=<%=id%>"><%=id%></a></td>
 				</tr>
 			</table>
-			<table class="mui-table">
+			<table>
 				<tr> 
 					<td colspan=2 style="font-size:15px; font-weight:bold">Personal Information</td>
 				</tr>
