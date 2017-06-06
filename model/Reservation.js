@@ -3,7 +3,7 @@ const CustomerInfo=require('./CustomerInfo');
 
 module.exports=
 class Reservation { 
-	constructor(cid,timestamp,startDate,endDate,rooms,customerInfo,status,validity,id) {
+	constructor(cid,timestamp,startDate,endDate,rooms,customerInfo,status,validity,password,id) {
 		this.cid=cid;
 		this.timestamp=timestamp;
 		this.startDate=startDate; // - Date 형식의 체크인 날짜 (ex : “20170531”)
@@ -13,6 +13,7 @@ class Reservation {
 		this.status=status;
 		this.validity=validity;
 		this.id=id;
+		this.password=password;
 	}
 	/* Status-validity Table
 	 * Status		| Valid					| Invalid
@@ -55,7 +56,8 @@ class Reservation {
 			rooms:this.rooms.toJson(),
 			customerInfo:this.customerInfo.toJson(),
 			status:this.status,
-			validity:this.validity};
+			validity:this.validity,
+			password:this.password};
 		if(this.id) v.id=this.id;
 		return v;
 	}
@@ -63,7 +65,7 @@ class Reservation {
 		console.log(obj);
 		return new Reservation(obj.cid,obj.timestamp,obj.startDate,obj.endDate,
 			Rooms.buildFromJson(obj.rooms),CustomerInfo.buildFromJson(obj.customerInfo),
-			obj.status,obj.validity,obj._id);
+			obj.status,obj.validity,obj.password,obj._id);
 	}
 	static buildFromJsonArray(obj){
 		for(var i in obj) obj[i]=this.buildFromJson(obj[i]);

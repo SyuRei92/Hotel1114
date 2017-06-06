@@ -14,15 +14,16 @@ router.get('/new',function(req,res){
 //SeqD MakeReservation Step 09 Entrypoint
 router.get('/doReserve',function(req,res){
 	console.log("/doReserve");
+	console.log(req.query);
 	// 예약을 위한 컨트롤러를 실행하면서 입력받은 값들을 넘겨줍니다. 이 때 필요한 경우 클리스로 묶거나 형변환을 시켜 줍니다.
 	reservationController.reserve(
-		new CustomerInfo(req.query.name,req.query.email,req.query.phone),			// 고객 정보 클래스입니다.
+		new CustomerInfo(req.query.name,req.query.email,req.query.phoneNumber),			// 고객 정보 클래스입니다.
 		util.string2Date(req.query.startDate),										// 체크인 날짜입니다.
 		util.string2Date(req.query.endDate),										// 체크아웃 날짜입니다.
 		new Rooms(Number(req.query.singleRoom),										// 예약한 방의 개수 클래스입니다.
 			Number(req.query.doubleRoom),
 			Number(req.query.suiteRoom)),
-		'Hotel1114',																// 호텔명입니다.
+		'Hotel1114',req.query.password,												// 호텔명입니다.
 		function(result){															// 예약이 등록되었을 경우 수행할 작업입니다.
 			console.log("Reserving Succeed");
 			reservationController.pay(result.insertedId,null,						// ID를 이용하여 지불 절차에 들어갑니다.
