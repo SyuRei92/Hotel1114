@@ -73,6 +73,13 @@ reservationController.findReservationByStartDate=function(startDate,nextJob){
 	dao.queryStartDate(startDate,function(documents){
 		nextJob(documents);});
 };
+
+//아무거나 찾기
+reservationController.findReservation=function(x,nextJob){
+	dao.queryAnything(startDate,function(documents){
+		nextJob(documents);});
+};
+
 // 방 개수 가져오기
 //SeqD MakeReservation Step 04 arrives here
 //startDate:체크인 날짜, endDate:체크아웃 날짜, hotel:호텔, nextJob:다음에 처리할 일(인자 1개: 방 개수가 들어있는 Rooms)
