@@ -11,7 +11,7 @@ const ContactManager=require('./ContactManager');
 //SeqD MakeReservation Step 09 arrives here
 // room: Rooms 객체, 예약할 종류별 방의 개수
 reservationController.reserve=
-	function(customerInfo, startDate,endDate,rooms,hotel,nextJob,failJob){
+	function(customerInfo, startDate,endDate,rooms,hotel,password,nextJob,failJob){
 	// TODO Check variables here
 
 	var startDate_reservation=new Date(startDate.getTime());
@@ -49,7 +49,7 @@ reservationController.reserve=
 		updater(startDate,endDate,function(){
 			// 객체 만들기
 			var reservation=new Reservation(0,0,startDate_reservation,endDate_reservation,rooms,
-					customerInfo,"","");
+					customerInfo,"","",password);
 			reservation.setNew();
 			//SeqD MakeReservation Step 16(createReservation)
 			dao.insert(reservation,function(id){nextJob(id);});
