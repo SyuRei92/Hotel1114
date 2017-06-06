@@ -35,15 +35,13 @@ module.exports=function(){
 				function(result){console.log(result);console.log();nextJob(Reservation.buildFromJsonArray(result));});
 	};
 
-	// 2D. Search by ...Something?
-	// Input : Not decided yet
-	/*
-	reservationDao.queryAAAA=function(AAA, nextJob) {
-		db.find({???:AAA}).toArray().then(function(result) {
+	// 2D. Search by anything(rid, name, email, phoneNumber)
+	reservationDao.queryAnything=function(x, nextJob) {
+		db.find({$or:[{_id:new global.db.ObjectID(x)},
+			{name:x},{email:x},{phoneNumber:x}]}).toArray().then(function(result) {
 			nextJob(Reservation.buildFromJsonArray(result));
 		});
 	};
-	 */
 
 	// 3. Update
 	// 3A. Update reservation information
