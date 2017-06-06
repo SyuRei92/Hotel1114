@@ -13,25 +13,24 @@ ContactManager.sendComfirmMail=
 	var conn = require('nodemailer').createTransport(connArg);
 
 	console.log('Sendmail');
-	console.log(result);
-	// TODO Write mail contents here
-	var mailOptions = {  
-	    from: 'Hotel1114 <baek449.test@gmail.com>',
-	    to: result.customerInfo.email,
-	    subject: 'Hotel1114 Reservation Receipt',
-	    text: 'Thank you for reserving Hotel1114.'
-	    	+'\nReservation ID: '+result.id
-	    	+'\nName: '+result.customerInfo.name
-	    	+'\nEmail: '+result.customerInfo.email
-	    	+'\nPeriod: '+util.date2String(result.startDate)+'~'+util.date2String(result.endDate)
-	    	+'\nRooms: '+result.rooms.toString()
-	    	+'\nPayment: TBD'
-	};
-
-	conn.sendMail(mailOptions, function(error, response){
-	    if (error) console.log(error);
-	    else console.log("Message sent : " + response.message);
-	    conn.close();
+	console.log(result.toJson());
+	console.log(__dirname + '/mailform/confirm_mail.html');
+	require('ejs').renderFile(__dirname + '\\mailform\\confirm_mail.html',result,function(err,str){
+		// TODO Write mail contents here
+		if(err) console.error(err);
+		console.log(str);
+		var mailOptions = {  
+		    from: 'Hotel1114 <baek449.test@gmail.com>',
+		    to: result.customerInfo.email,
+		    subject: 'Hotel1114 Reservation Receipt',
+		    html:str
+		};
+		console.log(mailOptions.html);
+		conn.sendMail(mailOptions, function(error, response){
+		    if (error) console.log(error);
+		    else console.log("Message sent : " + response.message);
+		    conn.close();
+		});		
 	});
 };
 

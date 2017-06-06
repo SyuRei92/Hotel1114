@@ -13,7 +13,7 @@ router.get('/new',function(req,res){
 // 예약 실행
 //SeqD MakeReservation Step 09 Entrypoint
 router.get('/doReserve',function(req,res){
-	
+	console.log("/doReserve");
 	reservationController.reserve(
 			new CustomerInfo(req.query.name,req.query.email,req.query.phone),
 			util.string2Date(req.query.startDate),
@@ -22,15 +22,21 @@ router.get('/doReserve',function(req,res){
 					Number(req.query.doubleRoom),
 					Number(req.query.suiteRoom)),
 			'Hotel1114', function(result){
+				console.log("Reserving Succeed");
+				reservationController.pay(result.insertedId,null,
+					function(documents){
+						res.json(util.buildResponse(util.responseCode.SUCCESS,null));
+					}); // json 형식으로 뿌리도록 나중에 바꿔야 함
+				/*
 					//SeqD MakeReservation Step 17(showPaymentForm) Exitpoint (Will be changed later to JSON Response)
-					console.log("Reserving Succeed");
 					res.redirect('/payment.html?id='+result.insertedId);},
 					function(responseCode){
 						console.log("Reserving Failed");
 						//SeqD MakeReservation Step 10 and 13
 						// TODO notify the code to the customer
 						console.log(responseCode);
-					});
+					});*/
+			});
 });
 
 // 계정의 예약 목록
@@ -125,6 +131,7 @@ router.get('/modifyReservation', function(req, res) {
 				res.json(util.buildResponse(util.responseCode.FAILURE, null)); // 정확한 문구 아직 모름
 			}
 			// part 2-2
+			/*
 			else {
 				// part 3-1
 				startDate = 
@@ -158,6 +165,7 @@ router.get('/modifyReservation', function(req, res) {
 					);
 				}
 			}
+			*/
 		}
 	)
 });
