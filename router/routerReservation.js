@@ -2,6 +2,7 @@ var router=require('express').Router();
 const Rooms=require('../model/Rooms');
 const CustomerInfo=require('../model/CustomerInfo');
 const util=require('../controller/HotelUtil');
+const Reservation = require('../model/Reservation')
 
 const reservationController=require('../controller/ReservationController');
 	
@@ -119,22 +120,22 @@ router.get('/searchReservation', function(req,res) {
 	switch(req.query.search_type) {
 		case 'rid':
 			reservationController.findReservationById(req.query.condition, fucntion(resultArray) {
-				res.json(util.buildResponse(util.responseCode.SUCCESS, resultArray));
+				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'name':
 			reservationController.findReservationByName(req.query.condition, fucntion(resultArray) {
-				res.json(util.buildResponse(util.responseCode.SUCCESS, resultArray));
+				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'e-mail':
 			reservationController.findReservationByEmail(req.query.condition, fucntion(resultArray) {
-				res.json(util.buildResponse(util.responseCode.SUCCESS, resultArray));
+				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'phone':
 			reservationController.findReservationByPhone(req.query.condition, fucntion(resultArray) {
-				res.json(util.buildResponse(util.responseCode.SUCCESS, resultArray));
+				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		default:
