@@ -48,7 +48,7 @@ class Reservation {
 			"\nReserved At: "+this.timestamp;
 	}
 	toJson(){
-		return {cid:this.cid,
+		var v={cid:this.cid,
 			timestamp:this.timestamp,
 			startDate:this.startDate,
 			endDate:this.endDate,
@@ -56,6 +56,8 @@ class Reservation {
 			customerInfo:this.customerInfo.toJson(),
 			status:this.status,
 			validity:this.validity};
+		if(this.id) v.id=this.id;
+		return v;
 	}
 	static buildFromJson(obj){
 		console.log(obj);

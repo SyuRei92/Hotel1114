@@ -39,6 +39,7 @@ $(document).ready(function () {
 	
 	function bindEvents() {
 		$("#payment_complete").on("click", function() {
+			alert('click');
 			sendReserveInfo(reserve_info);
 		});
 	}

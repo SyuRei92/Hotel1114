@@ -37,12 +37,13 @@ module.exports=function(){
 
 	// 2D. Search by ...Something?
 	// Input : Not decided yet
+	/*
 	reservationDao.queryAAAA=function(AAA, nextJob) {
 		db.find({???:AAA}).toArray().then(function(result) {
 			nextJob(Reservation.buildFromJsonArray(result));
 		});
 	};
-
+	 */
 
 	// 3. Update
 	// 3A. Update reservation information
@@ -77,7 +78,7 @@ module.exports=function(){
 
 	// 4. Modification
 	// 넘겨준 방 정보를 변경
-
+/*
 	reservationDao.modifyReservation = function(rid, phoneNumber, ???) {
 		db.updateOne(
 			{_id: rid},
@@ -87,7 +88,7 @@ module.exports=function(){
 			}
 		).then(nextJob);
 	};
-	
+	*/
 	// 5. Aggregation
 	// 5A. 호텔의 전체 방 개수를 질의한다.
 	// hotel:호텔, nextJob:다음에 처리할 일(인자 1개: Rooms)
