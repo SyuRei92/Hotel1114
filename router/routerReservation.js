@@ -14,58 +14,51 @@ router.get('/new',function(req,res){
 //SeqD MakeReservation Step 09 Entrypoint
 router.get('/doReserve',function(req,res){
 	console.log("/doReserve");
+	// 예약을 위한 컨트롤러를 실행하면서 입력받은 값들을 넘겨줍니다. 이 때 필요한 경우 클리스로 묶거나 형변환을 시켜 줍니다.
 	reservationController.reserve(
-			new CustomerInfo(req.query.name,req.query.email,req.query.phone),
-			util.string2Date(req.query.startDate),
-			util.string2Date(req.query.endDate),
-			new Rooms(Number(req.query.singleRoom),
-					Number(req.query.doubleRoom),
-					Number(req.query.suiteRoom)),
-			'Hotel1114', function(result){
-				console.log("Reserving Succeed");
-				reservationController.pay(result.insertedId,null,
-					function(documents){
-						res.json(util.buildResponse(util.responseCode.SUCCESS,null));
-					}); // json 형식으로 뿌리도록 나중에 바꿔야 함
-				/*
-					//SeqD MakeReservation Step 17(showPaymentForm) Exitpoint (Will be changed later to JSON Response)
-					res.redirect('/payment.html?id='+result.insertedId);},
-					function(responseCode){
-						console.log("Reserving Failed");
-						//SeqD MakeReservation Step 10 and 13
-						// TODO notify the code to the customer
-						console.log(responseCode);
-					});*/
-			});
+		new CustomerInfo(req.query.name,req.query.email,req.query.phone),			// 고객 정보 클래스입니다.
+		util.string2Date(req.query.startDate),										// 체크인 날짜입니다.
+		util.string2Date(req.query.endDate),										// 체크아웃 날짜입니다.
+		new Rooms(Number(req.query.singleRoom),										// 예약한 방의 개수 클래스입니다.
+			Number(req.query.doubleRoom),
+			Number(req.query.suiteRoom)),
+		'Hotel1114',																// 호텔명입니다.
+		function(result){															// 예약이 등록되었을 경우 수행할 작업입니다.
+			console.log("Reserving Succeed");
+			reservationController.pay(result.insertedId,null,						// ID를 이용하여 지불 절차에 들어갑니다.
+				function(documents){												// 지불 절차가 끝났을 경우 수행할 작업입니다.
+					res.json(util.buildResponse(util.responseCode.SUCCESS,null));	// 클라이언트에 성공했음을 알려줍니다.
+				}
+			);
+		}
+	);
 });
 
 // 계정의 예약 목록
 router.get('/list',function(req,res){
 	reservationController.findReservationByAccount('baek449@gmail.com',
-			function(documents){res.render('reservationList.html',{result:documents})});
+		function(documents){res.render('reservationList.html',{result:documents})});
 });
 
 //예약 기간에 대한 방 개수
 //SeqD MakeReservation Step 04 Entrypoint
 router.get('/available',function(req,res){
 	//SeqD MakeReservation Step 04
-	var d=reservationController.availableRooms(util.string2Date(req.query.startDate),
+	var d=reservationController.availableRooms(util.string2Date(req.query.startDate),	// 날짜로부터 예약 가능한 방 개수를 가져옵니다.
 			util.string2Date(req.query.endDate),'Hotel1114',
-		function(documents){
-			
-			if(!documents.isValid()){ // opt RoomCheck
-				// 사용 가능한 방이 없는 경우
+		function(documents){															// 방 개수를 가져온 다음에 수행할 작업입니다.
+			if(!documents.isValid()){													// 사용 가능한 방이 없는 경우(opt RoomCheck)
 				//SeqD MakeReservation Step 07(No Available Rooms) Exitpoint
-				res.json(util.buildResponse(util.responseCode.NO_ROOM,null));
+				res.json(util.buildResponse(util.responseCode.NO_ROOM,null));			// 클라이언트에 방이 없음을 알려줍니다.
 				return;
 			}
 			//SeqD MakeReservation Step 08(Show Available Rooms) Exitpoint
-			res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));
+			res.json(util.buildResponse(util.responseCode.SUCCESS,documents.toJson()));	// 클라이언트에 남은 방의 개수를 알려줍니다.
 			//res.render('remainingRooms.html',{result:documents});
 		});
 });
 
-// 결졔
+// 결졔 (직접 사용되지 않음)
 //SeqD MakeReservation Step 18 Entrypoint
 router.get('/pay',function(req,res){
 	reservationController.pay(req.query.id,null,
@@ -75,36 +68,26 @@ router.get('/pay',function(req,res){
 
 //시작날짜에 해당하는 예약 목록
 router.get('/listOfDate',function(req,res){
-	reservationController.findReservationByStartDate(
+	reservationController.findReservationByStartDate(									// 오늘 체크인하는 예약의 목록을 가져옵니다.
 		util.string2Date(req.query.startDate),
-		function(documents){console.log("type");console.log(util.buildResponse(util.responseCode.SUCCESS,documents));res.json(util.buildResponse(util.responseCode.SUCCESS,documents));});
+		function(documents){
+			console.log("type");
+			console.log(util.buildResponse(util.responseCode.SUCCESS,documents));
+			res.json(util.buildResponse(util.responseCode.SUCCESS,documents));
+		});
 });
 
 // 예약 취소
 router.get('/cancelReservation',function(req,res){
-	// 1. 해당 req.rid에 대한 예약이 있는지 확인
-	// 2-1. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
-	// 2-2. 정상적으로 있다면 reservationController에 있는 함수 cancelReservation을 실행
-	// 3-1. 성공했다면 res에 성공했다고 보냄
-	// 3.2. 실패했다면 res에 실패한 이유를 보냄. 실패하는 경우가 있는지 모르겠어서 일단 안 함.
-
-	// part 1
-	reservationController.findReservationById(
-		req.rid,
-		function(reservationObj){
-			// part 2-1
-			if (reservationObj == null) {
-				res.json(util.buildResponse(util.responseCode.FAILURE,null)); //정확한 문구 아직 모름
+	reservationController.cancelReservation(									// 1. 취소 시도를 합니다.
+		req.query.id,															// 입력받은 id는 req.query.id로 넘어옵니다.
+		function(r){
+			console.log(r);
+			if (r == null){
+				res.json(util.buildResponse(util.responseCode.FAILURE,null));	// 2-1. 실패
+				return;
 			}
-			// part 2-2
-			else {
-				reservationController.cancelReservation(
-					req.rid,
-					function(documents) {
-						// part 3-1
-						res.json(util.buildResponse(util.responseCode.SUCCESS,null)); //정확한 문구 아직 모름
-					});
-			}
+			res.json(util.buildResponse(util.responseCode.SUCCESS,null));		// 2-2. 성공
 		}
 	);
 });
@@ -112,62 +95,31 @@ router.get('/cancelReservation',function(req,res){
 
 // 예약 변경
 router.get('/modifyReservation', function(req, res) {
-	// 1. 해당 req.rid에 해당하는 예약이 있는지 확인
-	// 2-1. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
-	// 2-2. 보내온 방 갯수가 사용 가능한 방 갯수인지 확인. 불가능하면 response하고 종료
-	// 3-1. 기존 예약의 시작날짜/종료날짜, 각 방의 갯수를 획득.
-	// 3-2. 해당 날짜의 남은 방 갯수를 획득 후 기존 예약의 방 갯수를 가산.(예약 가능한 방의 갯수를 계산)
-	// 4-1. 방의 갯수가 너무 많아서 예약이 불가능하면 불가능하다고 응답하고 종료.
-	// 4-2. 정상적인 방 갯수라면 reservationController에 있는 함수 modifyReservation을 실행. 근데 Rooms는 어떻게 넘겨줘야 할 지 고민중.
-	// 5-1. 성공했다면 res에 성공했다고 보냄
-	// 5-2. 실패했다면 res에 실패한 이유를 보냄. 실패하는 경우가 있는지 모르겠어서 일단 안 함.
+	// 0. 입력값을 변환하고 검증합니다.
+	var rooms_new=new Rooms(Number(req.query.singleRoom),						// 새롭게 예약한 방의 개수 클래스입니다.
+		Number(req.query.doubleRoom),
+		Number(req.query.suiteRoom));
+	if(!rooms.isValid()){														// 0-1. 음수 방이 있거나 방의 총 개수가 0이면
+		res.json(util.buildResponse(util.responseCode.FAILURE, null));			// 클라이언트에 실패했음을 알려줍니다.
+		return;
+	}
+	reservationController.modifyReservation(req.query.id,						// 1. 해당 id에 대한 예약 변경을 시도합니다.
+			rooms_new,req.query.phoneNumber,function(r){
+		res.json(r);															// 그 결과를 클라이언트에 전달합니다.
+	});
 
-	// part 1
-	reservationController.findReservationById(
-		req.rid,
-		function(reservationObj) {
-			// part 2-1
-			if (reservationObj == null) {
-				res.json(util.buildResponse(util.responseCode.FAILURE, null)); // 정확한 문구 아직 모름
-			}
-			// part 2-2
-			/*
-			else {
-				// part 3-1
-				startDate = 
-				endDate = 
-				singleRoom = 
-				doubleRoom = 
-				suiteRoom = 
+});
 
-				// part 3-2
-				reservationController.availableRooms(startDate, endDate); // 변수 더 필요하니 확인
-				singleRoom += 
-				doubleRoom += 
-				suiteRoom += 
+//예약 검색
+router.get('/search/:x',function(req,res){
+	reservationController.findReservation(req.params.x,
+		function(documents){res.json({result:documents});});
+});
 
-				// part 4-1
-				if (싱글룸 > singleRoom || 더블룸 > doubleRoom || 스위트룸 > suiteRoom) {
-					res.json(util.buildResponse(util.responseCode.FAILURE, null)); // 방을 너무 많이 선택했다!
-				}
-				// part 4-2
-				else {
-					reservationController.modifyReservation(
-						reservationController.modifyReservation(
-							reservationObj,
-							전화번호,
-							변경된 방,
-							function(documents) {
-								// part 5-1
-								res.json(util.buildResponse(util.responseCode.SUCCESS, null));
-							}
-						)
-					);
-				}
-			}
-			*/
-		}
-	)
+//예약 번호에 대한 내역 가져오기
+router.get('/get/:rid',function(req,res){
+	reservationController.findReservationById(req.params.rid,
+		function(document){res.json({result:document});});
 });
 
 module.exports = router;
