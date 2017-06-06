@@ -2,6 +2,15 @@ body {
 	font-family: 'Hind', sans-serif;
 	background-color: #EEF4FF;
 }
+a{
+	color: white;
+}
+a:link{
+	text-decoration: none;
+}
+a:hover{
+	color: white;
+}
 
 /* for mui */
 .mui--text-display3 {
@@ -32,14 +41,3 @@ body {
 	margin-top: 20px;
 }
 
-a{
-	color: white;
-}
-
-a:link{
-	text-decoration: none;
-}
-
-a:hover{
-	color: white;
-}

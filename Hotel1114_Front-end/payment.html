@@ -8,7 +8,7 @@
 		<link href="https://cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Barrio|Hind" rel="stylesheet" />
 		<link href="./css/common.css" rel="stylesheet" />
-		<link href="./css/mainpage.css" rel="stylesheet" />
+		<link href="./css/payment.css" rel="stylesheet" />
   </head>
 	<body>
 		<div class="mui-appbar">
@@ -28,14 +28,14 @@
 			<div class="mui-col-xs-12 mui-col-md-6">
 				<div class="mui-panel">
 					<div class="mui--text-headline"> Reservation Information </div>
-					<div id="reservationInfo"> Your reservation info should be displayed here </div>
+					<div id="reservationInfo"></div>
 				</div>
 			</div>
 			<div class="mui-col-xs-12 mui-col-md-6">
 				<div class="mui-panel">
 					<div class="mui--text-headline"> Payment </div>
+					<div class="mui--text-body2"> Please, select a payment method </div>
 					<form action="./complete.html">
-						<div class="mui--text-caption"> Please, select a payment method </div>
 						<ul class="mui-tabs__bar">
 							<li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="credit"> Credit Card </a></li>
 							<li><a data-mui-toggle="tab" data-mui-controls="virtual_acc"> Virtual Account </a></li>
@@ -46,12 +46,8 @@
 						<div class="mui-tabs__pane" id="virtual_acc">
 							<div> Payment Details of Virtual Account </div>
 						</div>
-						<!-- to test linking to complete page, remove style attribute style="display:none;" -->
-						<input type="checkbox" id="payment_checker"  required>
-						
-						<input type="submit" id="to_complete" > 
+						<button type="submit" id="payment_complete" class="mui-btn mui-btn--raised mui-btn--accent mui-col-xs-12 mui-col-md-6" > Confirm </button>
 					</form>
-					<button class="mui-btn mui-btn--raised mui-btn--accent mui-col-xs-12 mui-col-md-6" id="payment_complete"> Confirm </button>
 				</div>
 			</div>
 		</div>
