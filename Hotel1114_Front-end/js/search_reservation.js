@@ -66,7 +66,7 @@ $(document).ready(function(){
 	
 	function queryModify(rid, singleRoom, doubleRoom, suiteRoom, phone){
 		$.getJSON('http://'+document.location.host+'/reservation/modifyReservation'
-				  +'?rid='+rid+'?singleRoom='+singleRoom+'?doubleRoom='+doubleRoom+'?suiteRoom='+suiteRoom+'?phone='+phone, modify_rsv);
+				  +'?rid='+rid+'&singleRoom='+singleRoom+'&doubleRoom='+doubleRoom+'&suiteRoom='+suiteRoom+'&phone='+phone, modify_rsv);
 	}
 	
 	function searchReservation(){
@@ -81,7 +81,7 @@ $(document).ready(function(){
 		else search_type = "name"; // 이름엔 숫자가 안 들어간다고 가정했습니다.
 		
 		$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
-				  +'?condition='+cond+'?search_type='+search_type, search_rsv);
+				  +'?condition='+cond+'&search_type='+search_type, search_rsv);
 		//search_rsv();
 	}
 	

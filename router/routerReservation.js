@@ -117,24 +117,25 @@ router.get('/modifyReservation', function(req, res) {
 // query.search_type : {"rid", "name", "e-mail", "phone"} 중 하나
 // search_type을 확인하여 맞는 컨트롤러 함수를 실행
 router.get('/searchReservation', function(req,res) {
+	console.log(req.query);
 	switch(req.query.search_type) {
 		case 'rid':
-			reservationController.findReservationById(req.query.condition, fucntion(resultArray) {
+			reservationController.findReservationById(req.query.condition, function(resultArray) {
 				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'name':
-			reservationController.findReservationByName(req.query.condition, fucntion(resultArray) {
+			reservationController.findReservationByName(req.query.condition, function(resultArray) {
 				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'e-mail':
-			reservationController.findReservationByEmail(req.query.condition, fucntion(resultArray) {
+			reservationController.findReservationByEmail(req.query.condition, function(resultArray) {
 				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
 		case 'phone':
-			reservationController.findReservationByPhone(req.query.condition, fucntion(resultArray) {
+			reservationController.findReservationByPhone(req.query.condition, function(resultArray) {
 				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
 			});
 			break;
