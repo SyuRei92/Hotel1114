@@ -78,17 +78,16 @@ module.exports=function(){
 
 	// 4. Modification
 	// 넘겨준 방 정보를 변경
-/*
-	reservationDao.modifyReservation = function(rid, phoneNumber, ???) {
+	reservationDao.modifyReservation = function(rid, rooms, phoneNumber, nextJob) {
 		db.updateOne(
 			{_id: rid},
 			{
-				$set: {전화번호: 전화번호, 각 방 종류: 갯수},
+				$set: {phoneNumber: phoneNumber, rooms: rooms.toJson()},
 				$currentDate: {lastModified: true}
 			}
 		).then(nextJob);
 	};
-	*/
+	
 	// 5. Aggregation
 	// 5A. 호텔의 전체 방 개수를 질의한다.
 	// hotel:호텔, nextJob:다음에 처리할 일(인자 1개: Rooms)
