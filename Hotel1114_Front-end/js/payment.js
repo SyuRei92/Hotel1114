@@ -11,7 +11,8 @@ function convertDate(date) {
 	var year = date_form[0];
 	var month = date_form[1];
 	var day = date_form[2];
-	var month_dic = {"01": "January", "02": "Febuary", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December"};
+	var month_dic = {"01": "January", "02": "Febuary", "03": "March", "04": "April", "05": "May", "06": "June", "07": "July", "08": "August", "09": "September", "10": "October", "11": "November", "12": "December",
+			"1": "January", "2": "Febuary", "3": "March", "4": "April", "5": "May", "6": "June", "7": "July", "8": "August", "9": "September"};
 	return month_dic[month] + " " + day + ", " + year;
 	
 }
@@ -31,8 +32,11 @@ $(document).ready(function () {
 			return vars;
 	}
 	function sendReserveInfo (reserveInfo) {
-		var query = 'http://' + document.location.host + '/reservation/doReserve';
-		query = query + '?startDate=' + reserveInfo["startDate"];
+		var query = 'http://' + document.location.host + '/reservation/doReserve?a=0';
+		if (typeof reserveInfo["rid"] !== "undefined") {
+			query = 'http://' + document.location.host + '/reservation/modifyReservation?rid='+reserveInfo["rid"];
+		}
+		query = query + '&startDate=' + reserveInfo["startDate"];
 		query = query + '&endDate=' + reserveInfo["endDate"];
 		query = query + '&singleRoom=' + reserveInfo["singleRoom"];
 		query = query + '&doubleRoom=' + reserveInfo["doubleRoom"];

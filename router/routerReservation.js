@@ -82,7 +82,7 @@ router.get('/listOfDate',function(req,res){
 // 예약 취소
 router.get('/cancelReservation',function(req,res){
 	reservationController.cancelReservation(									// 1. 취소 시도를 합니다.
-		req.query.id,															// 입력받은 id는 req.query.id로 넘어옵니다.
+		req.query.rid,															// 입력받은 id는 req.query.id로 넘어옵니다.
 		function(r){
 			console.log(r);
 			if (r == null){
@@ -101,11 +101,12 @@ router.get('/modifyReservation', function(req, res) {
 	var rooms_new=new Rooms(Number(req.query.singleRoom),						// 새롭게 예약한 방의 개수 클래스입니다.
 		Number(req.query.doubleRoom),
 		Number(req.query.suiteRoom));
-	if(!rooms.isValid()){														// 0-1. 음수 방이 있거나 방의 총 개수가 0이면
+	if(!rooms_new.isValid()){														// 0-1. 음수 방이 있거나 방의 총 개수가 0이면
 		res.json(util.buildResponse(util.responseCode.FAILURE, null));			// 클라이언트에 실패했음을 알려줍니다.
 		return;
 	}
-	reservationController.modifyReservation(req.query.id,						// 1. 해당 id에 대한 예약 변경을 시도합니다.
+	console.log(req.query);
+	reservationController.modifyReservation(req.query.rid,						// 1. 해당 id에 대한 예약 변경을 시도합니다.
 			rooms_new,req.query.phoneNumber,function(r){
 		res.json(r);															// 그 결과를 클라이언트에 전달합니다.
 	});

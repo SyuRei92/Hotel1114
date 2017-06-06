@@ -148,7 +148,7 @@ $(document).ready(function(){
 			if (newsingle != rsv_list[detailed_row-2][4][0] || newdouble != rsv_list[detailed_row-2][4][1] || newsuite != rsv_list[detailed_row-2][4][2]){
 				alert("Modified Complete. Your payment before will be refunded.");
 				// go to payment page
-				window.location.href = "./payment.html?startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
+				window.location.href = "./payment.html?rid="+rsv_list[detailed_row-2][1]+"&startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
 					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&guest-number=1&name="+rsv_list[detailed_row-2][0][0]+
 					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][5];
 			}
@@ -157,7 +157,7 @@ $(document).ready(function(){
 				window.location.reload();
 			}
 			
-			queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
+			//queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
 		}
 	});
 	
