@@ -83,10 +83,10 @@ $(document).ready(function(){
 			else search_type = "phone";
 		}
 		else search_type = "name"; // 이름엔 숫자가 안 들어간다고 가정했습니다.
-		/*$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
-				  +'?condition='+cond+'&search_type='+search_type, search_rsv);*/
-		search_rsv();
 
+		$.getJSON('http://'+document.location.host+'/reservation/searchReservation'
+				  +'?condition='+cond+'&search_type='+search_type, search_rsv);
+		//search_rsv();
 	}
 	
 	$(document).on("click", "#search", searchReservation);
@@ -162,7 +162,6 @@ $(document).ready(function(){
 			if (newsingle != rsv_list[detailed_row-2][3][0] || newdouble != rsv_list[detailed_row-2][3][1] || newsuite != rsv_list[detailed_row-2][3][2]){
 				alert("Modified Complete. Your payment before will be refunded.");
 				// go to payment page
-
 				window.location.href = "./payment.html?startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
 					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&rid="+rsv_list[detailed_row-2][1]+"&name="+rsv_list[detailed_row-2][0][0]+
 					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][4];
