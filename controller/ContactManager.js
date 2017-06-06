@@ -15,7 +15,7 @@ ContactManager.sendComfirmMail=
 	console.log('Sendmail');
 	console.log(result.toJson());
 	console.log(__dirname + '/mailform/confirm_mail.html');
-	require('ejs').renderFile(__dirname + '\\mailform\\confirm_mail.html',result,function(err,str){
+	require('ejs').renderFile(__dirname + '/mailform/confirm_mail.html',result,function(err,str){
 		// TODO Write mail contents here
 		if(err) console.error(err);
 		console.log(str);

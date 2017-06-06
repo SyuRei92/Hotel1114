@@ -66,7 +66,7 @@ class Reservation {
 		//응답의 format은 아래처럼 해주셨으면 합니다.
 		// [["김현성", "010-6545-5483", "hskimbusan@kaist.ac.kr"], "12345", ["2017/01/01", "2017/01/02"], 2, [2, 0, 0], 1234];
 		return [[this.customerInfo.name,this.customerInfo.phoneNumber,this.customerInfo.email],this.id,
-			[Util.date2String(this.startDate),Util.date2String(this.endDate)],0,
+			[Util.date2String(this.startDate),Util.date2String(this.endDate)],
 			[this.rooms.singleRoom,this.rooms.doubleRoom,this.rooms.suiteRoom],this.password];
 	}
 	static buildFromJson(obj){

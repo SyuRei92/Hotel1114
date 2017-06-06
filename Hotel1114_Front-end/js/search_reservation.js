@@ -70,7 +70,7 @@ $(document).ready(function(){
 	
 	function queryModify(rid, singleRoom, doubleRoom, suiteRoom, phone){
 		$.getJSON('http://'+document.location.host+'/reservation/modifyReservation'
-				  +'?rid='+rid+'&singleRoom='+singleRoom+'&doubleRoom='+doubleRoom+'&suiteRoom='+suiteRoom+'&phone='+phone, modify_rsv);
+				  +'?rid='+rid+'&singleRoom='+singleRoom+'&doubleRoom='+doubleRoom+'&suiteRoom='+suiteRoom+'&phoneNumber='+phone, modify_rsv);
 	}
 	
 	function searchReservation(){
@@ -209,7 +209,8 @@ $(document).ready(function(){
 	
 	function showDetail(i){
 		var pwd = prompt("Please enter reservation password:", '');
-		
+		alert(pwd);
+		alert(rsv_list[i][4]);
 		if (pwd != null){
 			if (pwd == rsv_list[i][4]){
 				detailed_row = i+2;

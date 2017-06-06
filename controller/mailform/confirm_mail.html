@@ -74,11 +74,11 @@
 		  	</div>
 			<table>
 				<tr>
-					<th rowspan=4><img src="./image/success.png"></th>
+					<th rowspan=4><img src="http://52.79.95.49:23400/success.png"></th>
 				</tr>
 				<tr>
 					<th style="font-size:20px"> Date : </th>
-					<td style="font-size:20px"> <%=''+startDate+','+endDate%> </td>
+					<td style="font-size:20px"> <%=''+startDate.toISOString().slice(0,10)+'~'+endDate.toISOString().slice(0,10)%> </td>
 				</tr>
 				<tr>
 					<th style="font-size:20px"> Rooms : </th>
