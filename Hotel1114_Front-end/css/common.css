@@ -11,28 +11,28 @@ a:link{
 a:hover{
 	color: white;
 }
-
-/* for mui */
-.mui--text-display3 {
+#title {
   margin: 0 auto;
   font-family: 'Barrio', cursive;
-  font-size: 400%;
+  font-size: 30pt;
 	position: absolute;
 	top: 5px;
 	left: 10px;
-	display: inline;
+	overflow: hidden;
+	white-space: nowrap;
 }
-.mui--text-display1 {
-  font-weight: bold;
-	margin-bottom: 10px;
-}
-.mui-dropdown {
+#menu {
 	display: inline;
 	position: absolute;
 	top: 5px;
 	right: 10px;
 	float: right;
 	vertical-align: middle;
+}
+/* for mui */
+.mui--text-display1 {
+  font-weight: bold;
+	margin-bottom: 10px;
 }
 .mui-appbar {
 	margin 0 0 20px 0;
