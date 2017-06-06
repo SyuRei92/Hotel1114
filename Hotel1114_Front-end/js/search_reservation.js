@@ -78,7 +78,7 @@ $(document).ready(function(){
 		var search_type;
 		
 		if (cond.split('@').length == 2) search_type = "e-mail";
-		else if (!/[A-Za-z]/.test(cond)) {
+		else if (/\d/.test(cond)) {
 			if (cond.length == 24) search_type = "rid";
 			else search_type = "phone";
 		}
