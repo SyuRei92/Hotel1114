@@ -21,10 +21,31 @@ module.exports=function(){
 	reservationDao.queryRid=function(rid,nextJob){
 		db.findOne({_id:new global.db.ObjectID(rid)},{},function(err,r){nextJob(Reservation.buildFromJson(r));});
 	};
+	// 2A-2. Search by reservation customer name
+	// Input: name, nextJob(function(Reservation[]))
+	reservationDao.queryName=function(name,nextJob){
+		db.find({"customerInfo.name":name}).toArray().then(
+				function(result){nextJob(Reservation.buildFromJsonArray(result));
+				});
+	};
+	// 2A-3. Search by reservation customer email
+	// Input: email, nextJob(function(Reservation[]))
+	reservationDao.queryEmail=function(email,nextJob){
+		db.find({"customerInfo.email":email}).toArray().then(
+				function(result){nextJob(Reservation.buildFromJsonArray(result));
+				});
+	};
+	// 2A-4. Search by reservation customer phone
+	// Input: phone, nextJob(function(Reservation[]))
+	reservationDao.queryPhone=function(phone,nextJob){
+		db.find({"customerInfo.phoneNumber":phone}).toArray().then(
+				function(result){nextJob(Reservation.buildFromJsonArray(result));
+				});
+	};
 	// 2B. Search by reservation customer ID(cid)
 	// Input: cid(customer ID), nextJob(function(Reservation[]))
 	reservationDao.queryCid=function(cid,nextJob){
-		db.find({"customerInfo.email":cid}).toArray().then(
+		db.find({"customerInfo.id":cid}).toArray().then(
 				function(result){nextJob(Reservation.buildFromJsonArray(result));
 				});
 	};
