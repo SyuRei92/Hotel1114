@@ -105,12 +105,10 @@ router.get('/modifyReservation', function(req, res) {
 		res.json(util.buildResponse(util.responseCode.FAILURE, null));			// 클라이언트에 실패했음을 알려줍니다.
 		return;
 	}
-	console.log(req.query);
 	reservationController.modifyReservation(req.query.rid,						// 1. 해당 id에 대한 예약 변경을 시도합니다.
 			rooms_new,req.query.phoneNumber,function(r){
 		res.json(r);															// 그 결과를 클라이언트에 전달합니다.
 	});
-
 });
 
 // 예약 검색
@@ -150,6 +148,14 @@ router.get('/searchReservation', function(req,res) {
 router.get('/get/:rid',function(req,res){
 	reservationController.findReservationById(req.params.rid,
 		function(document){res.json({result:document});});
+});
+
+//전화번호 업데이트
+router.get('/modifyPhone',function(req,res){
+	reservationController.modifyPhone(req.query.rid,						// 1. 해당 id에 대한 예약 변경을 시도합니다.
+			req.query.phoneNumber,function(r){
+		res.json(r);															// 그 결과를 클라이언트에 전달합니다.
+	});
 });
 
 module.exports = router;

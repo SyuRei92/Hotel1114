@@ -172,13 +172,16 @@ $(document).ready(function(){
 				// go to payment page
 				window.location.href = "./payment.html?startDate="+rsv_list[detailed_row-2][2][0]+"&endDate="+rsv_list[detailed_row-2][2][1]+
 					"&singleRoom="+newsingle+"&doubleRoom="+newdouble+"&suiteRoom="+newsuite+"&rid="+rsv_list[detailed_row-2][1]+"&name="+rsv_list[detailed_row-2][0][0]+
-					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+rsv_list[detailed_row-2][0][1]+"&password="+rsv_list[detailed_row-2][4];
+					"&email="+rsv_list[detailed_row-2][0][2]+"&phoneNumber="+newphone+"&password="+rsv_list[detailed_row-2][4];
 			}
 			else {
-				alert("Modified Complete.");
-				window.location.reload();
+				var query = 'http://' + document.location.host + '/reservation/modifyPhone?rid='
+					+ rsv_list[detailed_row-2][1]+'&phoneNumber='+newphone;
+				$.getJSON(query,function(result){
+					alert("Modification Complete.");
+					window.location.reload();
+				});
 			}
-			
 			//queryModify(rsv_list[detailed_row-2][1], newsingle, newdouble, newsuite, newphone);
 		}
 	});

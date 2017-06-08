@@ -189,7 +189,6 @@ reservationController.modifyReservation = function(rid, rooms_new, phoneNumber, 
 						nextJob(util.buildResponse(util.responseCode.FAILURE, null));
 						return;
 					}
-					console.log(rooms_new);
 					dao.modifyReservation(rid, rooms_new, phoneNumber, function(){				// 4-2. DAO를 불러서 실제 예약을 진행합니다.
 						dao.updateRoomsByDateRange(startDate,endDate,
 								rooms_new.subtract(rooms_old),'Hotel1114',function(){
@@ -201,4 +200,26 @@ reservationController.modifyReservation = function(rid, rooms_new, phoneNumber, 
 	);
 };
 
+reservationController.modifyPhone = function(rid, phoneNumber, nextJob) {
+	// 1. 해당 req.rid에 해당하는 예약이 있는지 확인
+	// 2. req.rid에 대한 예약이 없다면 res에 해당 번호의 예약이 없음을 보내고 종료
+	// 3-1. 기존 예약의 시작날짜/종료날짜, 각 방의 갯수를 획득.
+	// 3-2. 해당 날짜의 남은 방 갯수를 획득 후 기존 예약의 방 갯수를 가산.(예약 가능한 방의 갯수를 계산)
+	// 4-1. 방의 갯수가 너무 많아서 예약이 불가능하면 불가능하다고 응답하고 종료.
+	// 4-2. 정상적인 방 갯수라면 reservationController에 있는 함수 modifyReservation을 실행. 근데 Rooms는 어떻게 넘겨줘야 할 지 고민중.
+	// 5-1. 성공했다면 res에 성공했다고 보냄
+	// 5-2. 실패했다면 res에 실패한 이유를 보냄. 실패하는 경우가 있는지 모르겠어서 일단 안 함.
+	reservationController.findReservationById(									// 1. 해당 id에 대한 예약이 있는지 확인합니다.
+		rid,															// 입력받은 id는 req.query.id로 넘어옵니다.
+		function(reservationObj) {
+			if (reservationObj == null){										// 2. 예약이 없다면 실패
+				nextJob(util.buildResponse(util.responseCode.FAILURE, null));
+				return;
+			}
+			dao.modifyPhone(rid, phoneNumber, function(){				// 4-2. DAO를 불러서 실제 예약을 진행합니다.
+				nextJob(util.buildResponse(util.responseCode.SUCCESS, null));
+			});	
+		}
+	);
+};
 module.exports=reservationController;

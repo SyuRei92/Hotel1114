@@ -98,7 +98,17 @@ module.exports=function(){
 		db.updateOne(
 			{_id: new global.db.ObjectID(rid), validity:'Valid'},
 			{
-				$set: {phoneNumber: phoneNumber, rooms: rooms.toJson()},
+				$set: {'customerInfo.phoneNumber': phoneNumber, rooms: rooms.toJson()},
+				$currentDate: {lastModified: true}
+			}
+		).then(nextJob);
+	};
+	// 전화번호만 변경
+	reservationDao.modifyPhone = function(rid, phoneNumber, nextJob) {
+		db.updateOne(
+			{_id: new global.db.ObjectID(rid), validity:'Valid'},
+			{
+				$set: {'customerInfo.phoneNumber': phoneNumber},
 				$currentDate: {lastModified: true}
 			}
 		).then(nextJob);
