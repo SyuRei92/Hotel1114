@@ -121,8 +121,8 @@ router.get('/searchReservation', function(req,res) {
 	console.log(req.query);
 	switch(req.query.search_type) {
 		case 'rid':
-			reservationController.findReservationById(req.query.condition, function(resultArray) {
-				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple(resultArray)));
+			reservationController.findReservationById(req.query.condition, function(result) {
+				res.json(util.buildResponse(util.responseCode.SUCCESS, Reservation.arrayFormMultiple([result])));
 			});
 			break;
 		case 'name':
