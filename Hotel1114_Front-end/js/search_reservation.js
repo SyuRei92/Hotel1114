@@ -27,7 +27,6 @@ $(document).ready(function(){
 		var cond_rid = q.split('=')[1];
 		$("#cond").val(cond_rid);
 		searchReservation();
-		showDetail_correct(0);
 	}
 	
 	
@@ -208,7 +207,6 @@ $(document).ready(function(){
 		$(":button[id^='detail']").prop('disabled', true);
 		var newRow = rsv_table.insertRow(i+2);
 		var newCell1 = newRow.insertCell(0);
-		alert(JSON.stringify(rsv_list));
 		var rsv_detail = 
 		"<table class='mui-table mui-table' style='font-size:15px; border:1px solid #cccccc; width:400px'>"+
 			"<th colspan=2> Reservation Detail </th>"+
